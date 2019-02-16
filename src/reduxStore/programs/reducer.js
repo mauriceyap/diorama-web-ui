@@ -20,7 +20,7 @@ function DELETE_PROGRAM(state, { payload }) {
 export const addProgram = createAction("ADD_PROGRAM");
 // Usage: modifyProgram({ name: "program name", ...someProperties })
 export const modifyProgram = createAction("MODIFY_PROGRAM");
-// Usage: deleteProgram(programName)
+// Usage: requestConfirmDeleteProgram(programName)
 export const deleteProgram = createAction("DELETE_PROGRAM");
 
 export default handleActions(

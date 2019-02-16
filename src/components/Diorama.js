@@ -4,15 +4,22 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 
-import colours from "../styling/colours";
-import { selectTheme } from "../reduxStore/selectors";
+import colours from "../customisation/colours";
+import { selectCustomisation } from "../reduxStore/selectors";
 import AppBar from "./AppBar";
 import SideNav from "./SideNav";
 import PreferencesDialog from "./PreferencesDialog";
 import Programs from "./Programs";
 import ProjectHome from "./ProjectHome";
+import startupActions from "../startupActions";
 
 class Diorama extends Component {
+  constructor(props) {
+    super(props);
+    const { dispatch } = props;
+    startupActions(dispatch);
+  }
+
   render() {
     const { colourScheme } = this.props;
     const sideBarWrapperClassName = classnames(
@@ -48,7 +55,7 @@ Diorama.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    colourScheme: selectTheme(state).colourScheme
+    colourScheme: selectCustomisation(state).colourScheme
   };
 }
 

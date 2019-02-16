@@ -5,6 +5,8 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "metro4": "^4.2.36",
+    "moment": "^2.24.0",
+    "prop-types": "^15.7.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
@@ -13,6 +15,7 @@
     "redux": "^4.0.0",
     "redux-actions": "^2.6.1",
     "redux-devtools-extension": "^2.13.8",
+    "redux-polyglot": "^0.7.0",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {

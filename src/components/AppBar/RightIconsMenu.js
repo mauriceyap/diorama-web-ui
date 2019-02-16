@@ -1,9 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import MetroIcon from "../MetroIcon";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Metro from "metro4";
 
-import { preferencesDialogId } from "../../styling/styleConstants";
+import { preferencesDialogId } from "../../customisation/styleConstants";
+import { selectSocket } from "../../reduxStore/selectors";
 
 function openPreferencesDialog() {
   Metro.dialog.open(`#${preferencesDialogId}`);
@@ -11,10 +14,10 @@ function openPreferencesDialog() {
 
 const items = [{ icon: "cog", onClick: openPreferencesDialog }];
 
-export default class RightIconsMenu extends Component {
+class RightIconsMenu extends Component {
   static renderItems() {
     return items.map(({ icon, onClick }) => (
-      <li onClick={onClick}>
+      <li onClick={onClick} key={icon}>
         <a href="#">
           <MetroIcon icon={icon} />
         </a>
@@ -23,13 +26,35 @@ export default class RightIconsMenu extends Component {
   }
 
   render() {
+    const { isSocketConnected } = this.props;
     return (
       <ul
         className="app-bar-menu"
         style={{ marginLeft: "auto", marginRight: 0 }}
       >
+        <li>
+          <a>
+            {isSocketConnected ? (
+              <MetroIcon icon={"network-cell"} colour={'green'} />
+            ) : (
+              <MetroIcon icon={"cell-off"} colour={'red'} />
+            )}
+          </a>
+        </li>
         {RightIconsMenu.renderItems()}
       </ul>
     );
   }
 }
+
+RightIconsMenu.propTypes = {
+  isSocketConnected: PropTypes.bool.isRequired
+};
+
+function mapStateToProps(state) {
+  return {
+    isSocketConnected: selectSocket(state).connected
+  };
+}
+
+export default connect(mapStateToProps)(RightIconsMenu);

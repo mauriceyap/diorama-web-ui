@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import { selectTheme } from "../../reduxStore/selectors";
-import colours from "../../styling/colours";
+import { selectCustomisation } from "../../reduxStore/selectors";
+import colours from "../../customisation/colours";
 import RightIconsMenu from "./RightIconsMenu";
 
 class AppBar extends Component {
@@ -34,7 +34,7 @@ AppBar.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    colourScheme: selectTheme(state).colourScheme
+    colourScheme: selectCustomisation(state).colourScheme
   };
 }
 

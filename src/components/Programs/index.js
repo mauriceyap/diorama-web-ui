@@ -1,98 +1,107 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import {
-  addProgram,
-  deleteProgram,
-  modifyProgram
-} from "../../reduxStore/programs/reducer";
+import PropTypes from "prop-types";
+import ProgramCard from "./ProgramCard";
+import { selectPrograms } from "../../reduxStore/selectors";
+import { pPropType, programPropType } from "../../customPropTypes";
+import MetroIcon from "../MetroIcon";
+import NewProgramWizard from "./NewProgramWizard";
+import { addProgram } from "../../reduxStore/programs/reducer";
+import { getP } from "redux-polyglot";
+
+const initialState = {
+  isNewProgramWizardVisible: false
+};
 
 class Programs extends Component {
+  constructor(props) {
+    super(props);
+    this.state = initialState;
+    this.renderProgramCards = this.renderProgramCards.bind(this);
+    this.showNewProgramWizard = this.showNewProgramWizard.bind(this);
+    this.onNewProgramWizardCancel = this.onNewProgramWizardCancel.bind(this);
+    this.onNewProgramWizardSubmit = this.onNewProgramWizardSubmit.bind(this);
+  }
+
+  showNewProgramWizard() {
+    this.setState({
+      isNewProgramWizardVisible: true
+    });
+  }
+
+  onNewProgramWizardCancel() {
+    this.setState({
+      isNewProgramWizardVisible: false
+    });
+  }
+
+  onNewProgramWizardSubmit(runtime, name) {
+    const { dispatch } = this.props;
+    dispatch(addProgram({ runtime, name }));
+    this.setState({
+      isNewProgramWizardVisible: false
+    });
+  }
+
+  renderProgramCards() {
+    const { programs } = this.props;
+    return programs.map(
+      ({ name, runtime, codeSource, lastEdited, description }) => (
+        <ProgramCard
+          key={name}
+          name={name}
+          runtime={runtime}
+          description={description}
+          codeSource={codeSource}
+          lastEdited={lastEdited}
+        />
+      )
+    );
+  }
+
   render() {
+    const { isNewProgramWizardVisible } = this.state;
+    const { p } = this.props;
     return (
       <Fragment>
-        <span className={"display1"}>Programs</span>
+        <span className={"display1"}>{p.tc('programs')}</span>
+        {isNewProgramWizardVisible || (
+          <p style={{ textAlign: "right" }}>
+            <button
+              className="button success"
+              onClick={this.showNewProgramWizard}
+            >
+              <MetroIcon icon={"plus"} /> {p.tc('newProgram')}
+            </button>
+          </p>
+        )}
 
-        <button
-          onClick={() =>
-            this.props.dispatch(addProgram({ name: "abc", value: 123, a: 1 }))
-          }
-        >
-          add abc
-        </button>
-        <button
-          onClick={() =>
-            this.props.dispatch(addProgram({ name: "def", value: 246, a: 4 }))
-          }
-        >
-          add abc
-        </button>
-        <button
-          onClick={() =>
-            this.props.dispatch(modifyProgram({ name: "def", value: 0 }))
-          }
-        >
-          add abc
-        </button>
-        <button onClick={() => this.props.dispatch(deleteProgram("abc"))}>
-          del abc
-        </button>
+        {isNewProgramWizardVisible && (
+          <NewProgramWizard
+            submitCb={this.onNewProgramWizardSubmit}
+            cancelCb={this.onNewProgramWizardCancel}
+          />
+        )}
 
         <div className="grid">
-          <div className="row">
-            <div className="cell-xl-3 cell-lg-4 cell-md-6">
-              <div className="card">
-                <div className="card-header">Card header</div>
-                <div className="card-content p-2">
-                  Card with header and footer...
-                </div>
-                <div className="card-footer">Card Footer</div>
-              </div>
-            </div><div className="cell-xl-3 cell-lg-4 cell-md-6">
-              <div className="card">
-                <div className="card-header">Card header</div>
-                <div className="card-content p-2">
-                  Card with header and footer...
-                </div>
-                <div className="card-footer">Card Footer</div>
-              </div>
-            </div><div className="cell-xl-3 cell-lg-4 cell-md-6">
-              <div className="card">
-                <div className="card-header">Card header</div>
-                <div className="card-content p-2">
-                  Card with header and footer...
-                </div>
-                <div className="card-footer">Card Footer</div>
-              </div>
-            </div><div className="cell-xl-3 cell-lg-4 cell-md-6">
-              <div className="card">
-                <div className="card-header">Card header</div>
-                <div className="card-content p-2">
-                  Card with header and footer...
-                </div>
-                <div className="card-footer">Card Footer</div>
-              </div>
-            </div><div className="cell-xl-3 cell-lg-4 cell-md-6">
-              <div className="card">
-                <div className="card-header">Card header</div>
-                <div className="card-content p-2">
-                  Card with header and footer...
-                </div>
-                <div className="card-footer">Card Footer</div>
-              </div>
-            </div><div className="cell-xl-3 cell-lg-4 cell-md-6">
-              <div className="card">
-                <div className="card-header">Card header</div>
-                <div className="card-content p-2">
-                  Card with header and footer...
-                </div>
-                <div className="card-footer">Card Footer</div>
-              </div>
-            </div>
-          </div>
+          <div className="row">{this.renderProgramCards()}</div>
         </div>
       </Fragment>
     );
   }
 }
 
-export default connect()(Programs);
+Programs.propTypes = {
+  programs: PropTypes.arrayOf(programPropType).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  p: pPropType.isRequired
+};
+
+function mapStateToProps(state) {
+  return {
+    programs: selectPrograms(state),
+    p: getP(state)
+  };
+}
+
+export default connect(mapStateToProps)(Programs);
