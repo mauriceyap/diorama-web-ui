@@ -10,7 +10,7 @@ import {
   onChangeDateTimeFormatSelect,
   onChangeLanguageSelect,
   preferencesDialogId
-} from "../../customisation/styleConstants";
+} from "../../styleConstants";
 import { colourSchemes } from "../../customisation/colours";
 import dateTimeLocales from "../../customisation/dateTimeLocales";
 import { selectCustomisation } from "../../reduxStore/selectors";

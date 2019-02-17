@@ -1,8 +1,8 @@
 import {
-  noop,
   WEBSOCKET_ADDRESS,
   WEBSOCKET_RECONNECT_INTERVAL
 } from "./constants";
+import { noop } from "./utils";
 
 let websocket = null;
 const eventCallbacks = {};

@@ -9,16 +9,16 @@ import {
   selectPrograms
 } from "../../reduxStore/selectors";
 import colours from "../../customisation/colours";
-import { noop } from "../../constants";
+import { noop } from "../../utils";
 import {
   onClickNewProgramCancel,
   onClickNewProgramSubmit,
   toastSeparationDistance,
   toastTimeout
-} from "../../customisation/styleConstants";
-import { isStringEmpty } from "../../utils";
+} from "../../styleConstants";
 import { pPropType } from "../../customPropTypes";
 import { getP } from "redux-polyglot";
+import validator from "./validator";
 
 const initialState = {
   name: null,
@@ -41,27 +41,13 @@ class NewProgramWizard extends Component {
   validateValues() {
     const { runtime, name } = this.state;
     const { existingProgramNames, p } = this.props;
-
-    const isNameEmpty = isStringEmpty(name);
-    const isNameUsed = existingProgramNames.includes(name);
-    const isRuntimeNull = runtime == null;
-    const isRuntimeInvalid =
-      !isStringEmpty(runtime) && !runtimes.contains(runtime);
-
-    return {
-      isValid: !(
-        isNameEmpty ||
-        isNameUsed ||
-        isRuntimeNull ||
-        isRuntimeInvalid
-      ),
-      errorMessages: [
-        ...(isNameEmpty ? [p.t("giveYourProgramAName")] : []),
-        ...(isNameUsed ? [p.t("useADifferentName", { name })] : []),
-        ...(isRuntimeNull ? [p.t("chooseARuntimeError")] : []),
-        ...(isRuntimeInvalid ? [p.t("runtimeInvalid")] : [])
-      ]
-    };
+    return validator(
+      { runtime, name },
+      ["name", "runtime"],
+      existingProgramNames,
+      runtimes,
+      p
+    );
   }
 
   onClickCancel() {
@@ -74,9 +60,9 @@ class NewProgramWizard extends Component {
     const { submitCb } = this.props;
     const { runtime, name } = this.state;
 
-    const { isValid, errorMessages } = this.validateValues();
+    const errorMessages = this.validateValues();
 
-    if (isValid) {
+    if (errorMessages.length === 0) {
       this.setState(initialState);
       submitCb(runtime, name);
     } else {
@@ -103,7 +89,7 @@ class NewProgramWizard extends Component {
     return (
       <div
         data-role="wizard"
-        data-icon-help={`<span>${p.tc('cancel')}</span>`}
+        data-icon-help={`<span>${p.tc("cancel")}</span>`}
         data-on-help-click={onClickNewProgramCancel}
         data-on-finish-click={onClickNewProgramSubmit}
         data-button-mode="button"
@@ -111,7 +97,7 @@ class NewProgramWizard extends Component {
       >
         <section>
           <div className="page-content">
-            <h5>{p.tc('chooseARuntime')}</h5>
+            <h5>{p.tc("chooseARuntime")}</h5>
             <p />
             <div className="tiles-grid">
               {runtimes.map(runtime => (
@@ -139,8 +125,8 @@ class NewProgramWizard extends Component {
         </section>
         <section>
           <div className="page-content">
-            <h5>{p.tc('giveItAName')}</h5>
-            <p>{p.tc('youCanAlwaysChangeItLater')}</p>
+            <h5>{p.tc("giveItAName")}</h5>
+            <p>{p.tc("youCanAlwaysChangeItLater")}</p>
             <p>
               <input
                 type="text"

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Metro from "metro4";
 
-import { preferencesDialogId } from "../../customisation/styleConstants";
+import { preferencesDialogId } from "../../styleConstants";
 import { selectSocket } from "../../reduxStore/selectors";
 
 function openPreferencesDialog() {

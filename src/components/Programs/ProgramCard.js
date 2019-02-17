@@ -13,30 +13,43 @@ import {
 import { deleteProgram } from "../../reduxStore/programs/reducer";
 import { pPropType } from "../../customPropTypes";
 import { getP } from "redux-polyglot";
+import { Redirect } from "react-router-dom";
+import { pointerCursorOnHoverStyle } from "../../utils";
+
+const initialState = {
+  redirectToProgramPage: false
+};
 
 class ProgramCard extends Component {
   constructor(props) {
     super(props);
+
+    this.state = initialState;
     this.requestConfirmDeleteProgram = this.requestConfirmDeleteProgram.bind(
       this
     );
+    this.redirectToProgramPage = this.redirectToProgramPage.bind(this);
+  }
+
+  redirectToProgramPage() {
+    this.setState({ redirectToProgramPage: true });
   }
 
   requestConfirmDeleteProgram() {
     const { dispatch, name, p } = this.props;
     Metro.dialog.create({
-      title: p.tc('areYouSureYouWantToDeleteProgram', { name }),
-      content: `<p>${p.tc('itWillBeLostForever')}</p>`,
+      title: p.tc("areYouSureYouWantToDeleteProgram", { name }),
+      content: `<p>${p.tc("itWillBeLostForever")}</p>`,
       actions: [
         {
-          caption: p.t('yesIAmSure'),
+          caption: p.t("yesIAmSure"),
           cls: "js-dialog-close alert",
           onclick() {
             dispatch(deleteProgram(name));
           }
         },
         {
-          caption: p.t('noIDoNot'),
+          caption: p.t("noIDoNot"),
           cls: "js-dialog-close"
         }
       ]
@@ -44,6 +57,7 @@ class ProgramCard extends Component {
   }
 
   render() {
+    const { redirectToProgramPage } = this.state;
     const {
       name,
       runtime,
@@ -53,29 +67,40 @@ class ProgramCard extends Component {
       dateTimeLocale,
       p
     } = this.props;
+    if (redirectToProgramPage)
+      return <Redirect push to={`/programs/${name}`} />;
+
     const runtimeIcon = runtimeIcons[runtime];
     const codeSourceIcon = codeSourceIcons[codeSource];
     const codeSourceLabel = codeSourceLabels[codeSource];
     return (
       <div className="cell-xl-3 cell-lg-4 cell-md-6">
         <div className="card">
-          <div className="card-header">
+          <div
+            className="card-header"
+            onClick={this.redirectToProgramPage}
+            style={pointerCursorOnHoverStyle}
+          >
             <div className="avatar">
               <img src={runtimeIcon} alt={runtime} />
             </div>
             <div className="name">{name}</div>
             <div className="date">
-              {p.t('lastModified')}{" "}
+              {p.t("lastModified")}{" "}
               {moment(lastEdited)
                 .locale(dateTimeLocale)
                 .format("LLL")}
             </div>
           </div>
-          <div className="card-content p-4">
+          <div
+            className="card-content p-4"
+            onClick={this.redirectToProgramPage}
+            style={pointerCursorOnHoverStyle}
+          >
             <p>{description}</p>
             <p>
               <span className={"text-ultralight"}>
-                {p.tc('runtime')}: {runtimeLabels[runtime]}
+                {p.tc("runtime")}: {runtimeLabels[runtime]}
               </span>
             </p>
           </div>
@@ -100,7 +125,10 @@ class ProgramCard extends Component {
               className="flat-button mif-bin fg-lightCrimson"
               onClick={this.requestConfirmDeleteProgram}
             />
-            <button className="flat-button mif-pencil" />
+            <button
+              className="flat-button mif-pencil"
+              onClick={this.redirectToProgramPage}
+            />
           </div>
         </div>
       </div>

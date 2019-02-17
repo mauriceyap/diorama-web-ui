@@ -9,10 +9,10 @@ export default [
   },
   {
     locale: "de",
-    label: "German"
+    label: "Deutsch"
   },
   {
     locale: "zh-cn",
-    label: "Chinese (PR China)"
+    label: "中文 (中国)"
   },
 ];

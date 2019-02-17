@@ -8,6 +8,7 @@ import MetroIcon from "../MetroIcon";
 import NewProgramWizard from "./NewProgramWizard";
 import { addProgram } from "../../reduxStore/programs/reducer";
 import { getP } from "redux-polyglot";
+import { defaultCodeSource, defaultDescription } from "./constants";
 
 const initialState = {
   isNewProgramWizardVisible: false
@@ -37,7 +38,15 @@ class Programs extends Component {
 
   onNewProgramWizardSubmit(runtime, name) {
     const { dispatch } = this.props;
-    dispatch(addProgram({ runtime, name }));
+    dispatch(
+      addProgram({
+        runtime,
+        name,
+        codeSource: defaultCodeSource,
+        lastEdited: new Date().getTime(),
+        description: defaultDescription
+      })
+    );
     this.setState({
       isNewProgramWizardVisible: false
     });
@@ -64,14 +73,14 @@ class Programs extends Component {
     const { p } = this.props;
     return (
       <Fragment>
-        <span className={"display1"}>{p.tc('programs')}</span>
+        <span className={"display1"}>{p.tc("programs")}</span>
         {isNewProgramWizardVisible || (
           <p style={{ textAlign: "right" }}>
             <button
               className="button success"
               onClick={this.showNewProgramWizard}
             >
-              <MetroIcon icon={"plus"} /> {p.tc('newProgram')}
+              <MetroIcon icon={"plus"} /> {p.tc("newProgram")}
             </button>
           </p>
         )}

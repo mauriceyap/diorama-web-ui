@@ -11,6 +11,7 @@ import SideNav from "./SideNav";
 import PreferencesDialog from "./PreferencesDialog";
 import Programs from "./Programs";
 import ProjectHome from "./ProjectHome";
+import ProgramEditor from "./Programs/ProgramEditor";
 import startupActions from "../startupActions";
 
 class Diorama extends Component {
@@ -38,7 +39,11 @@ class Diorama extends Component {
             <div className={"pt-16"} style={{ width: "100%" }}>
               <div className={"container"}>
                 <Route exact path={"/"} component={ProjectHome} />
-                <Route path={"/programs"} component={Programs} />
+                <Route exact path={"/programs"} component={Programs} />
+                <Route
+                  path={"/programs/:programName"}
+                  component={ProgramEditor}
+                />
               </div>
             </div>
           </div>

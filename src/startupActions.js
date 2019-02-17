@@ -42,7 +42,7 @@ export default function(dispatch) {
     addProgram({
       name: "master",
       runtime: "python3",
-      mainMethod: "node.main",
+      mainHandler: "node.main",
       codeSource: "raw",
       codeData: "print('hello world lol')",
       lastEdited: 1550249133000,

@@ -9,6 +9,8 @@ export default {
   newProgram: "neues Programm",
   lastModified: "zuletzt bearbeitet um",
   rawCode: "roher Code",
+  gitRepo: "Git Repository",
+  zipFile: "ZIP-Datei hochladen",
   runtime: "Laufzeit",
   areYouSureYouWantToDeleteProgram: "Möchtest du %{name} wirklich löschen?",
   itWillBeLostForever: "Es wird für immer verloren sein!",
@@ -20,7 +22,13 @@ export default {
   runtimeInvalid: "Diese Laufzeit ist nicht verfügbar, wählst du also eine andere!",
 
   cancel: 'stornieren',
+  save: 'speichern',
   chooseARuntime: "wählst du eine Laufzeit",
   giveItAName: "gib es einen Namen",
-  youCanAlwaysChangeItLater: "Du kannst es später ändern!"
+  youCanAlwaysChangeItLater: "Du kannst es später ändern!",
+
+  description: "Beschreibung",
+  whatDoesThisNodeDo: "Was macht dieser Knoten?",
+  codeSource: "Source-Code",
+  mainHandler: "Main Handler"
 };
