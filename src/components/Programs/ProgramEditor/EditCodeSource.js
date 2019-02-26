@@ -8,7 +8,7 @@ export default class EditCodeSource extends Component {
     return (
       <Fragment>
         <h6>{polyglot.tc("codeSource")}</h6>
-        <form>
+        <form key={polyglot.tc("codeSource")}>
           {codeSources.map(source => (
             <input
               name={"codeSource"}

@@ -12,6 +12,10 @@ import EditCodeSource from "./EditCodeSource";
 import EditRuntime from "./EditRuntime";
 import EditDescription from "./EditDescription";
 import EditMainHandler from "./EditMainHandler";
+import { modifyProgram } from "../../../reduxStore/programs/reducer";
+import Socket from "../../../Socket";
+import SocketEvents from "../../../SocketEvents";
+import EditCodeData from "./EditCodeData";
 
 const initialState = {
   program: null,
@@ -28,35 +32,97 @@ class ProgramEditor extends Component {
       }
     } = this.props;
 
+    const savedProgram = programs.filter(({ name }) => name === programName)[0];
+
     this.state = {
       ...initialState,
       redirectToProgramsPage: !programs
         .map(({ name }) => name)
         .contains(programName),
-      programState: programs.filter(({ name }) => name === programName)[0]
+      programState: savedProgram,
+      editingCodeData: {
+        git:
+          savedProgram && savedProgram.codeSource === "git"
+            ? savedProgram.codeData
+            : "",
+        zip: null,
+        raw:
+          savedProgram && savedProgram.codeSource === "raw"
+            ? savedProgram.codeData
+            : ""
+      }
     };
 
     this.setCodeSource = this.setCodeSource.bind(this);
     window[onChangeProgramRuntime] = this.setRuntime.bind(this);
     this.setDescription = this.setDescription.bind(this);
     this.setMainHandler = this.setMainHandler.bind(this);
+    this.saveChanges = this.saveChanges.bind(this);
+    this.getChanges = this.getChanges.bind(this);
     this.isProgramChanged = this.isProgramChanged.bind(this);
     this.redirectToProgramsPage = this.redirectToProgramsPage.bind(this);
+    this.onGitRepositoryUrlChange = this.onGitRepositoryUrlChange.bind(this);
+    this.onRawCodeChange = this.onRawCodeChange.bind(this);
+  }
+
+  onGitRepositoryUrlChange({ target: { value } }) {
+    const {
+      editingCodeData: originalEditingCodeData,
+      programState: originalProgramState
+    } = this.state;
+    this.setState({
+      editingCodeData: { ...originalEditingCodeData, git: value },
+      programState: { ...originalProgramState, codeData: value }
+    });
+  }
+
+  onRawCodeChange(raw) {
+    const {
+      editingCodeData: originalEditingCodeData,
+      programState: originalProgramState
+    } = this.state;
+    this.setState({
+      editingCodeData: { ...originalEditingCodeData, raw },
+      programState: { ...originalProgramState, codeData: raw }
+    });
   }
 
   redirectToProgramsPage() {
     this.setState({ redirectToProgramsPage: true });
   }
 
-  isProgramChanged() {
+  saveChanges() {
+    const { dispatch } = this.props;
+    const { programState } = this.state;
+    const changesWithNameAndLastEdited = {
+      name: programState.name,
+      lastEdited: new Date().getTime(),
+      ...this.getChanges()
+    };
+    Socket.send(SocketEvents.MODIFY_PROGRAM, changesWithNameAndLastEdited);
+    dispatch(modifyProgram(changesWithNameAndLastEdited));
+    this.redirectToProgramsPage();
+  }
+
+  getChanges() {
     const { programState } = this.state;
     const { programs } = this.props;
     const savedProgram = programs.filter(
       ({ name }) => name === programState.name
     )[0];
-    return !fieldsToCheckDifference.every(
-      field => savedProgram[field] === programState[field]
-    );
+    return fieldsToCheckDifference.reduce((differences, fieldToCheck) => {
+      const originalValue = savedProgram[fieldToCheck];
+      const currentValue = programState[fieldToCheck];
+      if (originalValue !== currentValue) {
+        differences[fieldToCheck] = currentValue;
+      }
+      return differences;
+    }, {});
+  }
+
+  isProgramChanged() {
+    const changes = this.getChanges();
+    return Object.entries(changes).length > 0;
   }
 
   setDescription({ target: { value } }) {
@@ -67,9 +133,13 @@ class ProgramEditor extends Component {
   }
 
   setCodeSource({ target: { value } }) {
-    const { programState: existingProgramState } = this.state;
+    const { programState: existingProgramState, editingCodeData } = this.state;
     this.setState({
-      programState: { ...existingProgramState, codeSource: value }
+      programState: {
+        ...existingProgramState,
+        codeSource: value,
+        codeData: editingCodeData[value]
+      }
     });
   }
 
@@ -94,7 +164,11 @@ class ProgramEditor extends Component {
         params: { programName }
       }
     } = this.props;
-    const { redirectToProgramsPage, programState } = this.state;
+    const {
+      redirectToProgramsPage,
+      programState,
+      editingCodeData: { raw: rawCode, git: gitRepositoryUrl }
+    } = this.state;
 
     return !redirectToProgramsPage ? (
       <Fragment>
@@ -125,6 +199,17 @@ class ProgramEditor extends Component {
               selectedValue={programState.codeSource}
               onChange={this.setCodeSource}
             />
+            <EditCodeData
+              key={programState.codeSource}
+              selectedSource={programState.codeSource}
+              polyglot={p}
+              programName={programName}
+              runtime={programState.runtime}
+              rawCode={rawCode}
+              gitRepositoryUrl={gitRepositoryUrl}
+              onGitRepositoryUrlChange={this.onGitRepositoryUrlChange}
+              onRawCodeChange={this.onRawCodeChange}
+            />
           </div>
           <div className="mt-6">
             <EditMainHandler
@@ -136,7 +221,7 @@ class ProgramEditor extends Component {
         </div>
         <div className="mt-4">
           {this.isProgramChanged() && (
-            <button className="button primary">
+            <button className="button primary" onClick={this.saveChanges}>
               <MetroIcon icon={"floppy-disk"} /> {p.tc("save")}
             </button>
           )}
@@ -157,7 +242,8 @@ class ProgramEditor extends Component {
 ProgramEditor.propTypes = {
   p: pPropType.isRequired,
   match: PropTypes.object.isRequired,
-  programs: PropTypes.arrayOf(programPropType).isRequired
+  programs: PropTypes.arrayOf(programPropType).isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

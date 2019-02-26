@@ -1,6 +1,5 @@
 export const preferencesDialogId = "preferencesDialog";
 export const onChangeColourSchemeSelect = "onChangeColourSchemeSelect";
-export const onChangeDateTimeFormatSelect = "onChangeDateTimeFormatSelect";
 export const onChangeLanguageSelect = "onChangeLanguageSelect";
 
 export const onClickNewProgramCancel = "onClickNewProgramCancel";

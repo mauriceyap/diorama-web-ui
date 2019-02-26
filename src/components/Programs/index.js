@@ -8,10 +8,13 @@ import MetroIcon from "../MetroIcon";
 import NewProgramWizard from "./NewProgramWizard";
 import { addProgram } from "../../reduxStore/programs/reducer";
 import { getP } from "redux-polyglot";
-import { defaultCodeSource, defaultDescription } from "./constants";
+import { defaultCodeData, defaultCodeSource, defaultDescription, defaultMainHandler } from "./constants";
+import { Redirect } from "react-router-dom";
+import Socket from "../../Socket";
 
 const initialState = {
-  isNewProgramWizardVisible: false
+  isNewProgramWizardVisible: false,
+  redirectToProgramPage: undefined
 };
 
 class Programs extends Component {
@@ -38,17 +41,22 @@ class Programs extends Component {
 
   onNewProgramWizardSubmit(runtime, name) {
     const { dispatch } = this.props;
+    const newProgram = {
+      runtime,
+      name,
+      codeSource: defaultCodeSource,
+      codeData: defaultCodeData,
+      lastEdited: new Date().getTime(),
+      description: defaultDescription,
+      mainHandler: defaultMainHandler
+    };
     dispatch(
-      addProgram({
-        runtime,
-        name,
-        codeSource: defaultCodeSource,
-        lastEdited: new Date().getTime(),
-        description: defaultDescription
-      })
+      addProgram(newProgram)
     );
+    Socket.send("addProgram", newProgram);
     this.setState({
-      isNewProgramWizardVisible: false
+      isNewProgramWizardVisible: false,
+      redirectToProgramPage: name
     });
   }
 
@@ -69,8 +77,11 @@ class Programs extends Component {
   }
 
   render() {
-    const { isNewProgramWizardVisible } = this.state;
+    const { isNewProgramWizardVisible, redirectToProgramPage } = this.state;
     const { p } = this.props;
+    if (redirectToProgramPage) {
+      return <Redirect to={`/programs/${redirectToProgramPage}`} />;
+    }
     return (
       <Fragment>
         <span className={"display1"}>{p.tc("programs")}</span>

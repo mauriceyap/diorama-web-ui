@@ -3,6 +3,7 @@ import elixirIcon from "./runtimeIconImages/elixir.png";
 import scalaIcon from "./runtimeIconImages/scala.png";
 import rawCodeIcon from "./sourceIconImages/rawCode.png";
 import zipFileIcon from "./sourceIconImages/zipFile.png";
+import gitRepoIcon from "./sourceIconImages/gitRepo.png";
 
 export const runtimeIcons = {
   python2: pythonIcon,
@@ -18,11 +19,19 @@ export const runtimeLabels = {
   scala: "Scala"
 };
 
+export const braceEditorModes = {
+  python2: "python",
+  python3: "python",
+  elixir: "elixir",
+  scala: "scala"
+};
+
 export const runtimes = ["python2", "python3", "elixir", "scala"];
 
 export const codeSourceIcons = {
   raw: rawCodeIcon,
-  zip: zipFileIcon
+  zip: zipFileIcon,
+  git: gitRepoIcon
 };
 // These labels are consumed by Polyglot
 export const codeSourceLabels = {
@@ -32,6 +41,8 @@ export const codeSourceLabels = {
 };
 
 export const defaultCodeSource = "raw";
+export const defaultCodeData = "";
+export const defaultMainHandler = "main";
 
 export const codeSources = ["raw", "zip", "git"];
 

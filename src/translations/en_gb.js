@@ -5,6 +5,10 @@ export default {
   language: 'language',
   done: 'done',
 
+  // Colour schemes
+  default: "default",
+  strange: "strange",
+
   programs: 'Programs',
   newProgram: 'New program',
   lastModified: 'Last modified',
@@ -30,5 +34,7 @@ export default {
   description: "description",
   whatDoesThisNodeDo: "What does this node do?",
   codeSource: "code source",
-  mainHandler: "main handler"
+  mainHandler: "main handler",
+  repositoryUrl: "repository URL",
+  chooseZipFile: "choose zip file"
 };

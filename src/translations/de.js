@@ -5,6 +5,10 @@ export default {
   language: "Sprache",
   done: "erledigt",
 
+  // Colour schemes
+  default: "Standard",
+  strange: "seltsam",
+
   programs: "Programme",
   newProgram: "neues Programm",
   lastModified: "zuletzt bearbeitet um",
@@ -30,5 +34,7 @@ export default {
   description: "Beschreibung",
   whatDoesThisNodeDo: "Was macht dieser Knoten?",
   codeSource: "Source-Code",
-  mainHandler: "Main Handler"
+  mainHandler: "Main Handler",
+  repositoryUrl: "Repository-URL",
+  chooseZipFile: "wählen Zip-Datei"
 };

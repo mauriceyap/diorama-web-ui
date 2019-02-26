@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import moment from "moment/min/moment-with-locales";
 import Metro from "metro4";
-import { selectCustomisation } from "../../reduxStore/selectors";
 import {
   codeSourceIcons,
   codeSourceLabels,
@@ -15,6 +13,7 @@ import { pPropType } from "../../customPropTypes";
 import { getP } from "redux-polyglot";
 import { Redirect } from "react-router-dom";
 import { pointerCursorOnHoverStyle } from "../../utils";
+import DateTime from "../common/DateTime";
 
 const initialState = {
   redirectToProgramPage: false
@@ -64,7 +63,6 @@ class ProgramCard extends Component {
       description,
       codeSource,
       lastEdited,
-      dateTimeLocale,
       p
     } = this.props;
     if (redirectToProgramPage)
@@ -87,9 +85,7 @@ class ProgramCard extends Component {
             <div className="name">{name}</div>
             <div className="date">
               {p.t("lastModified")}{" "}
-              {moment(lastEdited)
-                .locale(dateTimeLocale)
-                .format("LLL")}
+              <DateTime format={"LLL"} dateTime={lastEdited} />
             </div>
           </div>
           <div
@@ -142,14 +138,12 @@ ProgramCard.propTypes = {
   codeSource: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   lastEdited: PropTypes.number.isRequired,
-  dateTimeLocale: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
   p: pPropType.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    dateTimeLocale: selectCustomisation(state).dateTimeLocale,
     p: getP(state)
   };
 }

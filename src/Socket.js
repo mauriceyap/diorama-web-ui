@@ -1,7 +1,4 @@
-import {
-  WEBSOCKET_ADDRESS,
-  WEBSOCKET_RECONNECT_INTERVAL
-} from "./constants";
+import { WEBSOCKET_ADDRESS, WEBSOCKET_RECONNECT_INTERVAL } from "./constants";
 import { noop } from "./utils";
 
 let websocket = null;
@@ -12,8 +9,8 @@ let onSocketDisconnected = noop;
 let onSocketError = noop;
 
 function onMessage({ data }) {
-  const messageObject = JSON.parse(JSON.parse(data));
-  eventCallbacks[messageObject.event](messageObject.data);
+  const messageObject = JSON.parse(data);
+  eventCallbacks[messageObject.event](JSON.parse(messageObject.data));
 }
 
 function connectWebSocket() {
@@ -52,7 +49,10 @@ export default {
   },
 
   send(event, data) {
-    const message = { event, data: JSON.stringify(JSON.stringify(data)) };
+    const message = JSON.stringify({
+      event,
+      data: JSON.stringify(data)
+    });
     websocket.readyState === WebSocket.OPEN
       ? websocket.send(message)
       : sendQueue.push(message);

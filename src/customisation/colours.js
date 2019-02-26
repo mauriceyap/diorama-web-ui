@@ -18,6 +18,10 @@ export default {
   newProgramRuntimeTiles: {
     default: "darkIndigo",
     strange: "lightRed"
+  },
+  aceEditorTheme: {
+    default: "tomorrow",
+    strange: "monokai"
   }
 };
 
