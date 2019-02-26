@@ -36,5 +36,6 @@ export default {
   codeSource: "Source-Code",
   mainHandler: "Main Handler",
   repositoryUrl: "Repository-URL",
-  chooseZipFile: "wählen Zip-Datei"
+  chooseZipFile: "wählen Zip-Datei",
+  selectedFile: "ausgewählte Datei"
 };

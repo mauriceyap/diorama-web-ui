@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import AceEditor from "react-ace";
@@ -24,7 +24,9 @@ class EditCodeData extends Component {
       gitRepositoryUrl,
       rawCode,
       onGitRepositoryUrlChange,
-      onRawCodeChange
+      onRawCodeChange,
+      onSelectedZipFileChange,
+      zipFileName
     } = this.props;
     if (selectedSource === "git") {
       return (
@@ -41,14 +43,18 @@ class EditCodeData extends Component {
     } else if (selectedSource === "zip") {
       // TODO: upload files
       return (
+        <Fragment>
         <form key={polyglot.tc("chooseZipFile")}>
           <input
             type="file"
             data-role="file"
             data-button-title={polyglot.tc("chooseZipFile")}
             accept={".zip,.ZIP"}
+            onChange={onSelectedZipFileChange}
           />
         </form>
+          {zipFileName && <p>{polyglot.tc("selectedFile")}: {zipFileName}</p>}
+        </Fragment>
       );
     }
     return (
@@ -75,7 +81,9 @@ EditCodeData.propTypes = {
   gitRepositoryUrl: PropTypes.string.isRequired,
   rawCode: PropTypes.string.isRequired,
   onGitRepositoryUrlChange: PropTypes.func.isRequired,
-  onRawCodeChange: PropTypes.func.isRequired
+  onSelectedZipFileChange: PropTypes.func.isRequired,
+  onRawCodeChange: PropTypes.func.isRequired,
+  zipFileName: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {

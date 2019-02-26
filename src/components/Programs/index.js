@@ -11,6 +11,7 @@ import { getP } from "redux-polyglot";
 import { defaultCodeData, defaultCodeSource, defaultDescription, defaultMainHandler } from "./constants";
 import { Redirect } from "react-router-dom";
 import Socket from "../../Socket";
+import SocketEvents from "../../SocketEvents";
 
 const initialState = {
   isNewProgramWizardVisible: false,
@@ -53,7 +54,7 @@ class Programs extends Component {
     dispatch(
       addProgram(newProgram)
     );
-    Socket.send("addProgram", newProgram);
+    Socket.send(SocketEvents.ADD_PROGRAM, newProgram);
     this.setState({
       isNewProgramWizardVisible: false,
       redirectToProgramPage: name

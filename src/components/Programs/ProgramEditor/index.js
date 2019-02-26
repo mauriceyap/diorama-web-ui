@@ -45,7 +45,7 @@ class ProgramEditor extends Component {
           savedProgram && savedProgram.codeSource === "git"
             ? savedProgram.codeData
             : "",
-        zip: null,
+        zip: "",
         raw:
           savedProgram && savedProgram.codeSource === "raw"
             ? savedProgram.codeData
@@ -63,6 +63,22 @@ class ProgramEditor extends Component {
     this.redirectToProgramsPage = this.redirectToProgramsPage.bind(this);
     this.onGitRepositoryUrlChange = this.onGitRepositoryUrlChange.bind(this);
     this.onRawCodeChange = this.onRawCodeChange.bind(this);
+    this.onSelectedZipFileChange = this.onSelectedZipFileChange.bind(this);
+  }
+
+  onSelectedZipFileChange({ target: { files } }) {
+    if (files.length < 1) {
+      return;
+    }
+    const {
+      editingCodeData: originalEditingCodeData,
+      programState: originalProgramState
+    } = this.state;
+    this.setState({
+      editingCodeData: { ...originalEditingCodeData, zip: files[0].name },
+      programState: { ...originalProgramState, codeData: files[0].name },
+      selectedZipFile: files[0]
+    });
   }
 
   onGitRepositoryUrlChange({ target: { value } }) {
@@ -93,14 +109,25 @@ class ProgramEditor extends Component {
 
   saveChanges() {
     const { dispatch } = this.props;
-    const { programState } = this.state;
-    const changesWithNameAndLastEdited = {
+    const { programState, selectedZipFile } = this.state;
+    const processedChanges = {
       name: programState.name,
       lastEdited: new Date().getTime(),
-      ...this.getChanges()
+      ...this.getChanges(),
+      ...(programState.codeSource === "zip" ? { codeData: "" } : {})
     };
-    Socket.send(SocketEvents.MODIFY_PROGRAM, changesWithNameAndLastEdited);
-    dispatch(modifyProgram(changesWithNameAndLastEdited));
+    if (programState.codeSource === "zip" && selectedZipFile) {
+      const reader = new FileReader();
+      reader.addEventListener("loadend", () =>
+        Socket.send(SocketEvents.UPLOAD_PROGRAM_ZIP_FILE, {
+          fileDataBase64: reader.result.replace(/^data:.*\/.*;base64,/, ""),
+          programName: programState.name
+        })
+      );
+      reader.readAsDataURL(selectedZipFile);
+    }
+    Socket.send(SocketEvents.MODIFY_PROGRAM, processedChanges);
+    dispatch(modifyProgram(processedChanges));
     this.redirectToProgramsPage();
   }
 
@@ -167,7 +194,7 @@ class ProgramEditor extends Component {
     const {
       redirectToProgramsPage,
       programState,
-      editingCodeData: { raw: rawCode, git: gitRepositoryUrl }
+      editingCodeData: { raw: rawCode, git: gitRepositoryUrl, zip: zipFileName }
     } = this.state;
 
     return !redirectToProgramsPage ? (
@@ -209,6 +236,8 @@ class ProgramEditor extends Component {
               gitRepositoryUrl={gitRepositoryUrl}
               onGitRepositoryUrlChange={this.onGitRepositoryUrlChange}
               onRawCodeChange={this.onRawCodeChange}
+              onSelectedZipFileChange={this.onSelectedZipFileChange}
+              zipFileName={zipFileName}
             />
           </div>
           <div className="mt-6">

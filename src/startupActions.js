@@ -60,5 +60,5 @@ export default function(dispatch) {
 
   Socket.connectWebSocket();
 
-  Socket.send('getPrograms')
+  Socket.send(SocketEvents.GET_PROGRAMS)
 }
