@@ -44,8 +44,11 @@ class ProgramEditor extends Component {
         git:
           savedProgram && savedProgram.codeSource === "git"
             ? savedProgram.codeData
+            : { repositoryUrl: "", checkoutBranchOrTag: "master" },
+        zip:
+          savedProgram && savedProgram.codeSource === "zip"
+            ? savedProgram.codeData
             : "",
-        zip: "",
         raw:
           savedProgram && savedProgram.codeSource === "raw"
             ? savedProgram.codeData
@@ -62,6 +65,7 @@ class ProgramEditor extends Component {
     this.isProgramChanged = this.isProgramChanged.bind(this);
     this.redirectToProgramsPage = this.redirectToProgramsPage.bind(this);
     this.onGitRepositoryUrlChange = this.onGitRepositoryUrlChange.bind(this);
+    this.onGitCheckoutBranchOrTagChange = this.onGitCheckoutBranchOrTagChange.bind(this);
     this.onRawCodeChange = this.onRawCodeChange.bind(this);
     this.onSelectedZipFileChange = this.onSelectedZipFileChange.bind(this);
   }
@@ -86,9 +90,24 @@ class ProgramEditor extends Component {
       editingCodeData: originalEditingCodeData,
       programState: originalProgramState
     } = this.state;
+    const { git: originalEditingGitData } = originalEditingCodeData;
+    const { codeData: originalProgramStateGitData } = originalProgramState;
     this.setState({
-      editingCodeData: { ...originalEditingCodeData, git: value },
-      programState: { ...originalProgramState, codeData: value }
+      editingCodeData: { ...originalEditingCodeData, git: { ...originalEditingGitData, repositoryUrl: value } },
+      programState: { ...originalProgramState, codeData: { ...originalProgramStateGitData, repositoryUrl: value} }
+    });
+  }
+
+  onGitCheckoutBranchOrTagChange({ target: { value } }) {
+    const {
+      editingCodeData: originalEditingCodeData,
+      programState: originalProgramState
+    } = this.state;
+    const { git: originalEditingGitData } = originalEditingCodeData;
+    const { codeData: originalProgramStateGitData } = originalProgramState;
+    this.setState({
+      editingCodeData: { ...originalEditingCodeData, git: { ...originalEditingGitData, checkoutBranchOrTag: value } },
+      programState: { ...originalProgramState, codeData: { ...originalProgramStateGitData, checkoutBranchOrTag: value} }
     });
   }
 
@@ -194,7 +213,7 @@ class ProgramEditor extends Component {
     const {
       redirectToProgramsPage,
       programState,
-      editingCodeData: { raw: rawCode, git: gitRepositoryUrl, zip: zipFileName }
+      editingCodeData: { raw: rawCode, git: gitRepository, zip: zipFileName }
     } = this.state;
 
     return !redirectToProgramsPage ? (
@@ -233,8 +252,9 @@ class ProgramEditor extends Component {
               programName={programName}
               runtime={programState.runtime}
               rawCode={rawCode}
-              gitRepositoryUrl={gitRepositoryUrl}
+              gitRepository={gitRepository}
               onGitRepositoryUrlChange={this.onGitRepositoryUrlChange}
+              onGitCheckoutBranchOrTagChange={this.onGitCheckoutBranchOrTagChange}
               onRawCodeChange={this.onRawCodeChange}
               onSelectedZipFileChange={this.onSelectedZipFileChange}
               zipFileName={zipFileName}

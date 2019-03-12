@@ -56,3 +56,5 @@ export const fieldsToCheckDifference = [
   "name",
   "runtime"
 ];
+
+export const existingUploadingFileName = "UPLOADED";

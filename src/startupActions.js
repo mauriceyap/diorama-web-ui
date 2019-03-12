@@ -39,17 +39,6 @@ export default function(dispatch) {
   // get these things from the server
   dispatch(setLanguage("en-gb", translations["en-gb"]));
 
-  // dispatch(
-  //   addProgram({
-  //     name: "master",
-  //     runtime: "python3",
-  //     mainHandler: "node.main",
-  //     codeSource: "raw",
-  //     codeData: "print('hello world lol')",
-  //     lastEdited: 1550249133000,
-  //     description: "you are not my master"
-  //   })
-  // );
   Socket.setOnSocketConnected(() => dispatch(socketConnected()));
   Socket.setOnSocketDisconnected(() => dispatch(socketDisconnected()));
   Socket.setOnSocketError(() => dispatch(socketDisconnected()));

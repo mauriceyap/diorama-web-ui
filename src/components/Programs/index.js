@@ -22,6 +22,7 @@ class Programs extends Component {
   constructor(props) {
     super(props);
     this.state = initialState;
+    Socket.send(SocketEvents.GET_PROGRAMS);
     this.renderProgramCards = this.renderProgramCards.bind(this);
     this.showNewProgramWizard = this.showNewProgramWizard.bind(this);
     this.onNewProgramWizardCancel = this.onNewProgramWizardCancel.bind(this);

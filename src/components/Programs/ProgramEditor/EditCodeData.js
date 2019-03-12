@@ -11,7 +11,8 @@ import "brace/theme/monokai";
 import "brace/mode/python";
 import "brace/mode/elixir";
 import "brace/mode/scala";
-import { braceEditorModes } from "../constants";
+import { braceEditorModes, existingUploadingFileName } from "../constants";
+import { gitRepositoryDataPropType } from "../../../customPropTypes";
 
 class EditCodeData extends Component {
   render() {
@@ -21,14 +22,16 @@ class EditCodeData extends Component {
       programName,
       colourScheme,
       runtime,
-      gitRepositoryUrl,
+      gitRepository,
       rawCode,
       onGitRepositoryUrlChange,
+      onGitCheckoutBranchOrTagChange,
       onRawCodeChange,
       onSelectedZipFileChange,
       zipFileName
     } = this.props;
     if (selectedSource === "git") {
+      const { repositoryUrl, checkoutBranchOrTag } = gitRepository;
       return (
         <form key={polyglot.tc("repositoryUrl")}>
           <input
@@ -36,24 +39,37 @@ class EditCodeData extends Component {
             data-role="input"
             data-prepend={`${polyglot.tc("repositoryUrl")}:`}
             onChange={onGitRepositoryUrlChange}
-            value={gitRepositoryUrl}
+            value={repositoryUrl}
+          />
+          <input
+            type="text"
+            data-role="input"
+            data-prepend={`${polyglot.tc("checkoutBranchOrTag")}:`}
+            onChange={onGitCheckoutBranchOrTagChange}
+            value={checkoutBranchOrTag}
           />
         </form>
       );
     } else if (selectedSource === "zip") {
-      // TODO: upload files
       return (
         <Fragment>
-        <form key={polyglot.tc("chooseZipFile")}>
-          <input
-            type="file"
-            data-role="file"
-            data-button-title={polyglot.tc("chooseZipFile")}
-            accept={".zip,.ZIP"}
-            onChange={onSelectedZipFileChange}
-          />
-        </form>
-          {zipFileName && <p>{polyglot.tc("selectedFile")}: {zipFileName}</p>}
+          <form key={polyglot.tc("chooseZipFile")}>
+            <input
+              type="file"
+              data-role="file"
+              data-button-title={polyglot.tc("chooseZipFile")}
+              accept={".zip,.ZIP"}
+              onChange={onSelectedZipFileChange}
+            />
+          </form>
+          {zipFileName && zipFileName !== existingUploadingFileName && (
+            <p>
+              {polyglot.tc("selectedFile")}: {zipFileName}
+            </p>
+          )}
+          {zipFileName === existingUploadingFileName && (
+            <p>{polyglot.tc("existingUploadedFile")}</p>
+          )}
         </Fragment>
       );
     }
@@ -78,9 +94,10 @@ EditCodeData.propTypes = {
   programName: PropTypes.string.isRequired,
   colourScheme: PropTypes.string.isRequired,
   runtime: PropTypes.string.isRequired,
-  gitRepositoryUrl: PropTypes.string.isRequired,
+  gitRepository: gitRepositoryDataPropType.isRequired,
   rawCode: PropTypes.string.isRequired,
   onGitRepositoryUrlChange: PropTypes.func.isRequired,
+  onGitCheckoutBranchOrTagChange: PropTypes.func.isRequired,
   onSelectedZipFileChange: PropTypes.func.isRequired,
   onRawCodeChange: PropTypes.func.isRequired,
   zipFileName: PropTypes.string.isRequired

@@ -19,6 +19,11 @@ export const programPropType = PropTypes.shape({
   lastEdited: PropTypes.number
 });
 
+export const gitRepositoryDataPropType = PropTypes.shape({
+  repositoryUrl: PropTypes.string,
+  checkoutBranchOrTag: PropTypes.string
+});
+
 export const pPropType = PropTypes.shape({
   t: PropTypes.func.isRequired,
   tc: PropTypes.func.isRequired,

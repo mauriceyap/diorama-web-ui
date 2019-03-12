@@ -21,12 +21,14 @@ export default {
   yesIAmSure: "Ja, ich bin mir sicher!",
   noIDoNot: "Nein ich nicht",
   giveYourProgramAName: "Bitte gibst du deinem Programm einen Namen!",
-  useADifferentName: "Du hast bereits ein Programm mit dem Namen %{name}. Bitte nennst du es etwas anderes!",
+  useADifferentName:
+    "Du hast bereits ein Programm mit dem Namen %{name}. Bitte nennst du es etwas anderes!",
   chooseARuntimeError: "Bitte wählst du eine Laufzeit!",
-  runtimeInvalid: "Diese Laufzeit ist nicht verfügbar, wählst du also eine andere!",
+  runtimeInvalid:
+    "Diese Laufzeit ist nicht verfügbar, wählst du also eine andere!",
 
-  cancel: 'stornieren',
-  save: 'speichern',
+  cancel: "stornieren",
+  save: "speichern",
   chooseARuntime: "wählst du eine Laufzeit",
   giveItAName: "gib es einen Namen",
   youCanAlwaysChangeItLater: "Du kannst es später ändern!",
@@ -37,5 +39,8 @@ export default {
   mainHandler: "Main Handler",
   repositoryUrl: "Repository-URL",
   chooseZipFile: "wählen Zip-Datei",
-  selectedFile: "ausgewählte Datei"
+  selectedFile: "ausgewählte Datei",
+  existingUploadedFile:
+    "Du hast bereits eine Datei hochgeladen, kannst diese jedoch durch Hochladen einer anderen Datei überschreiben.",
+  checkoutBranchOrTag: "Zweig/Tag-Name oder Commit-SHA"
 };
