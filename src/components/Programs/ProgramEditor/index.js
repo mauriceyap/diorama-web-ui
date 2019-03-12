@@ -16,10 +16,12 @@ import { modifyProgram } from "../../../reduxStore/programs/reducer";
 import Socket from "../../../Socket";
 import SocketEvents from "../../../SocketEvents";
 import EditCodeData from "./EditCodeData";
+import { uploadZipFile } from "../../../HTTPServer";
 
 const initialState = {
   program: null,
-  redirectToProgramsPage: false
+  redirectToProgramsPage: false,
+  isLoading: false
 };
 
 class ProgramEditor extends Component {
@@ -65,7 +67,9 @@ class ProgramEditor extends Component {
     this.isProgramChanged = this.isProgramChanged.bind(this);
     this.redirectToProgramsPage = this.redirectToProgramsPage.bind(this);
     this.onGitRepositoryUrlChange = this.onGitRepositoryUrlChange.bind(this);
-    this.onGitCheckoutBranchOrTagChange = this.onGitCheckoutBranchOrTagChange.bind(this);
+    this.onGitCheckoutBranchOrTagChange = this.onGitCheckoutBranchOrTagChange.bind(
+      this
+    );
     this.onRawCodeChange = this.onRawCodeChange.bind(this);
     this.onSelectedZipFileChange = this.onSelectedZipFileChange.bind(this);
   }
@@ -93,8 +97,14 @@ class ProgramEditor extends Component {
     const { git: originalEditingGitData } = originalEditingCodeData;
     const { codeData: originalProgramStateGitData } = originalProgramState;
     this.setState({
-      editingCodeData: { ...originalEditingCodeData, git: { ...originalEditingGitData, repositoryUrl: value } },
-      programState: { ...originalProgramState, codeData: { ...originalProgramStateGitData, repositoryUrl: value} }
+      editingCodeData: {
+        ...originalEditingCodeData,
+        git: { ...originalEditingGitData, repositoryUrl: value }
+      },
+      programState: {
+        ...originalProgramState,
+        codeData: { ...originalProgramStateGitData, repositoryUrl: value }
+      }
     });
   }
 
@@ -106,8 +116,14 @@ class ProgramEditor extends Component {
     const { git: originalEditingGitData } = originalEditingCodeData;
     const { codeData: originalProgramStateGitData } = originalProgramState;
     this.setState({
-      editingCodeData: { ...originalEditingCodeData, git: { ...originalEditingGitData, checkoutBranchOrTag: value } },
-      programState: { ...originalProgramState, codeData: { ...originalProgramStateGitData, checkoutBranchOrTag: value} }
+      editingCodeData: {
+        ...originalEditingCodeData,
+        git: { ...originalEditingGitData, checkoutBranchOrTag: value }
+      },
+      programState: {
+        ...originalProgramState,
+        codeData: { ...originalProgramStateGitData, checkoutBranchOrTag: value }
+      }
     });
   }
 
@@ -135,19 +151,30 @@ class ProgramEditor extends Component {
       ...this.getChanges(),
       ...(programState.codeSource === "zip" ? { codeData: "" } : {})
     };
+
+    const makeChanges = () => {
+      Socket.send(SocketEvents.MODIFY_PROGRAM, processedChanges);
+      dispatch(modifyProgram(processedChanges));
+      this.redirectToProgramsPage();
+    };
+
     if (programState.codeSource === "zip" && selectedZipFile) {
-      const reader = new FileReader();
-      reader.addEventListener("loadend", () =>
-        Socket.send(SocketEvents.UPLOAD_PROGRAM_ZIP_FILE, {
-          fileDataBase64: reader.result.replace(/^data:.*\/.*;base64,/, ""),
-          programName: programState.name
-        })
+      this.setState({ isLoading: true });
+      uploadZipFile(
+        selectedZipFile,
+        programState.name,
+        () => {
+          this.setState({ isLoading: false });
+          makeChanges();
+        },
+        error => {
+          console.error(error);
+          this.setState({ redirectToProgramsPage: true });
+        }
       );
-      reader.readAsDataURL(selectedZipFile);
+    } else {
+      makeChanges();
     }
-    Socket.send(SocketEvents.MODIFY_PROGRAM, processedChanges);
-    dispatch(modifyProgram(processedChanges));
-    this.redirectToProgramsPage();
   }
 
   getChanges() {
@@ -213,10 +240,19 @@ class ProgramEditor extends Component {
     const {
       redirectToProgramsPage,
       programState,
-      editingCodeData: { raw: rawCode, git: gitRepository, zip: zipFileName }
+      editingCodeData: { raw: rawCode, git: gitRepository, zip: zipFileName },
+      isLoading
     } = this.state;
 
-    return !redirectToProgramsPage ? (
+    if (redirectToProgramsPage) {
+      return <Redirect to="/programs" />;
+    }
+
+    if (isLoading) {
+      return <div data-role="activity" data-type="ring" />;
+    }
+
+    return (
       <Fragment>
         <span className={"display1"}>
           <Link to={"/programs"} className={"display1"}>
@@ -254,7 +290,9 @@ class ProgramEditor extends Component {
               rawCode={rawCode}
               gitRepository={gitRepository}
               onGitRepositoryUrlChange={this.onGitRepositoryUrlChange}
-              onGitCheckoutBranchOrTagChange={this.onGitCheckoutBranchOrTagChange}
+              onGitCheckoutBranchOrTagChange={
+                this.onGitCheckoutBranchOrTagChange
+              }
               onRawCodeChange={this.onRawCodeChange}
               onSelectedZipFileChange={this.onSelectedZipFileChange}
               zipFileName={zipFileName}
@@ -282,8 +320,6 @@ class ProgramEditor extends Component {
           </button>
         </div>
       </Fragment>
-    ) : (
-      <Redirect to="/programs" />
     );
   }
 }
