@@ -9,19 +9,19 @@ export const metroIconSize = PropTypes.oneOf([
   "5x"
 ]);
 
+export const gitRepositoryDataPropType = PropTypes.shape({
+  repositoryUrl: PropTypes.string,
+  checkoutBranchOrTag: PropTypes.string
+});
+
 export const programPropType = PropTypes.shape({
   name: PropTypes.string,
   runtime: PropTypes.string,
   description: PropTypes.string,
   mainMethod: PropTypes.string,
   codeSource: PropTypes.string,
-  codeData: PropTypes.string,
+  codeData: PropTypes.oneOfType([PropTypes.string, gitRepositoryDataPropType]),
   lastEdited: PropTypes.number
-});
-
-export const gitRepositoryDataPropType = PropTypes.shape({
-  repositoryUrl: PropTypes.string,
-  checkoutBranchOrTag: PropTypes.string
 });
 
 export const pPropType = PropTypes.shape({
