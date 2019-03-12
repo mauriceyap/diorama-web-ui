@@ -2,7 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { INITIAL_NETWORK_TOPOLOGY_LANGUAGE } from "../../constants";
 
 const initialState = {
-  rawNetworkTopology: [],
+  rawNetworkTopology: "",
   compiledNetworkTopology: [],
   language: INITIAL_NETWORK_TOPOLOGY_LANGUAGE
 };

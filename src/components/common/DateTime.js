@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import moment from "moment/min/moment-with-locales";
+import moment from "moment";
+import "moment/min/locales";
 
 import { getLocale } from "redux-polyglot";
 

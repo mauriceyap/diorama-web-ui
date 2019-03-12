@@ -80,6 +80,7 @@ class EditCodeData extends Component {
         mode={braceEditorModes[runtime]}
         value={rawCode}
         onChange={onRawCodeChange}
+        width={"100%"}
         editorProps={{
           $blockScrolling: Infinity
         }}

@@ -12,6 +12,7 @@ import PreferencesDialog from "./PreferencesDialog";
 import Programs from "./Programs";
 import ProjectHome from "./ProjectHome";
 import ProgramEditor from "./Programs/ProgramEditor";
+import NetworkTopology from "./NetworkTopology";
 import startupActions from "../startupActions";
 
 class Diorama extends Component {
@@ -43,6 +44,11 @@ class Diorama extends Component {
                 <Route
                   path={"/programs/:programName"}
                   component={ProgramEditor}
+                />
+                <Route
+                  exact
+                  path={"/network-topology"}
+                  component={NetworkTopology}
                 />
               </div>
             </div>

@@ -39,5 +39,8 @@ export default {
   chooseZipFile: "choose zip file",
   selectedFile: "selected file",
   existingUploadedFile: "You've already uploaded a file, but you can overwrite it by uploading another one.",
-  checkoutBranchOrTag: "Branch/tag name or commit SHA"
+  checkoutBranchOrTag: "Branch/tag name or commit SHA",
+
+  networkTopology: "network topology",
+  revert: "revert"
 };

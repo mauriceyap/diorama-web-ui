@@ -9,7 +9,10 @@ import { selectCustomisation } from "../../reduxStore/selectors";
 import { getP } from "redux-polyglot";
 import { pPropType } from "../../customPropTypes";
 
-const sideNavItems = [{ icon: "apps", polyglotLabel: "programs", route: "/programs" }];
+const sideNavItems = [
+  { icon: "apps", polyglotLabel: "programs", route: "/programs" },
+  { icon: "tree", polyglotLabel: "networkTopology", route: "/network-topology"}
+];
 
 class SideNav extends Component {
   constructor(props) {
@@ -38,11 +41,7 @@ class SideNav extends Component {
       `bg-${backgroundColour}`,
       `fg-${foregroundColour}`
     );
-    return (
-      <ul className={className}>
-        {this.renderItems()}
-      </ul>
-    );
+    return <ul className={className}>{this.renderItems()}</ul>;
   }
 }
 

@@ -42,5 +42,8 @@ export default {
   selectedFile: "ausgewählte Datei",
   existingUploadedFile:
     "Du hast bereits eine Datei hochgeladen, kannst diese jedoch durch Hochladen einer anderen Datei überschreiben.",
-  checkoutBranchOrTag: "Zweig/Tag-Name oder Commit-SHA"
+  checkoutBranchOrTag: "Zweig/Tag-Name oder Commit-SHA",
+
+  networkTopology: "Netzwerktopologie",
+  revert: "zurückkehren"
 };
