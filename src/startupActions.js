@@ -51,4 +51,5 @@ export default function(dispatch) {
 
   Socket.send(SocketEvents.GET_PROGRAMS);
   Socket.send(SocketEvents.GET_RAW_NETWORK_TOPOLOGY);
+  Socket.send(SocketEvents.GET_CUSTOM_CONFIG);
 }

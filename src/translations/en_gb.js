@@ -63,5 +63,12 @@ export default {
   NT_ERROR_MAP_TYPE:
     "This needs to be a map/dictionary, but you've given %{type}.",
   NT_ERROR_BASE_KEYS:
-    "You have an invalid key in your topology definition. The key, %{invalidKeys}, is not allowed. |||| You have invalid keys in your topology definition. The keys, %{invalidKeys}, are not allowed."
+    "You have an invalid key in your topology definition. The key, %{invalidKeys}, is not allowed. |||| You have invalid keys in your topology definition. The keys, %{invalidKeys}, are not allowed.",
+
+  configuration: "configuration",
+  customConfig: "custom configuration",
+  selfConnectedNodes: "self-connected nodes",
+  baseIpAddress: "base IP address",
+  networkSubnet: "network subnet",
+  basePort: "base port"
 };
