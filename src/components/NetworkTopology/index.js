@@ -11,7 +11,10 @@ import {
   selectCustomisation,
   selectNetworkTopology
 } from "../../reduxStore/selectors";
-import { onChangeNetworkTopologyLanguage } from "../../styleConstants";
+import {
+  onChangeNetworkTopologyLanguage,
+  toastTimeout
+} from "../../styleConstants";
 import {
   setUnpackedNetworkTopology,
   setNetworkTopologyLanguage,
@@ -28,6 +31,8 @@ import "brace/mode/json";
 import MetroIcon from "../MetroIcon";
 import { saveNetworkTopology } from "../../HTTPServer";
 import { noop } from "../../utils";
+import Metro from "metro4";
+import { getErrorDisplayMessage } from "./errors";
 
 class NetworkTopology extends Component {
   constructor(props) {
@@ -66,7 +71,7 @@ class NetworkTopology extends Component {
 
   onSaveChangesResponse(response) {
     const { language, rawNetworkTopology } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, p } = this.props;
     response
       .json()
       .then(data => {
@@ -78,7 +83,15 @@ class NetworkTopology extends Component {
           dispatch(setUnpackedNetworkTopology(unpackedTopology));
         } else {
           const { errorMessage, errorData } = data;
-          // TODO: use these and display errors
+          Metro.toast.create(
+            getErrorDisplayMessage(errorMessage, errorData, p),
+            noop,
+            toastTimeout,
+            "alert",
+            {
+              showTop: true
+            }
+          );
         }
       })
       .catch(e => console.error(e));

@@ -1,4 +1,15 @@
 export default {
+  normalDelimiter: ", ",
+  finalDelimiter: " and ",
+
+  // Python types
+  int: "einen Integer-Wert",
+  str: "ein String",
+  float: "floating point number",
+  complex: "eine komplexe Zahl",
+  list: "eine Liste",
+  tuple: "ein Tupel",
+
   preferences: "Präferenzen",
   colourScheme: "Farbschema",
   dateAndTimeFormat: "Datums- und Zeitformat",
@@ -45,5 +56,12 @@ export default {
   checkoutBranchOrTag: "Zweig/Tag-Name oder Commit-SHA",
 
   networkTopology: "Netzwerktopologie",
-  revert: "zurückkehren"
+  revert: "zurückkehren",
+  onlyAllowedKeys: "Die einzigen erlaubten Schlüssel sind %{allowedKeys}.",
+  NT_ERROR_PARSING:
+    "Es gibt irgendwo einen Syntaxfehler in deinem Code. Dies ist die Fehlermeldung: %{parserErrorMessage}",
+  NT_ERROR_MAP_TYPE:
+    "Dies muss ein assoziative Datenfeld (englisch map) sein, aber du hast %{type} gegeben.",
+  NT_ERROR_BASE_KEYS:
+    "Du hast einen ungültigen Schlüssel in deiner Topologiedefinition. Der Schlüssel %{invalidKeys} ist nicht erlaubt. |||| Du hast ungültige Schlüssel in deiner Topologiedefinition.  Die Schlüssel, %{invalidKeys} sind nicht erlaubt."
 };
