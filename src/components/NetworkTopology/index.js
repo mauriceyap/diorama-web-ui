@@ -81,6 +81,15 @@ class NetworkTopology extends Component {
           dispatch(setNetworkTopologyLanguage(language));
           dispatch(setRawNetworkTopology(rawNetworkTopology));
           dispatch(setUnpackedNetworkTopology(unpackedTopology));
+          Metro.toast.create(
+            p.t("topologySaved"),
+            noop,
+            toastTimeout,
+            "success",
+            {
+              showTop: true
+            }
+          );
         } else {
           const { errorMessage, errorData } = data;
           Metro.toast.create(
@@ -118,6 +127,7 @@ class NetworkTopology extends Component {
   render() {
     const { p, colourScheme } = this.props;
     const { rawNetworkTopology, language } = this.state;
+    // TODO: create a visualiser for the network
     return (
       <Fragment>
         <span className={"display1"}>{p.tc("networkTopology")}</span>

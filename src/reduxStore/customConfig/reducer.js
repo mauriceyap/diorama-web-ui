@@ -2,15 +2,15 @@ import { createAction, handleActions } from "redux-actions";
 
 const initialState = {};
 
-function SET_ADVANCED_SETTINGS(state, { payload }) {
+function SET_CUSTOM_CONFIG(state, { payload }) {
   return { ...state, ...payload };
 }
 
-export const setAdvancedSettings = createAction("SET_ADVANCED_SETTINGS");
+export const setCustomConfig = createAction("SET_CUSTOM_CONFIG");
 
 export default handleActions(
   {
-    SET_ADVANCED_SETTINGS
+    SET_CUSTOM_CONFIG
   },
   initialState
 );

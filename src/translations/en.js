@@ -56,6 +56,7 @@ export default {
 
   networkTopology: "network topology",
   revert: "revert",
+  topologySaved: "Topology saved!",
   onlyAllowedKeys: "The only allowed keys are %{allowedKeys}.",
   NT_ERROR_PARSING:
     "There's a syntax error in your code somewhere. This is the error message: %{parserErrorMessage}",

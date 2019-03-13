@@ -11,5 +11,5 @@ export default {
   RAW_NETWORK_TOPOLOGY: "rawNetworkTopology",
   NETWORK_TOPOLOGY_LANGUAGE: "networkTopologyLanguage",
   UNPACKED_NETWORK_TOPOLOGY: "unpackedNetworkTopology",
-  ADVANCED_SETTINGS: "advancedSettings"
+  CUSTOM_CONFIG: "customConfig"
 };

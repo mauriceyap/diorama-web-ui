@@ -11,7 +11,7 @@ import {
   setNetworkTopologyLanguage,
   setRawNetworkTopology
 } from "./reduxStore/networkTopology/reducer";
-import { setAdvancedSettings } from "./reduxStore/advancedSettings/reducer";
+import { setCustomConfig } from "./reduxStore/customConfig/reducer";
 import SocketEvents from "./SocketEvents";
 
 export default function(dispatch) {
@@ -32,8 +32,8 @@ export default function(dispatch) {
       dispatch(setUnpackedNetworkTopology(topology));
     },
 
-    [SocketEvents.ADVANCED_SETTINGS](settings) {
-      dispatch(setAdvancedSettings(settings));
+    [SocketEvents.CUSTOM_CONFIG](settings) {
+      dispatch(setCustomConfig(settings));
     }
   };
   // get these things from the server
