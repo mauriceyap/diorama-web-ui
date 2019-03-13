@@ -7,7 +7,7 @@ import {
   socketDisconnected
 } from "./reduxStore/socket/reducer";
 import {
-  setCompiledNetworkTopology,
+  setUnpackedNetworkTopology,
   setNetworkTopologyLanguage,
   setRawNetworkTopology
 } from "./reduxStore/networkTopology/reducer";
@@ -28,8 +28,8 @@ export default function(dispatch) {
       dispatch(setNetworkTopologyLanguage(language));
     },
 
-    [SocketEvents.COMPILED_NETWORK_TOPOLOGY](topology) {
-      dispatch(setCompiledNetworkTopology(topology));
+    [SocketEvents.UNPACKED_NETWORK_TOPOLOGY](topology) {
+      dispatch(setUnpackedNetworkTopology(topology));
     },
 
     [SocketEvents.ADVANCED_SETTINGS](settings) {
@@ -49,5 +49,6 @@ export default function(dispatch) {
 
   Socket.connectWebSocket();
 
-  Socket.send(SocketEvents.GET_PROGRAMS)
+  Socket.send(SocketEvents.GET_PROGRAMS);
+  Socket.send(SocketEvents.GET_RAW_NETWORK_TOPOLOGY);
 }

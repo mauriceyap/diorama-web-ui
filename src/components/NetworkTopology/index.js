@@ -13,9 +13,12 @@ import {
 } from "../../reduxStore/selectors";
 import { onChangeNetworkTopologyLanguage } from "../../styleConstants";
 import {
+  setUnpackedNetworkTopology,
   setNetworkTopologyLanguage,
   setRawNetworkTopology
 } from "../../reduxStore/networkTopology/reducer";
+import Socket from "../../Socket";
+import SocketEvents from "../../SocketEvents";
 
 import "brace/theme/tomorrow";
 import "brace/theme/monokai";
@@ -24,6 +27,7 @@ import "brace/mode/yaml";
 import "brace/mode/json";
 import MetroIcon from "../MetroIcon";
 import { saveNetworkTopology } from "../../HTTPServer";
+import { noop } from "../../utils";
 
 class NetworkTopology extends Component {
   constructor(props) {
@@ -33,12 +37,14 @@ class NetworkTopology extends Component {
       language: savedLanguage,
       rawNetworkTopology: savedRawNetworkTopology
     };
+    Socket.send(SocketEvents.GET_RAW_NETWORK_TOPOLOGY);
     window[onChangeNetworkTopologyLanguage] = this.setLanguage.bind(this);
     this.setRawNetworkTopology = this.setRawNetworkTopology.bind(this);
     this.setLanguage = this.setLanguage.bind(this);
     this.isNetworkTopologyChanged = this.isNetworkTopologyChanged.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
     this.revertChanges = this.revertChanges.bind(this);
+    this.onSaveChangesResponse = this.onSaveChangesResponse.bind(this);
   }
 
   isNetworkTopologyChanged() {
@@ -58,13 +64,34 @@ class NetworkTopology extends Component {
     this.setState({ rawNetworkTopology });
   }
 
+  onSaveChangesResponse(response) {
+    const { language, rawNetworkTopology } = this.state;
+    const { dispatch } = this.props;
+    response
+      .json()
+      .then(data => {
+        const { isValidAndSaved } = data;
+        if (isValidAndSaved) {
+          const { unpackedTopology } = data;
+          dispatch(setNetworkTopologyLanguage(language));
+          dispatch(setRawNetworkTopology(rawNetworkTopology));
+          dispatch(setUnpackedNetworkTopology(unpackedTopology));
+        } else {
+          const { errorMessage, errorData } = data;
+          // TODO: use these and display errors
+        }
+      })
+      .catch(e => console.error(e));
+  }
+
   saveChanges() {
     const { language, rawNetworkTopology } = this.state;
-    saveNetworkTopology(rawNetworkTopology, language);
-    // TODO: perform validation
-    const { dispatch } = this.props;
-    dispatch(setNetworkTopologyLanguage(language));
-    dispatch(setRawNetworkTopology(rawNetworkTopology));
+    saveNetworkTopology(
+      rawNetworkTopology,
+      language,
+      this.onSaveChangesResponse,
+      noop
+    );
   }
 
   revertChanges() {
@@ -124,6 +151,26 @@ class NetworkTopology extends Component {
         </div>
       </Fragment>
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    const { language, rawNetworkTopology } = this.state;
+    const { savedLanguage, savedRawNetworkTopology } = this.props;
+    const {
+      savedLanguage: prevSavedLanguage,
+      savedRawNetworkTopology: prevSavedRawNetworkTopology
+    } = prevProps;
+
+    if (language === prevSavedLanguage && savedLanguage !== prevSavedLanguage) {
+      this.setState({ language: savedLanguage });
+    }
+
+    if (
+      rawNetworkTopology === prevSavedRawNetworkTopology &&
+      savedRawNetworkTopology !== prevSavedRawNetworkTopology
+    ) {
+      this.setState({ rawNetworkTopology: savedRawNetworkTopology });
+    }
   }
 }
 

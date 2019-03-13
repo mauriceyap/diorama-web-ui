@@ -6,8 +6,8 @@ const SAVE_NETWORK_TOPOLOGY_ENDPOINT_PATH = "/saveNetworkTopology";
 
 function httpServerFetch(
   endpointPath = "/",
-  onSuccessResponse = noop(),
-  onErrorResponse = noop(),
+  onSuccessResponse = noop,
+  onErrorResponse = noop,
   method = "GET",
   headers = {},
   body = null,
@@ -38,7 +38,7 @@ export function saveNetworkTopology(
       "Content-Type": "application/json"
     },
     JSON.stringify({ rawNetworkTopology, language }),
-    true
+    false
   );
 }
 
