@@ -12,7 +12,8 @@ import { pPropType } from "../../customPropTypes";
 const sideNavItems = [
   { icon: "apps", polyglotLabel: "programs", route: "/programs" },
   { icon: "tree", polyglotLabel: "networkTopology", route: "/network-topology"},
-  { icon: "wrench", polyglotLabel: "configuration", route: "/custom-config"}
+  { icon: "wrench", polyglotLabel: "configuration", route: "/custom-config"},
+  { icon: "space-shuttle", polyglotLabel: "simulation", route: "/simulation"}
 ];
 
 class SideNav extends Component {

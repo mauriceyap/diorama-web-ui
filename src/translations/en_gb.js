@@ -70,5 +70,7 @@ export default {
   selfConnectedNodes: "self-connected nodes",
   baseIpAddress: "base IP address",
   networkSubnet: "network subnet",
-  basePort: "base port"
+  basePort: "base port",
+
+  simulation: "simulation"
 };

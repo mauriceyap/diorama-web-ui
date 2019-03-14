@@ -14,6 +14,7 @@ import ProjectHome from "./ProjectHome";
 import ProgramEditor from "./Programs/ProgramEditor";
 import NetworkTopology from "./NetworkTopology";
 import CustomConfig from "./CustomConfig";
+import Simulation from "./Simulation";
 import startupActions from "../startupActions";
 
 class Diorama extends Component {
@@ -52,6 +53,7 @@ class Diorama extends Component {
                   component={NetworkTopology}
                 />
                 <Route exact path={"/custom-config"} component={CustomConfig} />
+                <Route exact path={"/simulation"} component={Simulation} />
               </div>
             </div>
           </div>
