@@ -144,8 +144,16 @@ class CustomConfig extends Component {
     );
   }
 
-  componentDidUpdate() {
-    // TODO: when stuff updated through socket
+  componentDidUpdate(prevProps) {
+    const { customConfig: prevCustomConfig } = prevProps;
+    const { customConfig } = this.props;
+    if (
+      Object.keys(customConfig).some(
+        key => customConfig[key] !== prevCustomConfig[key]
+      )
+    ) {
+      this.revertChanges();
+    }
   }
 }
 
