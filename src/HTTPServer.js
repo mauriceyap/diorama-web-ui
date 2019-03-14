@@ -57,6 +57,6 @@ export function uploadZipFile(
       "Content-Type": "application/zip"
     },
     file,
-    true
+    false
   );
 }
