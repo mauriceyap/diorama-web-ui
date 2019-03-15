@@ -3,7 +3,7 @@ import { createAction, handleActions } from "redux-actions";
 const initialState = [];
 
 function ADD_PROGRAM(state, { payload }) {
-  return [...(state.filter(({ name }) => name !== payload.name)), payload];
+  return [...state.filter(({ name }) => name !== payload.name), payload];
 }
 
 function MODIFY_PROGRAM(state, { payload }) {

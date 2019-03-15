@@ -1,17 +1,21 @@
 export default {
   // Send
   ADD_PROGRAM: "addProgram",
+  DELETE_PROGRAM: "deleteProgram",
   MODIFY_PROGRAM: "modifyProgram",
   GET_PROGRAMS: "getPrograms",
   UPLOAD_PROGRAM_ZIP_FILE: "uploadProgramZipFile",
   GET_RAW_NETWORK_TOPOLOGY: "getRawNetworkTopology",
   GET_CUSTOM_CONFIG: "getCustomConfig",
   SET_CUSTOM_CONFIG: "setCustomConfig",
+  SET_UP_SIMULATION: "setUpSimulation",
+  STOP_AND_RESET_SIMULATION: "stopAndResetSimulation",
 
-// Receive
+  // Receive
   PROGRAMS: "programs",
   RAW_NETWORK_TOPOLOGY: "rawNetworkTopology",
   NETWORK_TOPOLOGY_LANGUAGE: "networkTopologyLanguage",
   UNPACKED_NETWORK_TOPOLOGY: "unpackedNetworkTopology",
-  CUSTOM_CONFIG: "customConfig"
+  CUSTOM_CONFIG: "customConfig",
+  SIMULATION_STATE: "simulationState"
 };

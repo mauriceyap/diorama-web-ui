@@ -1,12 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 
 export default class EditMainHandler extends Component {
   render() {
-    const { polyglot, onChange, defaultValue } = this.props;
+    const { polyglot, onChange, defaultValue, isRaw } = this.props;
     return (
       <Fragment>
-        <h6>{polyglot.tc("mainHandler")}</h6>
+        <h6>
+          {isRaw ? polyglot.tc("mainFunction") : polyglot.tc("mainHandler")}
+        </h6>
         <p>something</p>
         <input
           type="text"
@@ -23,5 +25,6 @@ export default class EditMainHandler extends Component {
 EditMainHandler.propTypes = {
   polyglot: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  defaultValue: PropTypes.string.isRequired
+  defaultValue: PropTypes.string.isRequired,
+  isRaw: PropTypes.bool.isRequired
 };

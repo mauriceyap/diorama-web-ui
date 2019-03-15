@@ -32,6 +32,7 @@ export default {
   yesIAmSure: "Ja, ich bin mir sicher!",
   noIDoNot: "Nein ich nicht",
   giveYourProgramAName: "Bitte gibst du deinem Programm einen Namen!",
+  nameMustBeLowerCase: "Der Name muss mit einem Kleinbuchstaben beginnen.",
   useADifferentName:
     "Du hast bereits ein Programm mit dem Namen %{name}. Bitte nennst du es etwas anderes!",
   chooseARuntimeError: "Bitte wählst du eine Laufzeit!",
@@ -48,6 +49,7 @@ export default {
   whatDoesThisNodeDo: "Was macht dieser Knoten?",
   codeSource: "Source-Code",
   mainHandler: "Main Handler",
+  mainFunction: "main-Funktion",
   repositoryUrl: "Repository-URL",
   chooseZipFile: "wählen Zip-Datei",
   selectedFile: "ausgewählte Datei",

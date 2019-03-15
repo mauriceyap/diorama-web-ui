@@ -20,8 +20,12 @@ function SET_NETWORK_TOPOLOGY_LANGUAGE(state, { payload }) {
 }
 
 export const setRawNetworkTopology = createAction("SET_RAW_NETWORK_TOPOLOGY");
-export const setUnpackedNetworkTopology = createAction("SET_UNPACKED_NETWORK_TOPOLOGY");
-export const setNetworkTopologyLanguage = createAction("SET_NETWORK_TOPOLOGY_LANGUAGE");
+export const setUnpackedNetworkTopology = createAction(
+  "SET_UNPACKED_NETWORK_TOPOLOGY"
+);
+export const setNetworkTopologyLanguage = createAction(
+  "SET_NETWORK_TOPOLOGY_LANGUAGE"
+);
 
 export default handleActions(
   {

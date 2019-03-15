@@ -34,6 +34,7 @@ export default {
   giveYourProgramAName: "Please give your program a name!",
   useADifferentName:
     "You already have a program called %{name}. Please call it something different!",
+  nameMustBeLowerCase: "The name must start with a lower case letter.",
   chooseARuntimeError: "Please choose a runtime!",
   runtimeInvalid: "That runtime isn't available, so please choose another one!",
 
@@ -47,6 +48,7 @@ export default {
   whatDoesThisNodeDo: "What does this node do?",
   codeSource: "code source",
   mainHandler: "main handler",
+  mainFunction: "main function",
   repositoryUrl: "repository URL",
   chooseZipFile: "choose zip file",
   selectedFile: "selected file",

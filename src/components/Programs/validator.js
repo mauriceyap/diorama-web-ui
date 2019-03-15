@@ -24,6 +24,13 @@ export default function(
       messageArgs: { name: program.name }
     },
     {
+      field: "name",
+      rule({ name }) {
+        return /^[a-z]/.test(name);
+      },
+      errorMessage: "nameMustBeLowerCase"
+    },
+    {
       field: "runtime",
       rule({ runtime }) {
         return !isStringEmpty(runtime);

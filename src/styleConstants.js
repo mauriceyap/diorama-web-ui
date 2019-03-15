@@ -7,7 +7,8 @@ export const onClickNewProgramSubmit = "onClickNewProgramSubmit";
 
 export const onChangeProgramRuntime = "onChangeProgramRuntime";
 
-export const onChangeNetworkTopologyLanguage = "onChangeNetworkTopologyLanguage";
+export const onChangeNetworkTopologyLanguage =
+  "onChangeNetworkTopologyLanguage";
 
 export const toastTimeout = 4000;
 export const toastSeparationDistance = 50;

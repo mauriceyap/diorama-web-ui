@@ -35,9 +35,9 @@ class RightIconsMenu extends Component {
         <li>
           <a>
             {isSocketConnected ? (
-              <MetroIcon icon={"network-cell"} colour={'green'} />
+              <MetroIcon icon={"network-cell"} colour={"green"} />
             ) : (
-              <MetroIcon icon={"cell-off"} colour={'red'} />
+              <MetroIcon icon={"cell-off"} colour={"red"} />
             )}
           </a>
         </li>

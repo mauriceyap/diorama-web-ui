@@ -8,7 +8,12 @@ import MetroIcon from "../MetroIcon";
 import NewProgramWizard from "./NewProgramWizard";
 import { addProgram } from "../../reduxStore/programs/reducer";
 import { getP } from "redux-polyglot";
-import { defaultCodeData, defaultCodeSource, defaultDescription, defaultMainHandler } from "./constants";
+import {
+  defaultCodeData,
+  defaultCodeSource,
+  defaultDescription,
+  defaultMainHandler
+} from "./constants";
 import { Redirect } from "react-router-dom";
 import Socket from "../../Socket";
 import SocketEvents from "../../SocketEvents";
@@ -52,9 +57,7 @@ class Programs extends Component {
       description: defaultDescription,
       mainHandler: defaultMainHandler
     };
-    dispatch(
-      addProgram(newProgram)
-    );
+    dispatch(addProgram(newProgram));
     Socket.send(SocketEvents.ADD_PROGRAM, newProgram);
     this.setState({
       isNewProgramWizardVisible: false,

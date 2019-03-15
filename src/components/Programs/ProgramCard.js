@@ -14,6 +14,8 @@ import { getP } from "redux-polyglot";
 import { Redirect } from "react-router-dom";
 import { pointerCursorOnHoverStyle } from "../../utils";
 import DateTime from "../common/DateTime";
+import Socket from "../../Socket";
+import SocketEvents from "../../SocketEvents";
 
 const initialState = {
   redirectToProgramPage: false
@@ -44,6 +46,7 @@ class ProgramCard extends Component {
           caption: p.t("yesIAmSure"),
           cls: "js-dialog-close alert",
           onclick() {
+            Socket.send(SocketEvents.DELETE_PROGRAM, name);
             dispatch(deleteProgram(name));
           }
         },

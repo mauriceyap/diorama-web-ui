@@ -14,5 +14,5 @@ export default [
   {
     locale: "zh-cn",
     label: "中文 (中国)"
-  },
+  }
 ];

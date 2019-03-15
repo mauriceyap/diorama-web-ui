@@ -219,7 +219,10 @@ class ProgramEditor extends Component {
   setMainHandler({ target: { value } }) {
     const { programState: existingProgramState } = this.state;
     this.setState({
-      programState: { ...existingProgramState, mainHandler: value }
+      programState: {
+        ...existingProgramState,
+        mainHandler: value
+      }
     });
   }
 
@@ -302,6 +305,7 @@ class ProgramEditor extends Component {
             <EditMainHandler
               polyglot={p}
               onChange={this.setMainHandler}
+              isRaw={programState.codeSource}
               defaultValue={programState.mainHandler}
             />
           </div>
