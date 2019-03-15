@@ -15,6 +15,7 @@ import { setCustomConfig } from "./reduxStore/customConfig/reducer";
 import SocketEvents from "./SocketEvents";
 import { setSimulationState } from "./reduxStore/simulationState/reducer";
 import { SimulationStateEnum } from "./constants";
+import { setSimulationNodes } from "./reduxStore/simulationNodes/reducer";
 
 export default function(dispatch) {
   const onReceiveEvent = {
@@ -40,6 +41,10 @@ export default function(dispatch) {
 
     [SocketEvents.SIMULATION_STATE](simulationState) {
       dispatch(setSimulationState(SimulationStateEnum[simulationState]));
+    },
+
+    [SocketEvents.SIMULATION_NODES](simulationNodes) {
+      dispatch(setSimulationNodes(simulationNodes));
     }
   };
   // get these things from the server
@@ -58,5 +63,6 @@ export default function(dispatch) {
   Socket.send(SocketEvents.GET_PROGRAMS);
   Socket.send(SocketEvents.GET_RAW_NETWORK_TOPOLOGY);
   Socket.send(SocketEvents.GET_CUSTOM_CONFIG);
+  Socket.send(SocketEvents.GET_SIMULATION_STATE);
   // TODO: get simulation state
 }

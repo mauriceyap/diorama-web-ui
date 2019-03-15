@@ -8,7 +8,9 @@ export default {
   GET_RAW_NETWORK_TOPOLOGY: "getRawNetworkTopology",
   GET_CUSTOM_CONFIG: "getCustomConfig",
   SET_CUSTOM_CONFIG: "setCustomConfig",
+  GET_SIMULATION_STATE: "getSimulationState",
   SET_UP_SIMULATION: "setUpSimulation",
+  GET_SIMULATION_NODES: "getSimulationNodes",
   STOP_AND_RESET_SIMULATION: "stopAndResetSimulation",
 
   // Receive
@@ -17,5 +19,6 @@ export default {
   NETWORK_TOPOLOGY_LANGUAGE: "networkTopologyLanguage",
   UNPACKED_NETWORK_TOPOLOGY: "unpackedNetworkTopology",
   CUSTOM_CONFIG: "customConfig",
-  SIMULATION_STATE: "simulationState"
+  SIMULATION_STATE: "simulationState",
+  SIMULATION_NODES: "simulationNodes"
 };
