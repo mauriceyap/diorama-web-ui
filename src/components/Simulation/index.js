@@ -30,6 +30,7 @@ const runningStates = [
 
 class Simulation extends Component {
   componentDidMount() {
+    Simulation.getSimulationNodes();
     this.updateRequestInterval = setInterval(
       Simulation.getSimulationNodes,
       NODE_INFO_POLLING_INTERVAL
@@ -42,6 +43,10 @@ class Simulation extends Component {
 
   static setUpSimulation() {
     Socket.send(SocketEvents.SET_UP_SIMULATION);
+  }
+
+  static stopAndResetSimulation() {
+    Socket.send(SocketEvents.STOP_AND_RESET_SIMULATION);
   }
 
   render() {
@@ -62,9 +67,7 @@ class Simulation extends Component {
             <div style={{ textAlign: "right" }}>
               <button
                 className="button alert"
-                onClick={() =>
-                  Socket.send(SocketEvents.STOP_AND_RESET_SIMULATION)
-                }
+                onClick={Simulation.stopAndResetSimulation}
               >
                 <MetroIcon icon={"stop"} /> Stop and reset
               </button>

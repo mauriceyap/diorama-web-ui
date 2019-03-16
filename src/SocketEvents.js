@@ -12,6 +12,7 @@ export default {
   SET_UP_SIMULATION: "setUpSimulation",
   GET_SIMULATION_NODES: "getSimulationNodes",
   STOP_AND_RESET_SIMULATION: "stopAndResetSimulation",
+  PERFORM_NODE_ACTION: "performNodeAction",
 
   // Receive
   PROGRAMS: "programs",
