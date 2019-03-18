@@ -305,7 +305,7 @@ class ProgramEditor extends Component {
             <EditMainHandler
               polyglot={p}
               onChange={this.setMainHandler}
-              isRaw={programState.codeSource}
+              isRaw={programState.codeSource === "raw"}
               defaultValue={programState.mainHandler}
             />
           </div>

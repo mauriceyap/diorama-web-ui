@@ -8,6 +8,7 @@ import networkTopology from "./networkTopology/reducer";
 import customConfig from "./customConfig/reducer";
 import simulationState from "./simulationState/reducer";
 import simulationNodes from "./simulationNodes/reducer";
+import simulationLogs from "./simulationLogs/reducer";
 
 const reducers = {
   customisation,
@@ -17,7 +18,8 @@ const reducers = {
   customConfig,
   polyglot,
   simulationState,
-  simulationNodes
+  simulationNodes,
+  simulationLogs
 };
 
 export default combineReducers(reducers);

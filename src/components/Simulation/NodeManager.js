@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getP } from "redux-polyglot";
 import { pPropType } from "../../customPropTypes";
-import { selectSimulationNodes } from "../../reduxStore/selectors";
+import {
+  selectSimulationLogs,
+  selectSimulationNodes
+} from "../../reduxStore/selectors";
 import { runtimeIcons, runtimeLabels } from "../Programs/constants";
 import MetroIcon from "../MetroIcon";
 import NodeManagerButton from "./NodeManagerButton";
@@ -39,22 +42,31 @@ const visibleButtonsForStatus = {
 
 class NodeManager extends Component {
   render() {
-    const { simulationNodes } = this.props;
+    const { simulationNodes, latestLogTimestampForNode } = this.props;
     return (
       <div key={simulationNodes.map(({ nid, status }) => `${nid}${status}`)}>
-        <table className="table">
+        <table className="table row-border table-border">
           <thead>
             <tr>
-              <th data-sortable="true">Node ID (nid)</th>
-              <th data-sortable="true">Status</th>
-              <th data-sortable="true">Program</th>
+              <th />
+              <th>Node ID (nid)</th>
+              <th>Status</th>
+              <th>Program</th>
               <th />
             </tr>
           </thead>
           <tbody>
             {simulationNodes.map(
-              ({ nid, status, program, runtime, description }) => (
+              ({
+                nid,
+                status,
+                program,
+                runtime,
+                description,
+                loggingColour
+              }) => (
                 <tr key={nid}>
+                  <td style={{ backgroundColor: loggingColour }} />
                   <td>{nid}</td>
                   <td>
                     <MetroIcon
@@ -86,6 +98,7 @@ class NodeManager extends Component {
                         action={action}
                         nid={nid}
                         key={nid + action}
+                        latestTimestamp={latestLogTimestampForNode[nid]}
                       />
                     ))}
                   </td>
@@ -101,13 +114,24 @@ class NodeManager extends Component {
 
 NodeManager.propTypes = {
   p: pPropType.isRequired,
-  simulationNodes: PropTypes.arrayOf(PropTypes.object).isRequired
+  simulationNodes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  latestLogTimestampForNode: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     p: getP(state),
-    simulationNodes: selectSimulationNodes(state)
+    simulationNodes: selectSimulationNodes(state),
+    latestLogTimestampForNode: selectSimulationLogs(state).reduce(
+      (latestLogs, { nid, timestamp }) => {
+        const latestForNode = latestLogs[nid];
+        if ((latestForNode && timestamp > latestForNode) || !latestForNode) {
+          latestLogs[nid] = timestamp;
+        }
+        return latestLogs;
+      },
+      {}
+    )
   };
 }
 

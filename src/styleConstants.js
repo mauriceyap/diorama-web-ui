@@ -12,3 +12,24 @@ export const onChangeNetworkTopologyLanguage =
 
 export const toastTimeout = 4000;
 export const toastSeparationDistance = 50;
+
+export const loggingColours = [
+  'lightBlue',
+  'lightPink',
+  'lightYellow',
+  'lightGray',
+  'lightLime',
+  'lightRed',
+  'lightTeal',
+  'lightOlive',
+  'lightMagenta',
+  'lightMauve',
+  'lightCyan',
+  'lightAmber',
+  'lightGreen',
+  'lightOrange',
+  'lightBrown',
+  'lightSteel',
+  'lightGrayBlue',
+  'lightTaupe'
+];

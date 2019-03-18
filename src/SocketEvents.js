@@ -13,6 +13,7 @@ export default {
   GET_SIMULATION_NODES: "getSimulationNodes",
   STOP_AND_RESET_SIMULATION: "stopAndResetSimulation",
   PERFORM_NODE_ACTION: "performNodeAction",
+  STREAM_NODE_LOGS: "streamNodeLogs",
 
   // Receive
   PROGRAMS: "programs",
@@ -21,5 +22,6 @@ export default {
   UNPACKED_NETWORK_TOPOLOGY: "unpackedNetworkTopology",
   CUSTOM_CONFIG: "customConfig",
   SIMULATION_STATE: "simulationState",
-  SIMULATION_NODES: "simulationNodes"
+  SIMULATION_NODES: "simulationNodes",
+  SIMULATION_LOGS: "simulationLogs"
 };

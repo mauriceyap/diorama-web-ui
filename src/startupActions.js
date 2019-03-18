@@ -16,6 +16,7 @@ import SocketEvents from "./SocketEvents";
 import { setSimulationState } from "./reduxStore/simulationState/reducer";
 import { SimulationStateEnum } from "./constants";
 import { setSimulationNodes } from "./reduxStore/simulationNodes/reducer";
+import { addSimulationLogs } from "./reduxStore/simulationLogs/reducer";
 
 export default function(dispatch) {
   const onReceiveEvent = {
@@ -45,6 +46,10 @@ export default function(dispatch) {
 
     [SocketEvents.SIMULATION_NODES](simulationNodes) {
       dispatch(setSimulationNodes(simulationNodes));
+    },
+
+    [SocketEvents.SIMULATION_LOGS](simulationLogs) {
+      dispatch(addSimulationLogs(simulationLogs));
     }
   };
   // get these things from the server
