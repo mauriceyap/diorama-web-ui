@@ -17,7 +17,8 @@ after_success:
 
 before_deploy:
   - git tag -d latest
-  - git tag latest
+  - export TRAVIS_TAG=latest
+  - git tag $TRAVIS_TAG
 
 deploy:
   provider: releases
