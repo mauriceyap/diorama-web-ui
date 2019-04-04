@@ -14,7 +14,10 @@ script:
 
 after_success:
   - zip -r build.zip build/
-  - git tag -d latest ; git tag latest
+
+before_deploy:
+  - git tag -d latest
+  - git tag latest
 
 deploy:
   provider: releases
