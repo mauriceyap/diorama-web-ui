@@ -26,7 +26,7 @@ deploy:
   file: build.zip
   skip_cleanup: true
   overwrite: true
-  target_commitish: latest
+  target_commitish: $TRAVIS_BRANCH
   on:
     tags: false
     branches:
