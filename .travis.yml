@@ -30,7 +30,7 @@ deploy:
   overwrite: true
   target_commitish: $TRAVIS_BRANCH
   on:
-    tags: false
+    tags: true
     branches:
       only:
       - master
