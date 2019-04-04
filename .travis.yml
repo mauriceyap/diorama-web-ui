@@ -16,6 +16,8 @@ after_success:
   - zip -r build.zip build/
 
 before_deploy:
+  - git config --local user.name Maurice Yap
+  - git config --local user.email mauriceyap@hotmail.co.uk
   - git tag -d latest
   - export TRAVIS_TAG=latest
   - git tag $TRAVIS_TAG
