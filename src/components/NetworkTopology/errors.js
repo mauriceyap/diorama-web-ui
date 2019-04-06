@@ -31,6 +31,24 @@ const messageWithDataGetters = {
         )
       })
     );
+  },
+  NT_ERROR_BASE_VALUE_NOT_LIST_OF_DICTS(data, polyglot) {
+    return polyglot.t("NT_ERROR_BASE_VALUE_NOT_LIST_OF_DICTS", { key: data });
+  },
+  NT_ERROR_NO_NID_SINGLE_NODES(data, polyglot) {
+    return polyglot.t("NT_ERROR_NO_NID_SINGLE_NODES", { index: data });
+  },
+  NT_ERROR_NO_PROGRAM_SINGLE_NODES(data, polyglot) {
+    return polyglot.t("NT_ERROR_NO_PROGRAM_SINGLE_NODES", { index: data });
+  },
+  NT_ERROR_NID_SINGLE_NODES_NOT_STRING(data, polyglot) {
+    return polyglot.t("NT_ERROR_NID_SINGLE_NODES_NOT_STRING", { index: data });
+  },
+  NT_ERROR_PROGRAM_SINGLE_NODES_NOT_STRING(data, polyglot) {
+    return polyglot.t("NT_ERROR_PROGRAM_SINGLE_NODES_NOT_STRING", { index: data });
+  },
+  NT_ERROR_CONNECTIONS_SINGLE_NODES_NOT_LIST_OF_STRINGS(data, polyglot) {
+    return polyglot.t("NT_ERROR_CONNECTIONS_SINGLE_NODES_NOT_LIST_OF_STRINGS", { index: data });
   }
 };
 

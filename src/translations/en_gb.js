@@ -66,6 +66,18 @@ export default {
     "This needs to be a map/dictionary, but you've given %{type}.",
   NT_ERROR_BASE_KEYS:
     "You have an invalid key in your topology definition. The key, %{invalidKeys}, is not allowed. |||| You have invalid keys in your topology definition. The keys, %{invalidKeys}, are not allowed.",
+  NT_ERROR_BASE_VALUE_NOT_LIST_OF_DICTS:
+    "The value for %{key} must be a list of maps/dictionaries.",
+  NT_ERROR_NO_NID_SINGLE_NODES:
+    "All nodes in single_nodes must include a key-value pair for nid, but element %{index} of your single_nodes list doesn't.",
+  NT_ERROR_NID_SINGLE_NODES_NOT_STRING:
+    "The nid value for all nodes in single_nodes must be a string, but element %{index} of your single_nodes list isn't.",
+  NT_ERROR_NO_PROGRAM_SINGLE_NODES:
+    "All nodes in single_nodes must include a key-value pair for program, but element %{index} of your single_nodes list doesn't.",
+  NT_ERROR_PROGRAM_SINGLE_NODES_NOT_STRING:
+    "The program value for all nodes in single_nodes must be a string, but element %{index} of your single_nodes list isn't.",
+  NT_ERROR_CONNECTIONS_SINGLE_NODES_NOT_LIST_OF_STRINGS:
+    "The connections value for all nodes in single_nodes must be a list of strings, but element %{index} of your single_nodes list isn't.",
 
   configuration: "configuration",
   customConfig: "custom configuration",
