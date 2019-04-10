@@ -15,5 +15,3 @@ export const SimulationStateEnum = {
   RUNNING: "RUNNING",
   RESETTING: "RESETTING"
 };
-
-export const NODE_INFO_POLLING_INTERVAL = 2000;

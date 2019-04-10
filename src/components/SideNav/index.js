@@ -8,6 +8,12 @@ import colours from "../../customisation/colours";
 import { selectCustomisation } from "../../reduxStore/selectors";
 import { getP } from "redux-polyglot";
 import { pPropType } from "../../customPropTypes";
+import {
+  shrunkSideBarWidth,
+  sideBarShrinkScreenWidth,
+  sideBarWidth
+} from "../../styleConstants";
+import { isScreenWidthGreaterThan } from "../../utils";
 
 const sideNavItems = [
   { icon: "apps", polyglotLabel: "programs", route: "/programs" },
@@ -32,7 +38,9 @@ class SideNav extends Component {
       <li key={`${icon}${polyglotLabel}${route}`}>
         <Link to={route}>
           <span className={`mif-${icon} icon`} />
-          <span className="title">{p.tc(polyglotLabel)}</span>
+          {isScreenWidthGreaterThan(sideBarShrinkScreenWidth) && (
+            <span className="title">{p.tc(polyglotLabel)}</span>
+          )}
         </Link>
       </li>
     ));
@@ -47,7 +55,18 @@ class SideNav extends Component {
       `bg-${backgroundColour}`,
       `fg-${foregroundColour}`
     );
-    return <ul className={className}>{this.renderItems()}</ul>;
+    return (
+      <ul
+        className={className}
+        style={{
+          width: isScreenWidthGreaterThan(sideBarShrinkScreenWidth)
+            ? sideBarWidth
+            : shrunkSideBarWidth
+        }}
+      >
+        {this.renderItems()}
+      </ul>
+    );
   }
 }
 

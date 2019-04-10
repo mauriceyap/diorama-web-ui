@@ -13,6 +13,10 @@ export const onChangeNetworkTopologyLanguage =
 export const toastTimeout = 4000;
 export const toastSeparationDistance = 50;
 
+export const sideBarWidth = 230;
+export const shrunkSideBarWidth = 52;
+export const sideBarShrinkScreenWidth = 600;
+
 export const loggingColours = [
   'lightBlue',
   'lightPink',

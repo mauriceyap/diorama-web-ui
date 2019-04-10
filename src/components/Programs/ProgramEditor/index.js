@@ -21,7 +21,7 @@ import { uploadZipFile } from "../../../HTTPServer";
 const initialState = {
   program: null,
   redirectToProgramsPage: false,
-  isLoading: false
+  isLoading: true
 };
 
 class ProgramEditor extends Component {
@@ -38,9 +38,6 @@ class ProgramEditor extends Component {
 
     this.state = {
       ...initialState,
-      redirectToProgramsPage: !programs
-        .map(({ name }) => name)
-        .contains(programName),
       programState: savedProgram,
       editingCodeData: {
         git:
@@ -325,6 +322,44 @@ class ProgramEditor extends Component {
         </div>
       </Fragment>
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    const { programs: oldPrograms } = prevProps;
+    const { programs } = this.props;
+    const { programState } = this.state;
+    if (programState || programs.length === oldPrograms.length) {
+      return;
+    }
+
+    const {
+      match: {
+        params: { programName }
+      }
+    } = this.props;
+    const savedProgram = programs.filter(({ name }) => name === programName)[0];
+
+    this.setState({
+      redirectToProgramsPage: !programs
+        .map(({ name }) => name)
+        .contains(programName),
+      isLoading: false,
+      programState: savedProgram,
+      editingCodeData: {
+        git:
+          savedProgram && savedProgram.codeSource === "git"
+            ? savedProgram.codeData
+            : { repositoryUrl: "", checkoutBranchOrTag: "master" },
+        zip:
+          savedProgram && savedProgram.codeSource === "zip"
+            ? savedProgram.codeData
+            : "",
+        raw:
+          savedProgram && savedProgram.codeSource === "raw"
+            ? savedProgram.codeData
+            : ""
+      }
+    });
   }
 }
 

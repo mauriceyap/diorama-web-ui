@@ -50,6 +50,10 @@ export default function(dispatch) {
 
     [SocketEvents.SIMULATION_LOGS](simulationLogs) {
       dispatch(addSimulationLogs(simulationLogs));
+    },
+
+    [SocketEvents.UNPACKED_NETWORK_TOPOLOGY](topology) {
+      dispatch(setUnpackedNetworkTopology(topology));
     }
   };
   // get these things from the server
@@ -69,5 +73,5 @@ export default function(dispatch) {
   Socket.send(SocketEvents.GET_RAW_NETWORK_TOPOLOGY);
   Socket.send(SocketEvents.GET_CUSTOM_CONFIG);
   Socket.send(SocketEvents.GET_SIMULATION_STATE);
-  // TODO: get simulation state
+  Socket.send(SocketEvents.GET_UNPACKED_NETWORK_TOPOLOGY)
 }

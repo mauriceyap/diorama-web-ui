@@ -6,6 +6,7 @@ export default {
   GET_PROGRAMS: "getPrograms",
   UPLOAD_PROGRAM_ZIP_FILE: "uploadProgramZipFile",
   GET_RAW_NETWORK_TOPOLOGY: "getRawNetworkTopology",
+  GET_UNPACKED_NETWORK_TOPOLOGY: "getUnpackedNetworkTopology",
   GET_CUSTOM_CONFIG: "getCustomConfig",
   SET_CUSTOM_CONFIG: "setCustomConfig",
   GET_SIMULATION_STATE: "getSimulationState",

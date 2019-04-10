@@ -16,6 +16,12 @@ import NetworkTopology from "./NetworkTopology";
 import CustomConfig from "./CustomConfig";
 import Simulation from "./Simulation";
 import startupActions from "../startupActions";
+import {
+  shrunkSideBarWidth,
+  sideBarShrinkScreenWidth,
+  sideBarWidth
+} from "../styleConstants";
+import { isScreenWidthGreaterThan } from "../utils";
 
 class Diorama extends Component {
   constructor(props) {
@@ -36,10 +42,21 @@ class Diorama extends Component {
         <Fragment>
           <AppBar />
           <div style={{ width: "100%", minHeight: "100vh", display: "flex" }}>
-            <div className={sideBarWrapperClassName}>
+            <div
+              className={sideBarWrapperClassName}
+              style={{ position: "fixed", height: "100%" }}
+            >
               <SideNav />
             </div>
-            <div className={"pt-16"} style={{ width: "100%" }}>
+            <div
+              className={"pt-16"}
+              style={{
+                width: "100%",
+                marginLeft: isScreenWidthGreaterThan(sideBarShrinkScreenWidth)
+                  ? sideBarWidth
+                  : shrunkSideBarWidth
+              }}
+            >
               <div className={"container"}>
                 <Route exact path={"/"} component={ProjectHome} />
                 <Route exact path={"/programs"} component={Programs} />

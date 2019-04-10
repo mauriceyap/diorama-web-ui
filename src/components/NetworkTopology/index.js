@@ -8,6 +8,7 @@ import AceEditor from "react-ace";
 import { topologyLanguages } from "./constants";
 import colours from "../../customisation/colours";
 import {
+  selectCustomConfig,
   selectCustomisation,
   selectNetworkTopology
 } from "../../reduxStore/selectors";
@@ -33,14 +34,20 @@ import { saveNetworkTopology } from "../../HTTPServer";
 import { noop } from "../../utils";
 import Metro from "metro4";
 import { getErrorDisplayMessage } from "./errors";
+import NetworkTopologyViewer from "../common/NetworkTopologyViewer";
 
 class NetworkTopology extends Component {
   constructor(props) {
     super(props);
-    const { savedRawNetworkTopology, savedLanguage } = props;
+    const {
+      savedRawNetworkTopology,
+      savedLanguage,
+      customConfig: { selfConnectedNodes }
+    } = props;
     this.state = {
       language: savedLanguage,
-      rawNetworkTopology: savedRawNetworkTopology
+      rawNetworkTopology: savedRawNetworkTopology,
+      selfConnectedNodes
     };
     Socket.send(SocketEvents.GET_RAW_NETWORK_TOPOLOGY);
     window[onChangeNetworkTopologyLanguage] = this.setLanguage.bind(this);
@@ -49,6 +56,7 @@ class NetworkTopology extends Component {
     this.isNetworkTopologyChanged = this.isNetworkTopologyChanged.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
     this.revertChanges = this.revertChanges.bind(this);
+    this.setSelfConnectedNodes = this.setSelfConnectedNodes.bind(this);
     this.onSaveChangesResponse = this.onSaveChangesResponse.bind(this);
   }
 
@@ -67,6 +75,15 @@ class NetworkTopology extends Component {
 
   setRawNetworkTopology(rawNetworkTopology) {
     this.setState({ rawNetworkTopology });
+  }
+
+  setSelfConnectedNodes({ target: { checked } }) {
+    const { customConfig } = this.props;
+    Socket.send(SocketEvents.SET_CUSTOM_CONFIG, {
+      ...customConfig,
+      selfConnectedNodes: checked
+    });
+    Socket.send(SocketEvents.GET_CUSTOM_CONFIG);
   }
 
   onSaveChangesResponse(response) {
@@ -126,50 +143,79 @@ class NetworkTopology extends Component {
 
   render() {
     const { p, colourScheme } = this.props;
-    const { rawNetworkTopology, language } = this.state;
-    // TODO: create a visualiser for the network
+    const { rawNetworkTopology, language, selfConnectedNodes } = this.state;
     return (
       <Fragment>
         <span className={"display1"}>{p.tc("networkTopology")}</span>
         <div className="border bd-lightGray border-size-2 p-4 mt-6">
-          <div key={language}>
-            <h6>Language</h6>
-            <select
-              data-role="select"
-              defaultValue={language}
-              data-on-change={onChangeNetworkTopologyLanguage}
-            >
-              {topologyLanguages.map(l => (
-                <option value={l} key={l}>
-                  {l}
-                </option>
-              ))}
-            </select>
+          <div className="row">
+            <div key={language} className="cell-md-6">
+              <h6>Language</h6>
+              <select
+                data-role="select"
+                defaultValue={language}
+                data-on-change={onChangeNetworkTopologyLanguage}
+              >
+                {topologyLanguages.map(l => (
+                  <option value={l} key={l}>
+                    {l}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mt-4 cell-md-6">
+              <h6>{p.tc("selfConnectedNodes")}</h6>
+              <p>
+                {selfConnectedNodes
+                  ? "nodes are connected to themselves"
+                  : "nodes are not connected to themselves"}
+              </p>
+              <input
+                type="checkbox"
+                data-role="switch"
+                data-material="true"
+                checked={selfConnectedNodes}
+                onChange={this.setSelfConnectedNodes}
+              />
+            </div>
           </div>
-          <div className="mt-4">
-            <AceEditor
-              name={"networkTopologyEditor"}
-              theme={colours.aceEditorTheme[colourScheme]}
-              mode={braceEditorModes[language]}
-              value={rawNetworkTopology}
-              onChange={this.setRawNetworkTopology}
-              width={"100%"}
-              editorProps={{
-                $blockScrolling: Infinity
-              }}
-            />
-          </div>
-          <div className="mt-4">
-            {this.isNetworkTopologyChanged() && (
-              <Fragment>
-                <button className="button primary" onClick={this.saveChanges}>
-                  <MetroIcon icon={"floppy-disk"} /> {p.tc("save")}
-                </button>
-                <button className="button yellow" onClick={this.revertChanges}>
-                  <MetroIcon icon={"undo"} /> {p.tc("revert")}
-                </button>
-              </Fragment>
-            )}
+          <div className="row mt-4">
+            <div className="cell-md-6">
+              <div>
+                <AceEditor
+                  name={"networkTopologyEditor"}
+                  theme={colours.aceEditorTheme[colourScheme]}
+                  mode={braceEditorModes[language]}
+                  value={rawNetworkTopology}
+                  onChange={this.setRawNetworkTopology}
+                  width={"100%"}
+                  editorProps={{
+                    $blockScrolling: Infinity
+                  }}
+                />
+              </div>
+              <div className="mt-4">
+                {this.isNetworkTopologyChanged() && (
+                  <Fragment>
+                    <button
+                      className="button primary"
+                      onClick={this.saveChanges}
+                    >
+                      <MetroIcon icon={"floppy-disk"} /> {p.tc("save")}
+                    </button>
+                    <button
+                      className="button yellow"
+                      onClick={this.revertChanges}
+                    >
+                      <MetroIcon icon={"undo"} /> {p.tc("revert")}
+                    </button>
+                  </Fragment>
+                )}
+              </div>
+            </div>
+            <div className="cell-md-6">
+              <NetworkTopologyViewer height={500} />
+            </div>
           </div>
         </div>
       </Fragment>
@@ -178,11 +224,20 @@ class NetworkTopology extends Component {
 
   componentDidUpdate(prevProps) {
     const { language, rawNetworkTopology } = this.state;
-    const { savedLanguage, savedRawNetworkTopology } = this.props;
+    const {
+      savedLanguage,
+      savedRawNetworkTopology,
+      customConfig: { selfConnectedNodes }
+    } = this.props;
     const {
       savedLanguage: prevSavedLanguage,
-      savedRawNetworkTopology: prevSavedRawNetworkTopology
+      savedRawNetworkTopology: prevSavedRawNetworkTopology,
+      customConfig: { selfConnectedNodes: prevSelfConnectedNodes }
     } = prevProps;
+
+    if (selfConnectedNodes !== prevSelfConnectedNodes) {
+      this.setState({ selfConnectedNodes });
+    }
 
     if (language === prevSavedLanguage && savedLanguage !== prevSavedLanguage) {
       this.setState({ language: savedLanguage });
@@ -202,7 +257,8 @@ NetworkTopology.propTypes = {
   colourScheme: PropTypes.string.isRequired,
   savedLanguage: PropTypes.string.isRequired,
   savedRawNetworkTopology: PropTypes.string.isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  customConfig: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
@@ -210,7 +266,8 @@ function mapStateToProps(state) {
     p: getP(state),
     colourScheme: selectCustomisation(state).colourScheme,
     savedRawNetworkTopology: selectNetworkTopology(state).rawNetworkTopology,
-    savedLanguage: selectNetworkTopology(state).language
+    savedLanguage: selectNetworkTopology(state).language,
+    customConfig: selectCustomConfig(state)
   };
 }
 

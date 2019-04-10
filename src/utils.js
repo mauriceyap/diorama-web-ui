@@ -15,3 +15,7 @@ export function createListString(items, normalDelimiter, finalDelimiter) {
   const allButLastString = items.slice(0, -1).join(normalDelimiter);
   return `${allButLastString}${finalDelimiter}${items.slice(-1)[0]}`;
 }
+
+export function isScreenWidthGreaterThan(width) {
+  return window.matchMedia(`(min-width: ${width}px)`).matches;
+}

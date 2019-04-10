@@ -66,7 +66,7 @@ class NodeManager extends Component {
                 loggingColour
               }) => (
                 <tr key={nid}>
-                  <td style={{ backgroundColor: loggingColour }} />
+                  <td className={`bg-${loggingColour}`} />
                   <td>{nid}</td>
                   <td>
                     <MetroIcon
@@ -76,13 +76,13 @@ class NodeManager extends Component {
                     {statusLabelsIcons[status]["label"]}
                   </td>
                   <td>
-                    <span
+                    {description ? (<span
                       data-role="popover"
                       data-popover-text={description}
                       data-hide-on-leave={true}
                     >
                       {program}
-                    </span>
+                    </span>) : program}
                     <img
                       src={runtimeIcons[runtime]}
                       alt={runtime}

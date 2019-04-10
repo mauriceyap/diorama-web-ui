@@ -11,7 +11,6 @@ import {
 } from "../../reduxStore/selectors";
 import StartSimulation from "./StartSimulation";
 import {
-  NODE_INFO_POLLING_INTERVAL,
   SimulationStateEnum
 } from "../../constants";
 import MetroIcon from "../MetroIcon";
@@ -40,10 +39,6 @@ class Simulation extends Component {
   }
   componentDidMount() {
     this.getSimulationNodes();
-    this.updateRequestInterval = setInterval(
-      this.getSimulationNodes,
-      NODE_INFO_POLLING_INTERVAL
-    );
   }
 
   getSimulationNodes() {

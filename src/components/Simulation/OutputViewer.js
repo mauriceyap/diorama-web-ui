@@ -175,7 +175,7 @@ class OutputViewer extends Component {
               .filter(this.logFilter)
               .map(({ message, timestamp, nid }) => (
                 <tr
-                  style={{ backgroundColor: nodeColours[nid] }}
+                  className={`bg-${nodeColours[nid]}`}
                   key={nid + message + timestamp}
                 >
                   <td>{nid}</td>
