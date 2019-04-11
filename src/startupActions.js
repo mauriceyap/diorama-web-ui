@@ -73,5 +73,5 @@ export default function(dispatch) {
   Socket.send(SocketEvents.GET_RAW_NETWORK_TOPOLOGY);
   Socket.send(SocketEvents.GET_CUSTOM_CONFIG);
   Socket.send(SocketEvents.GET_SIMULATION_STATE);
-  Socket.send(SocketEvents.GET_UNPACKED_NETWORK_TOPOLOGY)
+  Socket.send(SocketEvents.GET_UNPACKED_NETWORK_TOPOLOGY);
 }

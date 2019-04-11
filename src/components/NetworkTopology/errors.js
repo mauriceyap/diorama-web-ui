@@ -45,10 +45,14 @@ const messageWithDataGetters = {
     return polyglot.t("NT_ERROR_NID_SINGLE_NODES_NOT_STRING", { index: data });
   },
   NT_ERROR_PROGRAM_SINGLE_NODES_NOT_STRING(data, polyglot) {
-    return polyglot.t("NT_ERROR_PROGRAM_SINGLE_NODES_NOT_STRING", { index: data });
+    return polyglot.t("NT_ERROR_PROGRAM_SINGLE_NODES_NOT_STRING", {
+      index: data
+    });
   },
   NT_ERROR_CONNECTIONS_SINGLE_NODES_NOT_LIST_OF_STRINGS(data, polyglot) {
-    return polyglot.t("NT_ERROR_CONNECTIONS_SINGLE_NODES_NOT_LIST_OF_STRINGS", { index: data });
+    return polyglot.t("NT_ERROR_CONNECTIONS_SINGLE_NODES_NOT_LIST_OF_STRINGS", {
+      index: data
+    });
   }
 };
 

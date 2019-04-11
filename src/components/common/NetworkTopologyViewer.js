@@ -59,11 +59,11 @@ class NetworkTopologyViewer extends Component {
   }
 
   componentDidMount() {
-    this.assembleNetwork()
+    this.assembleNetwork();
   }
 
   componentDidUpdate() {
-    this.assembleNetwork()
+    this.assembleNetwork();
   }
 }
 

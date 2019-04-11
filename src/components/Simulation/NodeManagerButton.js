@@ -41,8 +41,11 @@ export default class NodeManagerButton extends Component {
   onClick() {
     const { nid, action, latestTimestamp } = this.props;
     Socket.send(SocketEvents.PERFORM_NODE_ACTION, { nid, action });
-    if (action === 'start') {
-      Socket.send(SocketEvents.STREAM_NODE_LOGS, { nid, since: latestTimestamp });
+    if (action === "start") {
+      Socket.send(SocketEvents.STREAM_NODE_LOGS, {
+        nid,
+        since: latestTimestamp
+      });
     }
   }
 
@@ -68,5 +71,5 @@ NodeManagerButton.propTypes = {
 };
 
 NodeManagerButton.defaultProps = {
-  latestTimestamp: undefined,
+  latestTimestamp: undefined
 };

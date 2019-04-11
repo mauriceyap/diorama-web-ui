@@ -7,7 +7,8 @@ export const onClickNewProgramSubmit = "onClickNewProgramSubmit";
 
 export const onChangeProgramRuntime = "onChangeProgramRuntime";
 
-export const onChangeOutputViewerProgramFilter = "onChangeOutputViewerProgramFilter";
+export const onChangeOutputViewerProgramFilter =
+  "onChangeOutputViewerProgramFilter";
 export const onChangeOutputViewerNodeFilter = "onChangeOutputViewerNodeFilter";
 
 export const onChangeNetworkTopologyLanguage =
@@ -21,22 +22,22 @@ export const shrunkSideBarWidth = 52;
 export const sideBarShrinkScreenWidth = 600;
 
 export const loggingColours = [
-  'lightBlue',
-  'lightPink',
-  'lightYellow',
-  'lightGray',
-  'lightLime',
-  'lightRed',
-  'lightTeal',
-  'lightOlive',
-  'lightMagenta',
-  'lightMauve',
-  'lightCyan',
-  'lightAmber',
-  'lightGreen',
-  'lightOrange',
-  'lightBrown',
-  'lightSteel',
-  'lightGrayBlue',
-  'lightTaupe'
+  "lightBlue",
+  "lightPink",
+  "lightYellow",
+  "lightGray",
+  "lightLime",
+  "lightRed",
+  "lightTeal",
+  "lightOlive",
+  "lightMagenta",
+  "lightMauve",
+  "lightCyan",
+  "lightAmber",
+  "lightGreen",
+  "lightOrange",
+  "lightBrown",
+  "lightSteel",
+  "lightGrayBlue",
+  "lightTaupe"
 ];

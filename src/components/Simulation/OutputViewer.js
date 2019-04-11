@@ -184,8 +184,7 @@ class OutputViewer extends Component {
     if (nidDoesContain.pattern.length > 0) {
       if (nidDoesContain.isRegex) {
         try {
-          if (!message.match(new RegExp(nidDoesContain.pattern)))
-            return false;
+          if (!message.match(new RegExp(nidDoesContain.pattern))) return false;
         } catch (err) {}
       } else {
         if (!message.contains(nidDoesContain.pattern)) return false;

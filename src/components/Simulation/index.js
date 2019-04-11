@@ -10,9 +10,7 @@ import {
   selectSimulationState
 } from "../../reduxStore/selectors";
 import StartSimulation from "./StartSimulation";
-import {
-  SimulationStateEnum
-} from "../../constants";
+import { SimulationStateEnum } from "../../constants";
 import MetroIcon from "../MetroIcon";
 import LoadingScreen from "./LoadingScreen";
 import NodeManager from "./NodeManager";
