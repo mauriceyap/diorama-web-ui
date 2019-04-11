@@ -4,8 +4,6 @@ import { Network } from "vis";
 import { selectNetworkTopology } from "../../reduxStore/selectors";
 import { connect } from "react-redux";
 
-const options = {};
-
 const style = {
   width: "100%"
 };
@@ -22,7 +20,9 @@ class NetworkTopologyViewer extends Component {
     const { topology } = this.props;
     const nodes = topology.map(({ nid, program }) => ({
       id: nid,
-      label: `${nid}\n(${program})`
+      label: `${nid}\n<i>(${program})</i>`,
+      font: { multi: 'html' },
+      group: program
     }));
 
     const edges = topology
@@ -46,10 +46,15 @@ class NetworkTopologyViewer extends Component {
     const { nodes: prevNodes, edges: prevEdges } = prevState;
     if (
       JSON.stringify(prevNodes) !== JSON.stringify(nodes) ||
-      JSON.stringify(prevEdges) !==
-        JSON.stringify(edges)
+      JSON.stringify(prevEdges) !== JSON.stringify(edges)
     ) {
       this.setState({ nodes, edges });
+      const options = {
+        groups: [...new Set(nodes.map(({ program }) => program))].reduce(
+          (acc, program) => ({ ...acc, [program]: {} })
+        ),
+        nodes: { shape: "box", margin: 10 }
+      };
       this.network = new Network(this.ref.current, { nodes, edges }, options);
     }
   }
