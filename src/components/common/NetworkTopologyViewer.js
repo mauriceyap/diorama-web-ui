@@ -9,19 +9,18 @@ const style = {
 };
 
 class NetworkTopologyViewer extends Component {
-  constructor() {
-    super();
-    this.network = {};
+  constructor(props) {
+    super(props);
     this.ref = createRef();
-    this.state = { nodes: [], edges: [] };
+    this.assembleNetwork = this.assembleNetwork.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  assembleNetwork() {
     const { topology } = this.props;
     const nodes = topology.map(({ nid, program }) => ({
       id: nid,
       label: `${nid}\n<i>(${program})</i>`,
-      font: { multi: 'html' },
+      font: { multi: "html" },
       group: program
     }));
 
@@ -42,32 +41,29 @@ class NetworkTopologyViewer extends Component {
           .flat()
       )
       .flat();
-
-    const { nodes: prevNodes, edges: prevEdges } = prevState;
-    if (
-      JSON.stringify(prevNodes) !== JSON.stringify(nodes) ||
-      JSON.stringify(prevEdges) !== JSON.stringify(edges)
-    ) {
-      this.setState({ nodes, edges });
-      const options = {
-        nodes: { shape: "box", margin: 10 }
-      };
-      this.network = new Network(this.ref.current, { nodes, edges }, options);
-    }
+    const options = {
+      nodes: { shape: "box", margin: 10 }
+    };
+    this.network = new Network(this.ref.current, { nodes, edges }, options);
   }
 
   render() {
-    const { nodes } = this.state;
     const { height } = this.props;
-    return nodes.length > 0 ? (
+    return (
       <div
         style={{ ...style, height }}
         ref={this.ref}
         className="border bd-lightGray"
       />
-    ) : (
-      <span ref={this.ref} />
     );
+  }
+
+  componentDidMount() {
+    this.assembleNetwork()
+  }
+
+  componentDidUpdate() {
+    this.assembleNetwork()
   }
 }
 
