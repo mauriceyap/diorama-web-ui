@@ -250,7 +250,14 @@ class ProgramEditor extends Component {
     }
 
     if (isLoading) {
-      return <div data-role="activity" data-type="ring" />;
+      return (
+        <div
+          data-role="activity"
+          data-type="ring"
+          data-style="color"
+          style={{ margin: "30vh auto" }}
+        />
+      );
     }
 
     return (
