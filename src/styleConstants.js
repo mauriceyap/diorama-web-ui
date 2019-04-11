@@ -7,6 +7,9 @@ export const onClickNewProgramSubmit = "onClickNewProgramSubmit";
 
 export const onChangeProgramRuntime = "onChangeProgramRuntime";
 
+export const onChangeOutputViewerProgramFilter = "onChangeOutputViewerProgramFilter";
+export const onChangeOutputViewerNodeFilter = "onChangeOutputViewerNodeFilter";
+
 export const onChangeNetworkTopologyLanguage =
   "onChangeNetworkTopologyLanguage";
 

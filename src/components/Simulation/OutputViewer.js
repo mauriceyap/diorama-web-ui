@@ -4,10 +4,15 @@ import { connect } from "react-redux";
 import { getP } from "redux-polyglot";
 import { pPropType } from "../../customPropTypes";
 import {
+  selectPrograms,
   selectSimulationLogs,
   selectSimulationNodes
 } from "../../reduxStore/selectors";
 import DateTime from "../common/DateTime";
+import {
+  onChangeOutputViewerProgramFilter,
+  onChangeOutputViewerNodeFilter
+} from "../../styleConstants";
 
 class OutputViewer extends Component {
   constructor(props) {
@@ -15,18 +20,51 @@ class OutputViewer extends Component {
     this.state = {
       messageFilterParams: {
         doesContain: { pattern: "", isRegex: false },
-        doesNotContain: { pattern: "", isRegex: false }
+        doesNotContain: { pattern: "" }
+      },
+      nodeFilterPrograms: [],
+      nodeFilterNodes: [],
+      nidFilterParams: {
+        doesContain: { pattern: "", isRegex: false },
+        doesNotContain: { pattern: "" }
       }
     };
 
-    this.setDoesContainPattern = this.setDoesContainPattern.bind(this);
-    this.setDoesNotContainPattern = this.setDoesNotContainPattern.bind(this);
-    this.setDoesContainIsRegex = this.setDoesContainIsRegex.bind(this);
-    this.setDoesNotContainIsRegex = this.setDoesNotContainIsRegex.bind(this);
+    window[onChangeOutputViewerProgramFilter] = this.onChangeProgramFilter.bind(
+      this
+    );
+    window[onChangeOutputViewerNodeFilter] = this.onChangeNodeFilter.bind(this);
+    this.setMessageDoesContainPattern = this.setMessageDoesContainPattern.bind(
+      this
+    );
+    this.setMessageDoesNotContainPattern = this.setMessageDoesNotContainPattern.bind(
+      this
+    );
+    this.setMessageDoesContainIsRegex = this.setMessageDoesContainIsRegex.bind(
+      this
+    );
+
+    this.setNidDoesContainPattern = this.setNidDoesContainPattern.bind(this);
+    this.setNidDoesNotContainPattern = this.setNidDoesNotContainPattern.bind(
+      this
+    );
+    this.setNidDoesContainIsRegex = this.setNidDoesContainIsRegex.bind(this);
     this.logFilter = this.logFilter.bind(this);
   }
 
-  setDoesContainPattern({ target: { value } }) {
+  onChangeProgramFilter(selected) {
+    this.setState({
+      nodeFilterPrograms: selected
+    });
+  }
+
+  onChangeNodeFilter(selected) {
+    this.setState({
+      nodeFilterNodes: selected
+    });
+  }
+
+  setMessageDoesContainPattern({ target: { value } }) {
     const { messageFilterParams } = this.state;
     const { doesContain } = messageFilterParams;
     this.setState({
@@ -40,7 +78,7 @@ class OutputViewer extends Component {
     });
   }
 
-  setDoesContainIsRegex({ target: { checked } }) {
+  setMessageDoesContainIsRegex({ target: { checked } }) {
     const { messageFilterParams } = this.state;
     const { doesContain } = messageFilterParams;
     this.setState({
@@ -54,7 +92,7 @@ class OutputViewer extends Component {
     });
   }
 
-  setDoesNotContainPattern({ target: { value } }) {
+  setMessageDoesNotContainPattern({ target: { value } }) {
     const { messageFilterParams } = this.state;
     const { doesNotContain } = messageFilterParams;
     this.setState({
@@ -68,50 +106,108 @@ class OutputViewer extends Component {
     });
   }
 
-  setDoesNotContainIsRegex({ target: { checked } }) {
-    const { messageFilterParams } = this.state;
-    const { doesNotContain } = messageFilterParams;
+  setNidDoesContainPattern({ target: { value } }) {
+    const { nidFilterParams } = this.state;
+    const { doesContain } = nidFilterParams;
     this.setState({
-      messageFilterParams: {
-        ...messageFilterParams,
-        doesNotContain: {
-          ...doesNotContain,
+      nidFilterParams: {
+        ...nidFilterParams,
+        doesContain: {
+          ...doesContain,
+          pattern: value
+        }
+      }
+    });
+  }
+
+  setNidDoesContainIsRegex({ target: { checked } }) {
+    const { nidFilterParams } = this.state;
+    const { doesContain } = nidFilterParams;
+    this.setState({
+      nidFilterParams: {
+        ...nidFilterParams,
+        doesContain: {
+          ...doesContain,
           isRegex: checked
         }
       }
     });
   }
 
-  logFilter({ nid, message, timestamp }) {
+  setNidDoesNotContainPattern({ target: { value } }) {
+    const { nidFilterParams } = this.state;
+    const { doesNotContain } = nidFilterParams;
+    this.setState({
+      nidFilterParams: {
+        ...nidFilterParams,
+        doesNotContain: {
+          ...doesNotContain,
+          pattern: value
+        }
+      }
+    });
+  }
+
+  logFilter({ nid, message }) {
     const {
-      messageFilterParams: { doesContain, doesNotContain }
+      messageFilterParams: {
+        doesContain: messageDoesContain,
+        doesNotContain: messageDoesNotContain
+      },
+      nidFilterParams: {
+        doesContain: nidDoesContain,
+        doesNotContain: nidDoesNotContain
+      },
+      nodeFilterPrograms,
+      nodeFilterNodes
     } = this.state;
-    if (doesContain.pattern.length !== 0) {
-      if (doesContain.isRegex) {
+    const { nodePrograms } = this.props;
+    if (messageDoesContain.pattern.length > 0) {
+      if (messageDoesContain.isRegex) {
         try {
-          if (!message.match(new RegExp(doesContain.pattern))) return false;
+          if (!message.match(new RegExp(messageDoesContain.pattern)))
+            return false;
         } catch (err) {}
       } else {
-        if (!message.contains(doesContain.pattern)) return false;
+        if (!message.contains(messageDoesContain.pattern)) return false;
       }
     }
-    if (doesNotContain.pattern.length !== 0) {
-      if (message.contains(doesNotContain.pattern)) return false;
+    if (messageDoesNotContain.pattern.length > 0) {
+      if (message.contains(messageDoesNotContain.pattern)) return false;
+    }
+    if (nodeFilterPrograms.length > 0) {
+      if (!nodeFilterPrograms.contains(nodePrograms[nid])) return false;
+    }
+    if (nodeFilterNodes.length > 0) {
+      if (!nodeFilterNodes.contains(nid)) return false;
+    }
+    if (nidDoesContain.pattern.length > 0) {
+      if (nidDoesContain.isRegex) {
+        try {
+          if (!message.match(new RegExp(nidDoesContain.pattern)))
+            return false;
+        } catch (err) {}
+      } else {
+        if (!message.contains(nidDoesContain.pattern)) return false;
+      }
+    }
+    if (nidDoesNotContain.pattern.length > 0) {
+      if (message.contains(nidDoesNotContain.pattern)) return false;
     }
     return true;
   }
 
   render() {
-    const { simulationLogs, nodeColours } = this.props;
+    const { simulationLogs, nodeColours, programNames, nodeNids } = this.props;
     return (
       <Fragment>
         <div
           data-role="accordion"
           data-one-frame={false}
-          data-show-active={false}
+          data-show-active={true}
           className="mt-3 mb-3"
         >
-          <div className="frame border bd-lightGray">
+          <div className="frame border bd-lightGray active">
             <div className="heading">
               <h5>Filtering</h5>
             </div>
@@ -126,7 +222,7 @@ class OutputViewer extends Component {
                         data-role="input"
                         data-prepend="Contains: "
                         data-clear-button={false}
-                        onChange={this.setDoesContainPattern}
+                        onChange={this.setMessageDoesContainPattern}
                       />
                     </div>
                     <div className="cell-2">
@@ -134,26 +230,79 @@ class OutputViewer extends Component {
                         type="checkbox"
                         data-role="checkbox"
                         data-caption="Regex?"
-                        onChange={this.setDoesContainIsRegex}
+                        onChange={this.setMessageDoesContainIsRegex}
                       />
                     </div>
                   </div>
                   <div className="row">
-                    <div className="cell-10">
+                    <div className="cell-12">
                       <input
                         type="text"
                         data-role="input"
                         data-prepend="Does not contain: "
                         data-clear-button={false}
-                        onChange={this.setDoesNotContainPattern}
+                        onChange={this.setMessageDoesNotContainPattern}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="border-bottom bd-lightGray ml-2 mr-2 pt-2 pb-2 mb-2">
+                <h6>Node</h6>
+                <div className="grid">
+                  <div className="row mt-2">
+                    <div className="cell-md-6" key={programNames}>
+                      <p>Program:</p>
+                      <select
+                        data-role="select"
+                        multiple
+                        data-on-change={onChangeOutputViewerProgramFilter}
+                      >
+                        {programNames.map(program => (
+                          <option value={program}>{program}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="cell-md-6" key={nodeNids}>
+                      <p>Select nodes:</p>
+                      <select
+                        data-role="select"
+                        multiple
+                        data-on-change={onChangeOutputViewerNodeFilter}
+                      >
+                        {nodeNids.map(nid => (
+                          <option value={nid}>{nid}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="row mt-2">
+                    <div className="cell-10">
+                      <input
+                        type="text"
+                        data-role="input"
+                        data-prepend="Nid contains: "
+                        data-clear-button={false}
+                        onChange={this.setNidDoesContainPattern}
                       />
                     </div>
                     <div className="cell-2">
-                      {" "}
                       <input
                         type="checkbox"
                         data-role="checkbox"
                         data-caption="Regex?"
+                        onChange={this.setNidDoesContainIsRegex}
+                      />
+                    </div>
+                  </div>
+                  <div className="row mt-2">
+                    <div className="cell-12">
+                      <input
+                        type="text"
+                        data-role="input"
+                        data-prepend="Nid does not contain: "
+                        data-clear-button={false}
+                        onChange={this.setNidDoesNotContainPattern}
                       />
                     </div>
                   </div>
@@ -195,22 +344,31 @@ class OutputViewer extends Component {
 OutputViewer.propTypes = {
   p: pPropType.isRequired,
   nodeColours: PropTypes.objectOf(PropTypes.string).isRequired,
-  simulationLogs: PropTypes.arrayOf(PropTypes.object).isRequired
+  simulationLogs: PropTypes.arrayOf(PropTypes.object).isRequired,
+  programNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  nodePrograms: PropTypes.objectOf(PropTypes.string).isRequired,
+  nodeNids: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 function mapStateToProps(state) {
   return {
     p: getP(state),
     nodeColours: selectSimulationNodes(state).reduce(
-      (accColours, { nid, loggingColour }) => {
-        accColours[nid] = loggingColour;
-        return accColours;
-      },
+      (accColours, { nid, loggingColour }) => ({
+        ...accColours,
+        [nid]: loggingColour
+      }),
       {}
     ),
     simulationLogs: selectSimulationLogs(state).sort(
       ({ timestamp: a }, { timestamp: b }) => (a < b ? -1 : a > b ? 1 : 0)
-    )
+    ),
+    programNames: selectPrograms(state).map(({ name }) => name),
+    nodePrograms: selectSimulationNodes(state).reduce(
+      (accPrograms, { nid, program }) => ({ ...accPrograms, [nid]: program }),
+      {}
+    ),
+    nodeNids: selectSimulationNodes(state).map(({ nid }) => nid)
   };
 }
 
