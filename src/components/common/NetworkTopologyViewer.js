@@ -50,9 +50,6 @@ class NetworkTopologyViewer extends Component {
     ) {
       this.setState({ nodes, edges });
       const options = {
-        groups: [...new Set(nodes.map(({ program }) => program))].reduce(
-          (acc, program) => ({ ...acc, [program]: {} })
-        ),
         nodes: { shape: "box", margin: 10 }
       };
       this.network = new Network(this.ref.current, { nodes, edges }, options);

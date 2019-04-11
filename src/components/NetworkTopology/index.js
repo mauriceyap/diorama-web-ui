@@ -223,7 +223,7 @@ class NetworkTopology extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { language, rawNetworkTopology } = this.state;
+    const { language } = this.state;
     const {
       savedLanguage,
       savedRawNetworkTopology,
@@ -243,10 +243,7 @@ class NetworkTopology extends Component {
       this.setState({ language: savedLanguage });
     }
 
-    if (
-      rawNetworkTopology === prevSavedRawNetworkTopology &&
-      savedRawNetworkTopology !== prevSavedRawNetworkTopology
-    ) {
+    if (savedRawNetworkTopology !== prevSavedRawNetworkTopology) {
       this.setState({ rawNetworkTopology: savedRawNetworkTopology });
     }
   }
