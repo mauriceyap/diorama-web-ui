@@ -39,6 +39,7 @@ class ProgramEditor extends Component {
     this.state = {
       ...initialState,
       programState: savedProgram,
+      isLoading: !savedProgram,
       editingCodeData: {
         git:
           savedProgram && savedProgram.codeSource === "git"
