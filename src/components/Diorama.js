@@ -57,7 +57,7 @@ class Diorama extends Component {
                   : shrunkSideBarWidth
               }}
             >
-              <div className={"container"}>
+              <div className={"container"} style={{ maxWidth: "none" }}>
                 <Route exact path={"/"} component={ProjectHome} />
                 <Route exact path={"/programs"} component={Programs} />
                 <Route
