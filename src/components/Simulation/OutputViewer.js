@@ -13,6 +13,7 @@ import {
   onChangeOutputViewerProgramFilter,
   onChangeOutputViewerNodeFilter
 } from "../../styleConstants";
+import ExportDataAccordion from "./ExportDataAccordion";
 
 class OutputViewer extends Component {
   constructor(props) {
@@ -310,6 +311,7 @@ class OutputViewer extends Component {
             </div>
           </div>
         </div>
+        <ExportDataAccordion />
         <table className="table compact row-border table-border">
           <thead>
             <tr>
