@@ -78,6 +78,8 @@ export default {
     "The program value for all nodes in single_nodes must be a string, but element %{index} of your single_nodes list isn't.",
   NT_ERROR_CONNECTIONS_SINGLE_NODES_NOT_LIST_OF_STRINGS:
     "The connections value for all nodes in single_nodes must be a list of strings, but element %{index} of your single_nodes list isn't.",
+  NT_ERROR_INVALID_NID:
+    "%{nid} doesn't match the pattern, [a-zA-Z0-9][a-zA-Z0-9_.-]+. All nids must match this pattern.",
 
   configuration: "configuration",
   customConfig: "custom configuration",

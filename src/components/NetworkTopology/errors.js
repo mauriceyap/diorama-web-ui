@@ -53,6 +53,9 @@ const messageWithDataGetters = {
     return polyglot.t("NT_ERROR_CONNECTIONS_SINGLE_NODES_NOT_LIST_OF_STRINGS", {
       index: data
     });
+  },
+  NT_ERROR_INVALID_NID(data, polyglot) {
+    return polyglot.t("NT_ERROR_INVALID_NID", { nid: data });
   }
 };
 
