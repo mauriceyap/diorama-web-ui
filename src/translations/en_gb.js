@@ -88,5 +88,12 @@ export default {
   networkSubnet: "network subnet",
   basePort: "base port",
 
-  simulation: "simulation"
+  simulation: "simulation",
+
+  // constants.SimulationStateEnum
+  INITIALISING: "Getting things ready",
+  CREATING_VIRTUAL_NETWORK: "Setting up the virtual network",
+  CREATING_PROGRAM_IMAGES: "Making images for all your programs",
+  CREATING_NODES: "Making nodes",
+  RESETTING: "Tearing everything down"
 };
