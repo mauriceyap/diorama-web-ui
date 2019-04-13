@@ -16,7 +16,10 @@ class LoadingScreen extends Component {
           style={{ margin: "30vh auto 0 auto" }}
         />
         <div style={{ textAlign: "center", margin: "3rem" }}>
-          <p className={"text-medium fg-darkGray"} style={{ fontSize: "1.3rem" }}>
+          <p
+            className={"text-medium fg-darkGray"}
+            style={{ fontSize: "1.3rem" }}
+          >
             {polyglot.t(simulationState)}...
           </p>
         </div>

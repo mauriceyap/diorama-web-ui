@@ -27,26 +27,8 @@ const sideNavItems = [
 ];
 
 class SideNav extends Component {
-  constructor(props) {
-    super(props);
-    this.renderItems = this.renderItems.bind(this);
-  }
-
-  renderItems() {
-    const { p } = this.props;
-    return sideNavItems.map(({ icon, polyglotLabel, route }) => (
-      <li key={`${icon}${polyglotLabel}${route}`}>
-        <Link to={route}>
-          <span className={`mif-${icon} icon`} />
-          {isScreenWidthGreaterThan(sideBarShrinkScreenWidth) && (
-            <span className="title">{p.tc(polyglotLabel)}</span>
-          )}
-        </Link>
-      </li>
-    ));
-  }
   render() {
-    const { colourScheme } = this.props;
+    const { colourScheme, p } = this.props;
     const backgroundColour = colours.sideNavBackground[colourScheme];
     const foregroundColour = colours.sideNavForeground[colourScheme];
     const className = classnames(
@@ -64,7 +46,16 @@ class SideNav extends Component {
             : shrunkSideBarWidth
         }}
       >
-        {this.renderItems()}
+        {sideNavItems.map(({ icon, polyglotLabel, route }) => (
+          <li key={`${icon}${polyglotLabel}${route}`}>
+            <Link to={route}>
+              <span className={`mif-${icon} icon`} />
+              {isScreenWidthGreaterThan(sideBarShrinkScreenWidth) && (
+                <span className="title">{p.tc(polyglotLabel)}</span>
+              )}
+            </Link>
+          </li>
+        ))}
       </ul>
     );
   }

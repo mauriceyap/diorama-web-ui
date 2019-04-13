@@ -83,7 +83,6 @@ class NetworkTopology extends Component {
       ...customConfig,
       selfConnectedNodes: checked
     });
-    Socket.send(SocketEvents.GET_CUSTOM_CONFIG);
   }
 
   onSaveChangesResponse(response) {

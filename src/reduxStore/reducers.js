@@ -9,6 +9,7 @@ import customConfig from "./customConfig/reducer";
 import simulationState from "./simulationState/reducer";
 import simulationNodes from "./simulationNodes/reducer";
 import simulationLogs from "./simulationLogs/reducer";
+import simulationLogsFilter from "./simulationLogsFilter/reducer";
 
 const reducers = {
   customisation,
@@ -19,7 +20,8 @@ const reducers = {
   polyglot,
   simulationState,
   simulationNodes,
-  simulationLogs
+  simulationLogs,
+  simulationLogsFilter
 };
 
 export default combineReducers(reducers);
