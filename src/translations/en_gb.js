@@ -95,5 +95,10 @@ export default {
   CREATING_VIRTUAL_NETWORK: "Setting up the virtual network",
   CREATING_PROGRAM_IMAGES: "Making images for all your programs",
   CREATING_NODES: "Making nodes",
-  RESETTING: "Tearing everything down"
+  RESETTING: "Tearing everything down",
+
+  startSelected: "start all (%{numberSelected})",
+  stopSelected: "stop all (%{numberSelected})",
+  pauseSelected: "pause all (%{numberSelected})",
+  unpauseSelected: "unpause all (%{numberSelected})"
 };

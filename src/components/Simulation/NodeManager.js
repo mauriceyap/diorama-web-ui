@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getP } from "redux-polyglot";
@@ -30,7 +30,7 @@ const statusLabelsIcons = {
   dead: { icon: "thumbs-down", colour: "lightViolet", label: "containerError" } // shouldn't be seen
 };
 
-const visibleButtonsForStatus = {
+const possibleActionsForStatus = {
   created: ["start"],
   restarting: [],
   running: ["stop", "pause"],
@@ -41,14 +41,83 @@ const visibleButtonsForStatus = {
 };
 
 class NodeManager extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { selectedNodesNids: [] };
+
+    this.toggleSelectedNodeNid = this.toggleSelectedNodeNid.bind(this);
+    this.getSelectedNodesPossibleActions = this.getSelectedNodesPossibleActions.bind(
+      this
+    );
+  }
+
+  toggleSelectedNodeNid(nidToToggle) {
+    const { selectedNodesNids: oldSelectedNodeNids } = this.state;
+    const selectedNodesNids = oldSelectedNodeNids.contains(nidToToggle)
+      ? oldSelectedNodeNids.filter(nid => nid !== nidToToggle)
+      : [...oldSelectedNodeNids, nidToToggle];
+    this.setState({
+      selectedNodesNids
+    });
+  }
+
+  getSelectedNodesPossibleActions() {
+    const { selectedNodesNids } = this.state;
+    const { simulationNodes } = this.props;
+    return selectedNodesNids.reduce((acc, nid) => {
+      const nodeStatus = simulationNodes.filter(
+        ({ nid: thatNid }) => thatNid === nid
+      )[0].status;
+      possibleActionsForStatus[nodeStatus].forEach(action => {
+        const existingNids = acc[action] || [];
+        acc[action] = [...existingNids, nid];
+      });
+      return acc;
+    }, {});
+  }
+
   render() {
     const { simulationNodes, latestLogTimestampForNode } = this.props;
+    const { selectedNodesNids } = this.state;
+    const selectedNodesPossibleActions = this.getSelectedNodesPossibleActions();
     return (
       <div key={simulationNodes.map(({ nid, status }) => `${nid}${status}`)}>
+        {selectedNodesNids.length > 0 ? (
+          <div>
+            <p>{selectedNodesNids.length} nodes selected</p>
+            <button className="button alert" onClick={() => {}}>
+              <MetroIcon icon={"stop"} /> Stop and reset
+            </button>
+            <p>
+              {Object.keys(selectedNodesPossibleActions).map(action => (
+                <NodeManagerButton
+                  action={action}
+                  nids={selectedNodesPossibleActions[action]}
+                  latestTimestamps={selectedNodesPossibleActions[action].reduce(
+                    (acc, nid) => ({
+                      ...acc,
+                      [nid]: latestLogTimestampForNode[nid]
+                    }),
+                    {}
+                  )}
+                  key={`selected${action}`}
+                />
+              ))}
+            </p>
+          </div>
+        ) : (
+          <Fragment />
+        )}
         <table className="table row-border table-border">
           <thead>
             <tr>
-              <th />
+              <th style={{ textAlign: "center" }}>
+                <input
+                  type="checkbox"
+                  data-role="checkbox"
+                  onChange={() => {}}
+                />
+              </th>
               <th>Node ID (nid)</th>
               <th>Status</th>
               <th>Program</th>
@@ -65,8 +134,24 @@ class NodeManager extends Component {
                 description,
                 loggingColour
               }) => (
-                <tr key={nid}>
-                  <td className={`bg-${loggingColour}`} />
+                <tr
+                  key={nid}
+                  className={selectedNodesNids.contains(nid) ? "bg-gray" : ""}
+                >
+                  <td
+                    className={`bg-${loggingColour}`}
+                    style={{ textAlign: "center" }}
+                    key={selectedNodesNids}
+                  >
+                    <input
+                      type="checkbox"
+                      data-role="checkbox"
+                      onChange={() => {
+                        this.toggleSelectedNodeNid(nid);
+                      }}
+                      checked={selectedNodesNids.contains(nid)}
+                    />
+                  </td>
                   <td>{nid}</td>
                   <td>
                     <MetroIcon
@@ -97,8 +182,9 @@ class NodeManager extends Component {
                     />
                   </td>
                   <td>
-                    {visibleButtonsForStatus[status].map(action => (
+                    {possibleActionsForStatus[status].map(action => (
                       <NodeManagerButton
+                        compact
                         action={action}
                         nid={nid}
                         key={nid + action}
