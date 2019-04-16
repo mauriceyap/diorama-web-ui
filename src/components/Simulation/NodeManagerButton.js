@@ -38,6 +38,7 @@ const icons = {
 class NodeManagerButton extends Component {
   constructor(props) {
     super(props);
+    this.state = { isClicked: false };
     this.onClick = this.onClick.bind(this);
   }
 
@@ -52,10 +53,32 @@ class NodeManagerButton extends Component {
         });
       }
     });
+
+    this.setState({ isClicked: true });
   }
 
   render() {
     const { action, compact, polyglot, nids } = this.props;
+    const { isClicked } = this.state;
+
+    if (isClicked) {
+      return (
+        <button
+          className={`button bg-${bgColours[action]} ${
+            compact ? "square" : ""
+          }`}
+        >
+          <div
+            data-role="activity"
+            className={`bg-${bgColours[action]}`}
+            style={{
+              margin: "auto",
+              padding: 0
+            }}
+          />
+        </button>
+      );
+    }
     return (
       <button
         className={`button bg-${bgColours[action]} bg-${
