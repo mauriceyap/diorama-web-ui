@@ -97,8 +97,10 @@ export default {
   CREATING_NODES: "Making nodes",
   RESETTING: "Tearing everything down",
 
-  startSelected: "start all (%{numberSelected})",
-  stopSelected: "stop all (%{numberSelected})",
-  pauseSelected: "pause all (%{numberSelected})",
-  unpauseSelected: "unpause all (%{numberSelected})"
+  startSelected: "start selected (%{numberSelected})",
+  stopSelected: "stop selected (%{numberSelected})",
+  pauseSelected: "pause selected (%{numberSelected})",
+  unpauseSelected: "unpause selected (%{numberSelected})",
+
+  copied: "Copied!"
 };

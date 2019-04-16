@@ -3,6 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import MetroIcon from "../MetroIcon";
 import { selectSimulationLogs } from "../../reduxStore/selectors";
+import Metro from "metro4";
+import { noop } from "../../utils";
+import { toastTimeout } from "../../styleConstants";
+import { getP } from "redux-polyglot";
+import { pPropType } from "../../customPropTypes";
 
 class CopyLogsButton extends Component {
   constructor(props) {
@@ -11,7 +16,7 @@ class CopyLogsButton extends Component {
   }
 
   onClick() {
-    const { logsData } = this.props;
+    const { logsData, polyglot } = this.props;
     const textToCopy =
       "nid\ttimestamp\tmessage\n" +
       logsData
@@ -25,6 +30,10 @@ class CopyLogsButton extends Component {
     dummyTextAreaElement.select();
     document.execCommand("copy");
     document.body.removeChild(dummyTextAreaElement);
+
+    Metro.toast.create(polyglot.t("copied"), noop, toastTimeout, "success", {
+      showTop: true
+    });
   }
 
   render() {
@@ -42,7 +51,8 @@ class CopyLogsButton extends Component {
 CopyLogsButton.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.string,
-  logsData: PropTypes.arrayOf(PropTypes.object).isRequired
+  logsData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  polyglot: pPropType.isRequired
 };
 
 CopyLogsButton.defaultProps = {
@@ -52,7 +62,8 @@ CopyLogsButton.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    logsData: selectSimulationLogs(state)
+    logsData: selectSimulationLogs(state),
+    polyglot: getP(state)
   };
 }
 
