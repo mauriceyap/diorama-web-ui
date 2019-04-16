@@ -84,22 +84,26 @@ class NodeManager extends Component {
       <div key={simulationNodes.map(({ nid, status }) => `${nid}${status}`)}>
         {selectedNodesNids.length > 0 ? (
           <div>
-            <p>
+            <div className="mt-2 mb-2">
               {Object.keys(selectedNodesPossibleActions).map(action => (
-                <NodeManagerButton
-                  action={action}
-                  nids={selectedNodesPossibleActions[action]}
-                  latestTimestamps={selectedNodesPossibleActions[action].reduce(
-                    (acc, nid) => ({
-                      ...acc,
-                      [nid]: latestLogTimestampForNode[nid]
-                    }),
-                    {}
-                  )}
-                  key={`selected${action}`}
-                />
+                <Fragment>
+                  <NodeManagerButton
+                    action={action}
+                    nids={selectedNodesPossibleActions[action]}
+                    latestTimestamps={selectedNodesPossibleActions[
+                      action
+                    ].reduce(
+                      (acc, nid) => ({
+                        ...acc,
+                        [nid]: latestLogTimestampForNode[nid]
+                      }),
+                      {}
+                    )}
+                    key={`selected${action}`}
+                  />{" "}
+                </Fragment>
               ))}
-            </p>
+            </div>
           </div>
         ) : (
           <Fragment />
