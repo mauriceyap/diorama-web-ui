@@ -45,9 +45,30 @@ class NodeManager extends Component {
     super(props);
     this.state = { selectedNodesNids: [] };
 
+    this.getAllNodeNids = this.getAllNodeNids.bind(this);
+    this.getAreAllNodesSelected = this.getAreAllNodesSelected.bind(this);
+    this.toggleAllNodesSelected = this.toggleAllNodesSelected.bind(this);
     this.toggleSelectedNodeNid = this.toggleSelectedNodeNid.bind(this);
     this.getSelectedNodesPossibleActions = this.getSelectedNodesPossibleActions.bind(
       this
+    );
+  }
+
+  getAllNodeNids() {
+    const { simulationNodes } = this.props;
+    return simulationNodes.map(({ nid }) => nid);
+  }
+
+  getAreAllNodesSelected() {
+    const { selectedNodesNids } = this.state;
+    return this.getAllNodeNids().length === selectedNodesNids.length;
+  }
+
+  toggleAllNodesSelected() {
+    this.setState(
+      this.getAreAllNodesSelected()
+        ? { selectedNodesNids: [] }
+        : { selectedNodesNids: this.getAllNodeNids() }
     );
   }
 
@@ -115,7 +136,8 @@ class NodeManager extends Component {
                 <input
                   type="checkbox"
                   data-role="checkbox"
-                  onChange={() => {}}
+                  onChange={this.toggleAllNodesSelected}
+                  checked={this.getAreAllNodesSelected()}
                 />
               </th>
               <th>Node ID (nid)</th>
