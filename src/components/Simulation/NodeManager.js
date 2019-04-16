@@ -84,10 +84,6 @@ class NodeManager extends Component {
       <div key={simulationNodes.map(({ nid, status }) => `${nid}${status}`)}>
         {selectedNodesNids.length > 0 ? (
           <div>
-            <p>{selectedNodesNids.length} nodes selected</p>
-            <button className="button alert" onClick={() => {}}>
-              <MetroIcon icon={"stop"} /> Stop and reset
-            </button>
             <p>
               {Object.keys(selectedNodesPossibleActions).map(action => (
                 <NodeManagerButton
