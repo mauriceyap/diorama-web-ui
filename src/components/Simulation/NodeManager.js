@@ -186,9 +186,11 @@ class NodeManager extends Component {
                       <NodeManagerButton
                         compact
                         action={action}
-                        nid={nid}
+                        nids={[nid]}
                         key={nid + action}
-                        latestTimestamp={latestLogTimestampForNode[nid]}
+                        latestTimestamps={{
+                          [nid]: latestLogTimestampForNode[nid]
+                        }}
                       />
                     ))}
                   </td>

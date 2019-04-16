@@ -42,18 +42,8 @@ class NodeManagerButton extends Component {
   }
 
   onClick() {
-    const {
-      nid: propNid,
-      action,
-      latestTimestamp: propLatestTimestamp,
-      nids,
-      latestTimestamps: propLatestTimestamps
-    } = this.props;
-    const latestTimestamps =
-      propNid && propLatestTimestamp
-        ? { propNid: propLatestTimestamp }
-        : propLatestTimestamps;
-    (propNid && propLatestTimestamp ? [propNid] : nids).forEach(nid => {
+    const { action, nids, latestTimestamps } = this.props;
+    nids.forEach(nid => {
       Socket.send(SocketEvents.PERFORM_NODE_ACTION, { nid, action });
       if (action === "start") {
         Socket.send(SocketEvents.STREAM_NODE_LOGS, {
@@ -85,20 +75,14 @@ class NodeManagerButton extends Component {
 
 NodeManagerButton.propTypes = {
   action: PropTypes.string.isRequired,
-  nid: PropTypes.string,
-  nids: PropTypes.arrayOf(PropTypes.string),
-  latestTimestamps: PropTypes.object,
-  latestTimestamp: PropTypes.string,
+  nids: PropTypes.arrayOf(PropTypes.string).isRequired,
+  latestTimestamps: PropTypes.object.isRequired,
   compact: PropTypes.bool,
   polyglot: pPropType.isRequired
 };
 
 NodeManagerButton.defaultProps = {
-  latestTimestamp: undefined,
-  compact: false,
-  nid: undefined,
-  nids: [],
-  latestTimestamps: {}
+  compact: false
 };
 
 function mapStateToProps(state) {
