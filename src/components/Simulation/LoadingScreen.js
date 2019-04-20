@@ -30,7 +30,7 @@ class LoadingScreen extends Component {
 
 LoadingScreen.propTypes = {
   simulationState: PropTypes.string.isRequired,
-  p: pPropType.isRequired
+  polyglot: pPropType.isRequired
 };
 
 function mapStateToProps(state) {
