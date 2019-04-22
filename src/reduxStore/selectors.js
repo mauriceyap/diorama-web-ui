@@ -7,3 +7,12 @@ export const selectSimulationState = state => state.simulationState;
 export const selectSimulationNodes = state => state.simulationNodes;
 export const selectSimulationLogs = state => state.simulationLogs;
 export const selectSimulationLogsFilter = state => state.simulationLogsFilter;
+export const selectEditingConnectionParameters = state =>
+  state.editingConnectionParameters;
+export const selectConnectionParameters = state => state.connectionParameters;
+export function selectConnectParametersFor(state, fromNid, toNid) {
+  const connectionParameters = selectConnectionParameters(state);
+  return connectionParameters[fromNid] && connectionParameters[fromNid][toNid]
+    ? connectionParameters[fromNid][toNid]
+    : {};
+}

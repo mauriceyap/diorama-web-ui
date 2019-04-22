@@ -34,7 +34,7 @@ import { saveNetworkTopology } from "../../HTTPServer";
 import { noop } from "../../utils";
 import Metro from "metro4";
 import { getErrorDisplayMessage } from "./errors";
-import NetworkTopologyViewer from "../common/NetworkTopologyViewer";
+import NetworkTopologyViewer from "../NetworkTopologyViewer";
 
 class NetworkTopology extends Component {
   constructor(props) {
@@ -83,6 +83,7 @@ class NetworkTopology extends Component {
       ...customConfig,
       selfConnectedNodes: checked
     });
+    Socket.send(SocketEvents.GET_CUSTOM_CONFIG);
   }
 
   onSaveChangesResponse(response) {
@@ -162,7 +163,7 @@ class NetworkTopology extends Component {
                 ))}
               </select>
             </div>
-            <div className="mt-4 cell-md-6">
+            <div className="mt-4 cell-md-6" key={selfConnectedNodes}>
               <h6>{p.tc("selfConnectedNodes")}</h6>
               <p>
                 {selfConnectedNodes

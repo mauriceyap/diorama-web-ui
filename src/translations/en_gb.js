@@ -102,5 +102,12 @@ export default {
   pauseSelected: "pause selected (%{numberSelected})",
   unpauseSelected: "unpause selected (%{numberSelected})",
 
-  copied: "Copied!"
+  copied: "Copied!",
+
+  modifyConnection: "modify connection: %{fromNid} to %{toNid}",
+  messageSendingSuccessRate: "message sending success rate",
+  messageSendingDelay: "message sending delay",
+  distribution: "distribution",
+  parameters: "parameters",
+  millisecondAbbreviation: "ms"
 };

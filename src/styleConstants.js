@@ -1,4 +1,6 @@
 export const preferencesDialogId = "preferencesDialog";
+export const connectionParametersEditorDialogId =
+  "connectionParametersEditorDialog";
 export const onChangeColourSchemeSelect = "onChangeColourSchemeSelect";
 export const onChangeLanguageSelect = "onChangeLanguageSelect";
 
@@ -13,6 +15,11 @@ export const onChangeOutputViewerNodeFilter = "onChangeOutputViewerNodeFilter";
 
 export const onChangeNetworkTopologyLanguage =
   "onChangeNetworkTopologyLanguage";
+
+export const onSelectConnectionParametersDelayDistribution =
+  "onSelectConnectionParametersDelayDistribution";
+export const onChangeConnectionParametersSuccessRate =
+  "onChangeConnectionParametersSuccessRate";
 
 export const toastTimeout = 4000;
 export const toastSeparationDistance = 50;

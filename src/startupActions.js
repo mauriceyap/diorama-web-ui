@@ -1,4 +1,4 @@
-import { addProgram } from "./reduxStore/programs/reducer";
+import { setAllPrograms } from "./reduxStore/programs/reducer";
 import { setLanguage } from "redux-polyglot";
 import translations from "./translations";
 import Socket from "./Socket";
@@ -17,11 +17,12 @@ import { setSimulationState } from "./reduxStore/simulationState/reducer";
 import { SimulationStateEnum } from "./constants";
 import { setSimulationNodes } from "./reduxStore/simulationNodes/reducer";
 import { addSimulationLogs } from "./reduxStore/simulationLogs/reducer";
+import { setConnectionParameters } from "./reduxStore/connectionParameters/reducer";
 
 export default function(dispatch) {
   const onReceiveEvent = {
     [SocketEvents.PROGRAMS](programs) {
-      programs.forEach(program => dispatch(addProgram(program)));
+      dispatch(setAllPrograms(programs));
     },
 
     [SocketEvents.RAW_NETWORK_TOPOLOGY](topology) {
@@ -54,6 +55,10 @@ export default function(dispatch) {
 
     [SocketEvents.UNPACKED_NETWORK_TOPOLOGY](topology) {
       dispatch(setUnpackedNetworkTopology(topology));
+    },
+
+    [SocketEvents.CONNECTION_PARAMETERS](connectionParameters) {
+      dispatch(setConnectionParameters(connectionParameters));
     }
   };
   // get these things from the server
@@ -74,4 +79,5 @@ export default function(dispatch) {
   Socket.send(SocketEvents.GET_CUSTOM_CONFIG);
   Socket.send(SocketEvents.GET_SIMULATION_STATE);
   Socket.send(SocketEvents.GET_UNPACKED_NETWORK_TOPOLOGY);
+  Socket.send(SocketEvents.GET_CONNECTION_PARAMETERS);
 }
