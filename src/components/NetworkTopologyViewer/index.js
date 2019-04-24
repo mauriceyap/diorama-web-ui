@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import Metro from "metro4";
 import { getP } from "redux-polyglot";
 import { pPropType } from "../../customPropTypes";
-import ConnectionParametersEditorDialog from "./ConnectionParametersEditorDialog";
 import { connectionParametersEditorDialogId } from "../../styleConstants";
 import {
   setConnectionParametersEditorDelayDistribution,
@@ -105,7 +104,6 @@ class Index extends Component {
           ref={this.ref}
           className="border bd-lightGray"
         />
-        <ConnectionParametersEditorDialog />
       </Fragment>
     );
   }

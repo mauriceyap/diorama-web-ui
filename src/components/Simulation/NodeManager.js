@@ -107,7 +107,7 @@ class NodeManager extends Component {
           <div>
             <div className="mt-2 mb-2">
               {Object.keys(selectedNodesPossibleActions).map(action => (
-                <Fragment>
+                <Fragment key={action}>
                   <NodeManagerButton
                     action={action}
                     nids={selectedNodesPossibleActions[action]}
