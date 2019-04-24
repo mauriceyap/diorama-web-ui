@@ -9,7 +9,7 @@ import NewProgramWizard from "./NewProgramWizard";
 import { addProgram } from "../../reduxStore/programs/reducer";
 import { getP } from "redux-polyglot";
 import {
-  defaultCodeData,
+  defaultCodeDataForRuntime,
   defaultCodeSource,
   defaultDescription,
   defaultMainHandler
@@ -52,7 +52,7 @@ class Programs extends Component {
       runtime,
       name,
       codeSource: defaultCodeSource,
-      codeData: defaultCodeData,
+      codeData: defaultCodeDataForRuntime[runtime],
       lastEdited: new Date().getTime(),
       description: defaultDescription,
       mainHandler: defaultMainHandler

@@ -41,7 +41,16 @@ export const codeSourceLabels = {
 };
 
 export const defaultCodeSource = "raw";
-export const defaultCodeData = "";
+export const defaultCodeDataForRuntime = {
+  python2: "NOT IMPLEMENTED YET",
+  python3:
+    "def main(peer_nids, my_nid, send, receive, storage):\n" +
+    "    while True:\n" +
+    "        message, nid = receive()\n" +
+    "        print(f'{message.decode(\"utf8\")} from {nid}')\n",
+  elixir: "NOT IMPLEMENTED YET",
+  scala: "NOT IMPLEMENTED YET"
+};
 export const defaultMainHandler = "main";
 
 export const codeSources = ["raw", "zip", "git"];
