@@ -35,8 +35,11 @@ class Simulation extends Component {
     this.getSimulationNodes = this.getSimulationNodes.bind(this);
     this.stopAndResetSimulation = this.stopAndResetSimulation.bind(this);
   }
+
   componentDidMount() {
+    const { p } = this.props;
     this.getSimulationNodes();
+    document.title = `Diorama - ${p.tc("simulation")}`;
   }
 
   getSimulationNodes() {

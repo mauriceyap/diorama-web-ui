@@ -8,4 +8,8 @@ export default class ProjectHome extends Component {
       </Fragment>
     );
   }
+
+  componentDidMount() {
+    document.title = "Diorama - Home";
+  }
 }

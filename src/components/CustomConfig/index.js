@@ -144,6 +144,11 @@ class CustomConfig extends Component {
     );
   }
 
+  componentDidMount() {
+    const { p } = this.props;
+    document.title = `Diorama - ${p.tc("customConfig")}`;
+  }
+
   componentDidUpdate(prevProps) {
     const { customConfig: prevCustomConfig } = prevProps;
     const { customConfig } = this.props;

@@ -1,0 +1,3 @@
+[submodule "src/userDocs"]
+	path = src/userDocs
+	url = https://github.com/mauriceyap/diorama-docs.git

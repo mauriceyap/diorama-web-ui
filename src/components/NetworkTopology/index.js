@@ -222,6 +222,11 @@ class NetworkTopology extends Component {
     );
   }
 
+  componentDidMount() {
+    const { p } = this.props;
+    document.title = `Diorama - ${p.tc("networkTopology")}`;
+  }
+
   componentDidUpdate(prevProps) {
     const { language } = this.state;
     const {

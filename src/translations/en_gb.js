@@ -55,6 +55,7 @@ export default {
   existingUploadedFile:
     "You've already uploaded a file, but you can overwrite it by uploading another one.",
   checkoutBranchOrTag: "Branch/tag name or commit SHA",
+  apiDocumentation: "API documentation",
 
   networkTopology: "network topology",
   revert: "revert",

@@ -114,6 +114,11 @@ class Programs extends Component {
       </Fragment>
     );
   }
+
+  componentDidMount() {
+    const { p } = this.props;
+    document.title = `Diorama - ${p.tc("programs")}`;
+  }
 }
 
 Programs.propTypes = {
