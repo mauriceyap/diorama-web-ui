@@ -23,6 +23,7 @@ import {
 } from "../../reduxStore/networkTopology/reducer";
 import Socket from "../../Socket";
 import SocketEvents from "../../SocketEvents";
+import NetworkTopologyAPIDocumentationAccordion from "./NetworkTopologyAPIDocumentationAccordion";
 
 import "brace/theme/tomorrow";
 import "brace/theme/monokai";
@@ -215,6 +216,14 @@ class NetworkTopology extends Component {
             </div>
             <div className="cell-md-6">
               <NetworkTopologyViewer height={500} />
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="cell-12">
+              <NetworkTopologyAPIDocumentationAccordion
+                language={language}
+                key={language}
+              />
             </div>
           </div>
         </div>

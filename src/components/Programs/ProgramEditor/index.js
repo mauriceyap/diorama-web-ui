@@ -17,7 +17,7 @@ import Socket from "../../../Socket";
 import SocketEvents from "../../../SocketEvents";
 import EditCodeData from "./EditCodeData";
 import { uploadZipFile } from "../../../HTTPServer";
-import APIDocumentationAccordion from "./APIDocumentationAccordion";
+import ProgramAPIDocumentationAccordion from "./ProgramAPIDocumentationAccordion";
 
 const initialState = {
   program: null,
@@ -306,8 +306,8 @@ class ProgramEditor extends Component {
               onSelectedZipFileChange={this.onSelectedZipFileChange}
               zipFileName={zipFileName}
             />
-            <div className={"mt-6"}/>
-            <APIDocumentationAccordion runtime={programState.runtime} />
+            <div className={"mt-6"} />
+            <ProgramAPIDocumentationAccordion runtime={programState.runtime} />
           </div>
           <div className="mt-6">
             <EditMainHandler

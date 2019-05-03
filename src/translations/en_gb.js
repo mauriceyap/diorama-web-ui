@@ -55,9 +55,10 @@ export default {
   existingUploadedFile:
     "You've already uploaded a file, but you can overwrite it by uploading another one.",
   checkoutBranchOrTag: "Branch/tag name or commit SHA",
-  apiDocumentation: "API documentation",
+  programAPIDocumentation: "program API documentation",
 
   networkTopology: "network topology",
+  networkTopologyAPIDocumentation: "network topology API documentation",
   revert: "revert",
   topologySaved: "Topology saved!",
   onlyAllowedKeys: "The only allowed keys are %{allowedKeys}.",
