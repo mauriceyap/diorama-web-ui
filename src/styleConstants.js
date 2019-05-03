@@ -1,6 +1,7 @@
 export const preferencesDialogId = "preferencesDialog";
 export const connectionParametersEditorDialogId =
   "connectionParametersEditorDialog";
+export const userEventsDialogId = "userEventsDialog";
 export const onChangeColourSchemeSelect = "onChangeColourSchemeSelect";
 export const onChangeLanguageSelect = "onChangeLanguageSelect";
 

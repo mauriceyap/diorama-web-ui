@@ -16,3 +16,4 @@ export function selectConnectParametersFor(state, fromNid, toNid) {
     ? connectionParameters[fromNid][toNid]
     : {};
 }
+export const selectUserEvents = state => state.userEvents;

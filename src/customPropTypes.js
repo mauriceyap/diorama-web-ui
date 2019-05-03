@@ -30,3 +30,9 @@ export const pPropType = PropTypes.shape({
   tu: PropTypes.func.isRequired,
   tm: PropTypes.func.isRequired
 });
+
+export const userEventPropType = PropTypes.shape({
+  time: PropTypes.number.isRequired,
+  node: PropTypes.string.isRequired,
+  action: PropTypes.string.isRequired
+});

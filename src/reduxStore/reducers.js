@@ -12,6 +12,7 @@ import simulationLogs from "./simulationLogs/reducer";
 import simulationLogsFilter from "./simulationLogsFilter/reducer";
 import editingConnectionParameters from "./editingConnectionParameters/reducer";
 import connectionParameters from "./connectionParameters/reducer";
+import userEvents from "./userEvents/reducer";
 
 const reducers = {
   customisation,
@@ -25,7 +26,8 @@ const reducers = {
   simulationLogs,
   simulationLogsFilter,
   editingConnectionParameters,
-  connectionParameters
+  connectionParameters,
+  userEvents
 };
 
 export default combineReducers(reducers);

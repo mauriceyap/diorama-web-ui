@@ -23,6 +23,7 @@ import {
 } from "../styleConstants";
 import { isScreenWidthGreaterThan } from "../utils";
 import ConnectionParametersEditorDialog from "./NetworkTopologyViewer/ConnectionParametersEditorDialog";
+import UserEventsDialog from "./Simulation/userEvents/UserEventsDialog";
 
 class Diorama extends Component {
   constructor(props) {
@@ -77,6 +78,7 @@ class Diorama extends Component {
           </div>
           <PreferencesDialog />
           <ConnectionParametersEditorDialog />
+          <UserEventsDialog />
         </Fragment>
       </Router>
     );

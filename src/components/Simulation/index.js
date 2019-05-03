@@ -7,7 +7,8 @@ import Socket from "../../Socket";
 import SocketEvents from "../../SocketEvents";
 import {
   selectSimulationNodes,
-  selectSimulationState
+  selectSimulationState,
+  selectUserEvents
 } from "../../reduxStore/selectors";
 import StartSimulation from "./StartSimulation";
 import { SimulationStateEnum } from "../../constants";
@@ -16,6 +17,8 @@ import LoadingScreen from "./LoadingScreen";
 import NodeManager from "./NodeManager";
 import OutputViewer from "./OutputViewer";
 import { clearSimulationLogs } from "../../reduxStore/simulationLogs/reducer";
+import Metro from "metro4";
+import { userEventsDialogId } from "../../styleConstants";
 
 const idleStates = [SimulationStateEnum.UNINITIALISED];
 const loadingStates = [
@@ -28,6 +31,16 @@ const runningStates = [
   SimulationStateEnum.READY_TO_RUN,
   SimulationStateEnum.RUNNING
 ];
+
+export const possibleActionsForStatus = {
+  created: ["start"],
+  restarting: [],
+  running: ["stop", "pause"],
+  removing: [], // shouldn't be seen
+  paused: ["unpause", "stop"],
+  exited: ["start"],
+  dead: [] // shouldn't be seen
+};
 
 class Simulation extends Component {
   constructor(props) {
@@ -64,8 +77,12 @@ class Simulation extends Component {
     dispatch(clearSimulationLogs());
   }
 
+  static openUserEventsDialog() {
+    Metro.dialog.open(`#${userEventsDialogId}`);
+  }
+
   render() {
-    const { p, simulationState } = this.props;
+    const { p, simulationState, isUserEventsRunning } = this.props;
     return (
       <Fragment>
         <span className={"display1"}>{p.tc("simulation")}</span>
@@ -79,13 +96,32 @@ class Simulation extends Component {
 
         {runningStates.includes(simulationState) && (
           <Fragment>
-            <div style={{ textAlign: "right" }}>
-              <button
-                className="button alert"
-                onClick={this.stopAndResetSimulation}
-              >
-                <MetroIcon icon={"stop"} /> Stop and reset
-              </button>
+            <div
+              className="mt-4"
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <div>
+                {isUserEventsRunning ? (
+                  <button className="button primary disabled">
+                    <MetroIcon icon={"spinner"} /> Running scheduled events
+                  </button>
+                ) : (
+                  <button
+                    className="button primary"
+                    onClick={Simulation.openUserEventsDialog}
+                  >
+                    <MetroIcon icon={"event-available"} /> Schedule events
+                  </button>
+                )}
+              </div>
+              <div>
+                <button
+                  className="button alert"
+                  onClick={this.stopAndResetSimulation}
+                >
+                  <MetroIcon icon={"stop"} /> Stop and reset
+                </button>
+              </div>
             </div>
             <div className="mt-6">
               <ul data-role="tabs" data-tabs-type="group" data-expand="true">
@@ -118,14 +154,16 @@ Simulation.propTypes = {
   p: pPropType.isRequired,
   simulationState: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
-  isSimulationNodesEmpty: PropTypes.bool.isRequired
+  isSimulationNodesEmpty: PropTypes.bool.isRequired,
+  isUserEventsRunning: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     p: getP(state),
     simulationState: selectSimulationState(state),
-    isSimulationNodesEmpty: selectSimulationNodes(state).length === 0
+    isSimulationNodesEmpty: selectSimulationNodes(state).length === 0,
+    isUserEventsRunning: selectUserEvents(state).isRunning
   };
 }
 

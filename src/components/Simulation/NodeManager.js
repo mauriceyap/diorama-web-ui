@@ -10,6 +10,7 @@ import {
 import { runtimeIcons, runtimeLabels } from "../Programs/constants";
 import MetroIcon from "../MetroIcon";
 import NodeManagerButton from "./NodeManagerButton";
+import { possibleActionsForStatus } from "./index";
 
 const runtimeIconStyle = {
   float: "right",
@@ -28,16 +29,6 @@ const statusLabelsIcons = {
   paused: { icon: "pause", colour: "darkCobalt", label: "paused" },
   exited: { icon: "hotel", colour: "crimson", label: "stopped" },
   dead: { icon: "thumbs-down", colour: "lightViolet", label: "containerError" } // shouldn't be seen
-};
-
-const possibleActionsForStatus = {
-  created: ["start"],
-  restarting: [],
-  running: ["stop", "pause"],
-  removing: [], // shouldn't be seen
-  paused: ["unpause", "stop"],
-  exited: ["start"],
-  dead: [] // shouldn't be seen
 };
 
 class NodeManager extends Component {
