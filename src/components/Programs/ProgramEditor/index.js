@@ -53,7 +53,7 @@ class ProgramEditor extends Component {
         raw:
           savedProgram && savedProgram.codeSource === "raw"
             ? savedProgram.codeData
-            : ""
+            : { code: "", dependencies: "" }
       }
     };
 
@@ -70,6 +70,9 @@ class ProgramEditor extends Component {
       this
     );
     this.onRawCodeChange = this.onRawCodeChange.bind(this);
+    this.onRawCodeDependenciesChange = this.onRawCodeDependenciesChange.bind(
+      this
+    );
     this.onSelectedZipFileChange = this.onSelectedZipFileChange.bind(this);
   }
 
@@ -126,14 +129,41 @@ class ProgramEditor extends Component {
     });
   }
 
-  onRawCodeChange(raw) {
+  onRawCodeChange(code) {
     const {
       editingCodeData: originalEditingCodeData,
       programState: originalProgramState
     } = this.state;
+    const { raw: originalEditingCodeDataRaw } = originalEditingCodeData;
+    const { codeData: originalProgramStateRawData } = originalProgramState;
     this.setState({
-      editingCodeData: { ...originalEditingCodeData, raw },
-      programState: { ...originalProgramState, codeData: raw }
+      editingCodeData: {
+        ...originalEditingCodeData,
+        raw: { ...originalEditingCodeDataRaw, code }
+      },
+      programState: {
+        ...originalProgramState,
+        codeData: { ...originalProgramStateRawData, code }
+      }
+    });
+  }
+
+  onRawCodeDependenciesChange(dependencies) {
+    const {
+      editingCodeData: originalEditingCodeData,
+      programState: originalProgramState
+    } = this.state;
+    const { raw: originalEditingCodeDataRaw } = originalEditingCodeData;
+    const { codeData: originalProgramStateRawData } = originalProgramState;
+    this.setState({
+      editingCodeData: {
+        ...originalEditingCodeData,
+        raw: { ...originalEditingCodeDataRaw, dependencies }
+      },
+      programState: {
+        ...originalProgramState,
+        codeData: { ...originalProgramStateRawData, dependencies }
+      }
     });
   }
 
@@ -242,7 +272,11 @@ class ProgramEditor extends Component {
     const {
       redirectToProgramsPage,
       programState,
-      editingCodeData: { raw: rawCode, git: gitRepository, zip: zipFileName },
+      editingCodeData: {
+        raw: { code: rawCode, dependencies: rawCodeDependencies },
+        git: gitRepository,
+        zip: zipFileName
+      },
       isLoading
     } = this.state;
 
@@ -297,12 +331,14 @@ class ProgramEditor extends Component {
               programName={programName}
               runtime={programState.runtime}
               rawCode={rawCode}
+              rawCodeDependencies={rawCodeDependencies}
               gitRepository={gitRepository}
               onGitRepositoryUrlChange={this.onGitRepositoryUrlChange}
               onGitCheckoutBranchOrTagChange={
                 this.onGitCheckoutBranchOrTagChange
               }
               onRawCodeChange={this.onRawCodeChange}
+              onRawCodeDependenciesChange={this.onRawCodeDependenciesChange}
               onSelectedZipFileChange={this.onSelectedZipFileChange}
               zipFileName={zipFileName}
             />
