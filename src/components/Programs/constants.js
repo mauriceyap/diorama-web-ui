@@ -42,14 +42,17 @@ export const codeSourceLabels = {
 
 export const defaultCodeSource = "raw";
 export const defaultCodeDataForRuntime = {
-  python2: "NOT IMPLEMENTED YET",
-  python3:
-    "def main(peer_nids, my_nid, send, receive, storage):\n" +
-    "    while True:\n" +
-    "        message, nid = receive()\n" +
-    "        print(f'{message.decode(\"utf8\")} from {nid}')\n",
-  elixir: "NOT IMPLEMENTED YET",
-  scala: "NOT IMPLEMENTED YET"
+  python2: { code: "NOT IMPLEMENTED YET", dependencies: "" },
+  python3: {
+    code:
+      "def main(peer_nids, my_nid, send, receive, storage):\n" +
+      "    while True:\n" +
+      "        message, nid = receive()\n" +
+      "        print(f'{message.decode(\"utf8\")} from {nid}')\n",
+    dependencies: ""
+  },
+  elixir: { code: "NOT IMPLEMENTED YET", dependencies: "" },
+  scala: { code: "NOT IMPLEMENTED YET", dependencies: "" }
 };
 export const defaultMainHandler = "main";
 
