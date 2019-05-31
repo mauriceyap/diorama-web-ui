@@ -22,7 +22,7 @@ const style = {
   width: "100%"
 };
 
-class Index extends Component {
+class NetworkTopologyViewer extends Component {
   constructor(props) {
     super(props);
     this.ref = createRef();
@@ -117,7 +117,7 @@ class Index extends Component {
   }
 }
 
-Index.propTypes = {
+NetworkTopologyViewer.propTypes = {
   topology: PropTypes.arrayOf(PropTypes.object),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   polyglot: pPropType.isRequired,
@@ -125,7 +125,7 @@ Index.propTypes = {
   connectionParameters: PropTypes.object.isRequired
 };
 
-Index.defaultProps = {
+NetworkTopologyViewer.defaultProps = {
   topology: [],
   height: "50rem"
 };
@@ -138,4 +138,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps)(NetworkTopologyViewer);

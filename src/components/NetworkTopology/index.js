@@ -36,6 +36,7 @@ import { noop } from "../../utils";
 import Metro from "metro4";
 import { getErrorDisplayMessage } from "./errors";
 import NetworkTopologyViewer from "../NetworkTopologyViewer";
+import { setConnectionParameters } from "../../reduxStore/connectionParameters/reducer";
 
 class NetworkTopology extends Component {
   constructor(props) {
@@ -85,6 +86,7 @@ class NetworkTopology extends Component {
       selfConnectedNodes: checked
     });
     Socket.send(SocketEvents.GET_CUSTOM_CONFIG);
+    Socket.send(SocketEvents.GET_CONNECTION_PARAMETERS);
   }
 
   onSaveChangesResponse(response) {
@@ -95,10 +97,11 @@ class NetworkTopology extends Component {
       .then(data => {
         const { isValidAndSaved } = data;
         if (isValidAndSaved) {
-          const { unpackedTopology } = data;
+          const { unpackedTopology, connectionParameters } = data;
           dispatch(setNetworkTopologyLanguage(language));
           dispatch(setRawNetworkTopology(rawNetworkTopology));
           dispatch(setUnpackedNetworkTopology(unpackedTopology));
+          dispatch(setConnectionParameters(connectionParameters));
           Metro.toast.create(
             p.t("topologySaved"),
             noop,
