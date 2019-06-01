@@ -18,6 +18,7 @@ import { SimulationStateEnum } from "./constants";
 import { setSimulationNodes } from "./reduxStore/simulationNodes/reducer";
 import { addSimulationLogs } from "./reduxStore/simulationLogs/reducer";
 import { setConnectionParameters } from "./reduxStore/connectionParameters/reducer";
+import { setCurrentSimulationHash } from "./reduxStore/currentSimulationHash/reducer";
 
 export default function(dispatch) {
   const onReceiveEvent = {
@@ -59,6 +60,10 @@ export default function(dispatch) {
 
     [SocketEvents.CONNECTION_PARAMETERS](connectionParameters) {
       dispatch(setConnectionParameters(connectionParameters));
+    },
+
+    [SocketEvents.CURRENT_SIMULATION_HASH](currentSimulationHash) {
+      dispatch(setCurrentSimulationHash(currentSimulationHash));
     }
   };
   // get these things from the server
@@ -80,4 +85,5 @@ export default function(dispatch) {
   Socket.send(SocketEvents.GET_SIMULATION_STATE);
   Socket.send(SocketEvents.GET_UNPACKED_NETWORK_TOPOLOGY);
   Socket.send(SocketEvents.GET_CONNECTION_PARAMETERS);
+  Socket.send(SocketEvents.GET_CURRENT_SIMULATION_HASH);
 }

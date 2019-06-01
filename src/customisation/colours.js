@@ -22,6 +22,22 @@ export default {
   aceEditorTheme: {
     default: "tomorrow",
     strange: "monokai"
+  },
+  homePageTopDivBackground: {
+    default: "darkIndigo",
+    strange: "darkRed"
+  },
+  homePageTopDivForeground: {
+    default: "white",
+    strange: "white"
+  },
+  homePageBottomDivBackground: {
+    default: "indigo",
+    strange: "red"
+  },
+  homePageBottomDivForeground: {
+    default: "white",
+    strange: "white"
   }
 };
 

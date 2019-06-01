@@ -16,14 +16,25 @@ import {
 import { isScreenWidthGreaterThan } from "../../utils";
 
 const sideNavItems = [
-  { icon: "apps", polyglotLabel: "programs", route: "/programs" },
+  {
+    icon: "apps",
+    polyglotLabel: "programs",
+    route: "/programs",
+    introStepsClassName: "intro-step-one"
+  },
   {
     icon: "tree",
     polyglotLabel: "networkTopology",
-    route: "/network-topology"
+    route: "/network-topology",
+    introStepsClassName: "intro-step-two"
   },
   { icon: "wrench", polyglotLabel: "configuration", route: "/custom-config" },
-  { icon: "space-shuttle", polyglotLabel: "simulation", route: "/simulation" }
+  {
+    icon: "space-shuttle",
+    polyglotLabel: "simulation",
+    route: "/simulation",
+    introStepsClassName: "intro-step-three"
+  }
 ];
 
 class SideNav extends Component {
@@ -46,16 +57,23 @@ class SideNav extends Component {
             : shrunkSideBarWidth
         }}
       >
-        {sideNavItems.map(({ icon, polyglotLabel, route }) => (
-          <li key={`${icon}${polyglotLabel}${route}`}>
-            <Link to={route}>
-              <span className={`mif-${icon} icon`} />
-              {isScreenWidthGreaterThan(sideBarShrinkScreenWidth) && (
-                <span className="title">{p.tc(polyglotLabel)}</span>
-              )}
-            </Link>
-          </li>
-        ))}
+        {sideNavItems.map(
+          ({ icon, polyglotLabel, route, introStepsClassName }) => (
+            <li key={`${icon}${polyglotLabel}${route}`}>
+              <Link to={route}>
+                <span
+                  className={classnames(
+                    `mif-${icon} icon`,
+                    introStepsClassName
+                  )}
+                />
+                {isScreenWidthGreaterThan(sideBarShrinkScreenWidth) && (
+                  <span className="title">{p.tc(polyglotLabel)}</span>
+                )}
+              </Link>
+            </li>
+          )
+        )}
       </ul>
     );
   }

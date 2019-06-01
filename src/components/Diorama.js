@@ -51,16 +51,16 @@ class Diorama extends Component {
               <SideNav />
             </div>
             <div
-              className={"pt-16"}
               style={{
                 width: "100%",
                 marginLeft: isScreenWidthGreaterThan(sideBarShrinkScreenWidth)
                   ? sideBarWidth
-                  : shrunkSideBarWidth
+                  : shrunkSideBarWidth,
+                paddingTop: 52.75
               }}
             >
-              <div className={"container"} style={{ maxWidth: "none" }}>
-                <Route exact path={"/"} component={ProjectHome} />
+              <Route exact path={"/"} component={ProjectHome} />
+              <div className={"container pt-3"} style={{ maxWidth: "none" }}>
                 <Route exact path={"/programs"} component={Programs} />
                 <Route
                   path={"/programs/:programName"}

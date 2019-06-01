@@ -17,3 +17,4 @@ export function selectConnectParametersFor(state, fromNid, toNid) {
     : {};
 }
 export const selectUserEvents = state => state.userEvents;
+export const selectCurrentSimulationHash = state => state.currentSimulationHash;

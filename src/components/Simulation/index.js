@@ -6,6 +6,9 @@ import { pPropType } from "../../customPropTypes";
 import Socket from "../../Socket";
 import SocketEvents from "../../SocketEvents";
 import {
+  selectCurrentSimulationHash,
+  selectNetworkTopology,
+  selectPrograms,
   selectSimulationNodes,
   selectSimulationState,
   selectUserEvents
@@ -47,12 +50,27 @@ class Simulation extends Component {
     super(props);
     this.getSimulationNodes = this.getSimulationNodes.bind(this);
     this.stopAndResetSimulation = this.stopAndResetSimulation.bind(this);
+    this.setUpSimulation = this.setUpSimulation.bind(this);
+    this.createSimulationHash = this.createSimulationHash.bind(this);
+    this.hasChangesToCurrentSimulation = this.hasChangesToCurrentSimulation.bind(
+      this
+    );
   }
 
   componentDidMount() {
     const { p } = this.props;
     this.getSimulationNodes();
     document.title = `Diorama - ${p.tc("simulation")}`;
+  }
+
+  createSimulationHash() {
+    const { programs, unpackedNetworkTopology } = this.props;
+    return btoa(JSON.stringify({ programs, unpackedNetworkTopology }));
+  }
+
+  hasChangesToCurrentSimulation() {
+    const { currentSimulationHash } = this.props;
+    return this.createSimulationHash() !== currentSimulationHash;
   }
 
   getSimulationNodes() {
@@ -67,8 +85,13 @@ class Simulation extends Component {
     Socket.send(SocketEvents.STREAM_NODE_LOGS, { all: true });
   }
 
-  static setUpSimulation() {
+  setUpSimulation() {
     Socket.send(SocketEvents.SET_UP_SIMULATION);
+    Socket.send(
+      SocketEvents.SET_CURRENT_SIMULATION_HASH,
+      this.createSimulationHash()
+    );
+    Socket.send(SocketEvents.GET_CURRENT_SIMULATION_HASH);
   }
 
   stopAndResetSimulation() {
@@ -87,7 +110,7 @@ class Simulation extends Component {
       <Fragment>
         <span className={"display1"}>{p.tc("simulation")}</span>
         {idleStates.includes(simulationState) && (
-          <StartSimulation onButtonClick={Simulation.setUpSimulation} />
+          <StartSimulation onButtonClick={this.setUpSimulation} />
         )}
 
         {loadingStates.includes(simulationState) && (
@@ -119,7 +142,12 @@ class Simulation extends Component {
                   className="button alert"
                   onClick={this.stopAndResetSimulation}
                 >
-                  <MetroIcon icon={"stop"} /> Stop and reset
+                  <MetroIcon icon={"stop"} /> Stop and reset{" "}
+                  {this.hasChangesToCurrentSimulation() && (
+                    <span className="badge bg-lightOrange inline fg-white">
+                      New changes have been made
+                    </span>
+                  )}
                 </button>
               </div>
             </div>
@@ -155,7 +183,8 @@ Simulation.propTypes = {
   simulationState: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
   isSimulationNodesEmpty: PropTypes.bool.isRequired,
-  isUserEventsRunning: PropTypes.bool.isRequired
+  isUserEventsRunning: PropTypes.bool.isRequired,
+  currentSimulationHash: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {
@@ -163,7 +192,11 @@ function mapStateToProps(state) {
     p: getP(state),
     simulationState: selectSimulationState(state),
     isSimulationNodesEmpty: selectSimulationNodes(state).length === 0,
-    isUserEventsRunning: selectUserEvents(state).isRunning
+    isUserEventsRunning: selectUserEvents(state).isRunning,
+    currentSimulationHash: selectCurrentSimulationHash(state),
+    programs: selectPrograms(state),
+    unpackedNetworkTopology: selectNetworkTopology(state)
+      .unpackedNetworkTopology
   };
 }
 

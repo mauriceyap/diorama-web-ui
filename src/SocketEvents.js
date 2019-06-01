@@ -17,6 +17,8 @@ export default {
   STOP_AND_RESET_SIMULATION: "stopAndResetSimulation",
   PERFORM_NODE_ACTION: "performNodeAction",
   STREAM_NODE_LOGS: "streamNodeLogs",
+  GET_CURRENT_SIMULATION_HASH: "getCurrentSimulationHash",
+  SET_CURRENT_SIMULATION_HASH: "setCurrentSimulationHash",
 
   // Receive
   PROGRAMS: "programs",
@@ -27,5 +29,6 @@ export default {
   CUSTOM_CONFIG: "customConfig",
   SIMULATION_STATE: "simulationState",
   SIMULATION_NODES: "simulationNodes",
-  SIMULATION_LOGS: "simulationLogs"
+  SIMULATION_LOGS: "simulationLogs",
+  CURRENT_SIMULATION_HASH: "currentSimulationHash"
 };

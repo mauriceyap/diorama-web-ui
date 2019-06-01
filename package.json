@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
+    "intro.js": "^2.9.3",
+    "intro.js-react": "^0.2.0",
     "metro4": "^4.2.36",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",

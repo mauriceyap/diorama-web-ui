@@ -8,6 +8,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import "metro4/build/css/metro-all.css";
 import "metro4";
 
+import "intro.js/introjs.css";
+
 import Diorama from "./components/Diorama";
 import * as serviceWorker from "./serviceWorker";
 import reducers from "./reduxStore/reducers";
