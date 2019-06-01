@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Steps, Hints } from "intro.js-react";
+import { Steps } from "intro.js-react";
 
 import { selectCustomisation } from "../../reduxStore/selectors";
 import colours from "../../customisation/colours";
