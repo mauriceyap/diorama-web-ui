@@ -151,6 +151,12 @@ class NetworkTopology extends Component {
     return (
       <Fragment>
         <span className={"display1"}>{p.tc("networkTopology")}</span>
+        <div className="mt-6">
+          <NetworkTopologyAPIDocumentationAccordion
+            language={language}
+            key={language}
+          />
+        </div>
         <div className="border bd-lightGray border-size-2 p-4 mt-6">
           <div className="row">
             <div key={language} className="cell-md-6">
@@ -219,14 +225,6 @@ class NetworkTopology extends Component {
             </div>
             <div className="cell-md-6">
               <NetworkTopologyViewer height={500} />
-            </div>
-          </div>
-          <div className="row mt-4">
-            <div className="cell-12">
-              <NetworkTopologyAPIDocumentationAccordion
-                language={language}
-                key={language}
-              />
             </div>
           </div>
         </div>

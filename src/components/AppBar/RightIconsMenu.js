@@ -7,6 +7,7 @@ import Metro from "metro4";
 
 import { preferencesDialogId } from "../../styleConstants";
 import { selectSocket } from "../../reduxStore/selectors";
+import { Link } from "react-router-dom";
 
 function openPreferencesDialog() {
   Metro.dialog.open(`#${preferencesDialogId}`);
@@ -15,7 +16,7 @@ function openPreferencesDialog() {
 const items = [{ icon: "cog", onClick: openPreferencesDialog }];
 
 class RightIconsMenu extends Component {
-  static renderItems() {
+  static renderOpenModalItems() {
     return items.map(({ icon, onClick }) => (
       <li onClick={onClick} key={icon}>
         <a href="#">
@@ -41,7 +42,12 @@ class RightIconsMenu extends Component {
             )}
           </a>
         </li>
-        {RightIconsMenu.renderItems()}
+        <li>
+          <Link to={"/docs"}>
+            <MetroIcon icon={"info"} />
+          </Link>
+        </li>
+        {RightIconsMenu.renderOpenModalItems()}
       </ul>
     );
   }

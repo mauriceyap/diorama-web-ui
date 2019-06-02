@@ -24,6 +24,8 @@ import {
 import { isScreenWidthGreaterThan } from "../utils";
 import ConnectionParametersEditorDialog from "./NetworkTopologyViewer/ConnectionParametersEditorDialog";
 import UserEventsDialog from "./Simulation/userEvents/UserEventsDialog";
+import Documentation from "./Documentation";
+import Viewer from "./Documentation/Viewer";
 
 class Diorama extends Component {
   constructor(props) {
@@ -61,6 +63,8 @@ class Diorama extends Component {
             >
               <Route exact path={"/"} component={ProjectHome} />
               <div className={"container pt-3"} style={{ maxWidth: "none" }}>
+                <Route exact path={"/docs"} component={Documentation} />
+                <Route path={"/docs/:interfaceLanguage"} component={Viewer} />
                 <Route exact path={"/programs"} component={Programs} />
                 <Route
                   path={"/programs/:programName"}

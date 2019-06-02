@@ -303,6 +303,8 @@ class ProgramEditor extends Component {
           </Link>{" "}
           > {programName}
         </span>
+        <div className="mt-6" />
+        <ProgramAPIDocumentationAccordion runtime={programState.runtime} />
         <div className="border bd-lightGray border-size-2 p-4 mt-6">
           <div>
             <EditDescription
@@ -342,8 +344,6 @@ class ProgramEditor extends Component {
               onSelectedZipFileChange={this.onSelectedZipFileChange}
               zipFileName={zipFileName}
             />
-            <div className={"mt-6"} />
-            <ProgramAPIDocumentationAccordion runtime={programState.runtime} />
           </div>
           <div className="mt-6">
             <EditMainHandler

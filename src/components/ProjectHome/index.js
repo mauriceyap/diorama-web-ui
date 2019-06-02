@@ -4,6 +4,7 @@ import { Steps } from "intro.js-react";
 
 import { selectCustomisation } from "../../reduxStore/selectors";
 import colours from "../../customisation/colours";
+import { Link } from "react-router-dom";
 
 const topDivStyle = {
   paddingTop: "7rem",
@@ -129,14 +130,17 @@ class ProjectHome extends Component {
                     Read the documentation for writing node programs and
                     defining your network topology
                   </p>
-                  <button className="button secondary large intro-step-zero">
-                    Take me there!
-                  </button>
+                  <Link to={"/docs"}>
+                    <button className="button secondary large intro-step-zero">
+                      Take me there!
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <p style={{ textAlign: "center" }}>&copy; Maurice Yap 2019.</p>
       </Fragment>
     );
   }
