@@ -177,8 +177,8 @@ class NetworkTopology extends Component {
               <h6>{p.tc("selfConnectedNodes")}</h6>
               <p>
                 {selfConnectedNodes
-                  ? "nodes are connected to themselves"
-                  : "nodes are not connected to themselves"}
+                  ? "Every node is connected to itself"
+                  : "Unless your code says that it should, each node isn't connected to itself."}
               </p>
               <input
                 type="checkbox"
@@ -224,6 +224,12 @@ class NetworkTopology extends Component {
               </div>
             </div>
             <div className="cell-md-6">
+              <p>
+                <b>
+                  Double-click on node connections to add message-passing delays
+                  or success rates.
+                </b>
+              </p>
               <NetworkTopologyViewer height={500} />
             </div>
           </div>
