@@ -6,6 +6,7 @@ import { pPropType } from "../../customPropTypes";
 import Socket from "../../Socket";
 import SocketEvents from "../../SocketEvents";
 import {
+  selectConnectionParameters,
   selectCurrentSimulationHash,
   selectNetworkTopology,
   selectPrograms,
@@ -64,8 +65,18 @@ class Simulation extends Component {
   }
 
   createSimulationHash() {
-    const { programs, unpackedNetworkTopology } = this.props;
-    return btoa(JSON.stringify({ programs, unpackedNetworkTopology }));
+    const {
+      programs,
+      unpackedNetworkTopology,
+      connectionParameters
+    } = this.props;
+    return btoa(
+      JSON.stringify({
+        programs,
+        unpackedNetworkTopology,
+        connectionParameters
+      })
+    );
   }
 
   hasChangesToCurrentSimulation() {
@@ -184,7 +195,8 @@ Simulation.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isSimulationNodesEmpty: PropTypes.bool.isRequired,
   isUserEventsRunning: PropTypes.bool.isRequired,
-  currentSimulationHash: PropTypes.string.isRequired
+  currentSimulationHash: PropTypes.string.isRequired,
+  connectionParameters: PropTypes.object().isRequired
 };
 
 function mapStateToProps(state) {
@@ -196,7 +208,8 @@ function mapStateToProps(state) {
     currentSimulationHash: selectCurrentSimulationHash(state),
     programs: selectPrograms(state),
     unpackedNetworkTopology: selectNetworkTopology(state)
-      .unpackedNetworkTopology
+      .unpackedNetworkTopology,
+    connectionParameters: selectConnectionParameters(state)
   };
 }
 
