@@ -10,7 +10,7 @@ import {
   runScheduledUserEvents,
   stopScheduledUserEvents
 } from "../../../reduxStore/userEvents/reducer";
-import { userEventPropType } from "../../../customPropTypes";
+import { pPropType, userEventPropType } from "../../../customPropTypes";
 import {
   selectSimulationNodes,
   selectUserEvents
@@ -18,6 +18,7 @@ import {
 import { pointerCursorOnHoverStyle } from "../../../utils";
 import { possibleActionsForStatus } from "../index";
 import { fireUserEvents } from "./userEventsManager";
+import { getP } from "redux-polyglot";
 
 const possibleActions = [
   ...new Set(Object.values(possibleActionsForStatus).flat())
@@ -82,18 +83,20 @@ class UserEventsDialog extends Component {
   }
 
   render() {
-    const { events, nids } = this.props;
+    const { events, nids, polyglot } = this.props;
     const { selectedAction, selectedNid, selectedTime } = this.state;
     return (
       <div className="dialog" data-role="dialog" id={userEventsDialogId}>
-        <div className="dialog-title">Schedule events</div>
+        <div className="dialog-title">
+          {polyglot.tc("simulation.scheduleEvents")}
+        </div>
         <div className="dialog-content">
           <table className={"table striped row-border"}>
             <thead>
               <tr>
-                <th width="30%">Time (ms)</th>
-                <th width="35%">Node</th>
-                <th width="30%">Action</th>
+                <th width="30%">{polyglot.tc("simulation.timeMs")}</th>
+                <th width="35%">{polyglot.tc("simulation.node")}</th>
+                <th width="30%">{polyglot.tc("simulation.action")}</th>
                 <th width="5%" />
               </tr>
             </thead>
@@ -102,7 +105,7 @@ class UserEventsDialog extends Component {
                 <tr key={eventId}>
                   <td>{time}</td>
                   <td>{node}</td>
-                  <td>{action}</td>
+                  <td>{polyglot.tc(`simulation.${action}`)}</td>
                   <td>
                     <MetroIcon
                       icon={"bin"}
@@ -140,7 +143,7 @@ class UserEventsDialog extends Component {
                   >
                     {possibleActions.map(action => (
                       <option value={action} key={action}>
-                        {action}
+                        {polyglot.tc(`simulation.${action}`)}
                       </option>
                     ))}
                   </select>
@@ -174,13 +177,15 @@ class UserEventsDialog extends Component {
 UserEventsDialog.propTypes = {
   dispatch: PropTypes.func.isRequired,
   events: PropTypes.arrayOf(userEventPropType).isRequired,
-  nids: PropTypes.arrayOf(PropTypes.string).isRequired
+  nids: PropTypes.arrayOf(PropTypes.string).isRequired,
+  polyglot: pPropType.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     events: selectUserEvents(state).events,
-    nids: selectSimulationNodes(state).map(({ nid }) => nid)
+    nids: selectSimulationNodes(state).map(({ nid }) => nid),
+    polyglot: getP(state)
   };
 }
 

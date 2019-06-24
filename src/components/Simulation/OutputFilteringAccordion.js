@@ -19,6 +19,8 @@ import {
   setNodeNids,
   setNodePrograms
 } from "../../reduxStore/simulationLogsFilter/reducer";
+import { getLocale, getP } from "redux-polyglot";
+import { pPropType } from "../../customPropTypes";
 
 class OutputFilteringAccordion extends Component {
   constructor(props) {
@@ -40,8 +42,10 @@ class OutputFilteringAccordion extends Component {
 
   render() {
     const {
+      polyglot,
       programNames,
       nodeNids,
+      locale,
       dispatchSetMessageDoesContainPattern,
       dispatchSetMessageDoesContainIsRegex,
       dispatchSetMessageDoesNotContainPattern,
@@ -53,23 +57,23 @@ class OutputFilteringAccordion extends Component {
       <div
         data-role="accordion"
         data-one-frame={false}
-        data-show-active={true}
+        data-show-active={false}
         className="mt-3 mb-3"
       >
         <div className="frame border bd-lightGray active">
           <div className="heading">
-            <h5>Filtering</h5>
+            <h5>{polyglot.tc("simulation.filtering")}</h5>
           </div>
-          <div className="content">
+          <div className="content" key={locale}>
             <div className="border-bottom bd-lightGray ml-2 mr-2 pt-2 pb-2 mb-2">
-              <h6>Output message</h6>
+              <h6>{polyglot.tc("simulation.outputMessage")}</h6>
               <div className="grid">
                 <div className="row mt-2 mb-2">
                   <div className="cell-10">
                     <input
                       type="text"
                       data-role="input"
-                      data-prepend="Contains: "
+                      data-prepend={polyglot.tc("simulation.contains") + ": "}
                       data-clear-button={false}
                       onChange={dispatchSetMessageDoesContainPattern}
                     />
@@ -78,7 +82,7 @@ class OutputFilteringAccordion extends Component {
                     <input
                       type="checkbox"
                       data-role="checkbox"
-                      data-caption="Regex?"
+                      data-caption={polyglot.tc("simulation.regex?")}
                       onChange={dispatchSetMessageDoesContainIsRegex}
                     />
                   </div>
@@ -88,7 +92,9 @@ class OutputFilteringAccordion extends Component {
                     <input
                       type="text"
                       data-role="input"
-                      data-prepend="Does not contain: "
+                      data-prepend={
+                        polyglot.tc("simulation.doesNotContain") + ": "
+                      }
                       data-clear-button={false}
                       onChange={dispatchSetMessageDoesNotContainPattern}
                     />
@@ -97,11 +103,11 @@ class OutputFilteringAccordion extends Component {
               </div>
             </div>
             <div className="border-bottom bd-lightGray ml-2 mr-2 pt-2 pb-2 mb-2">
-              <h6>Node</h6>
+              <h6>{polyglot.tc("simulation.node")}</h6>
               <div className="grid">
                 <div className="row mt-2">
                   <div className="cell-md-6" key={programNames}>
-                    <p>Program:</p>
+                    <p>{polyglot.tc("simulation.program")}:</p>
                     <select
                       data-role="select"
                       multiple
@@ -115,7 +121,7 @@ class OutputFilteringAccordion extends Component {
                     </select>
                   </div>
                   <div className="cell-md-6" key={nodeNids}>
-                    <p>Select nodes:</p>
+                    <p>{polyglot.tc("simulation.selectNodes")}:</p>
                     <select
                       data-role="select"
                       multiple
@@ -134,7 +140,9 @@ class OutputFilteringAccordion extends Component {
                     <input
                       type="text"
                       data-role="input"
-                      data-prepend="Nid contains: "
+                      data-prepend={
+                        polyglot.tc("simulation.nidContains") + ": "
+                      }
                       data-clear-button={false}
                       onChange={dispatchSetNidDoesContainPattern}
                     />
@@ -143,7 +151,7 @@ class OutputFilteringAccordion extends Component {
                     <input
                       type="checkbox"
                       data-role="checkbox"
-                      data-caption="Regex?"
+                      data-caption={polyglot.tc("simulation.regex?")}
                       onChange={dispatchSetNidDoesContainIsRegex}
                     />
                   </div>
@@ -153,7 +161,9 @@ class OutputFilteringAccordion extends Component {
                     <input
                       type="text"
                       data-role="input"
-                      data-prepend="Nid does not contain: "
+                      data-prepend={
+                        polyglot.tc("simulation.nidDoesNotContain") + ": "
+                      }
                       data-clear-button={false}
                       onChange={dispatchSetNidDoesNotContainPattern}
                     />
@@ -169,6 +179,7 @@ class OutputFilteringAccordion extends Component {
 }
 
 OutputFilteringAccordion.propTypes = {
+  polyglot: pPropType.isRequired,
   programNames: PropTypes.arrayOf(PropTypes.string).isRequired,
   nodeNids: PropTypes.arrayOf(PropTypes.string).isRequired,
   programForNode: PropTypes.objectOf(PropTypes.string).isRequired,
@@ -179,7 +190,8 @@ OutputFilteringAccordion.propTypes = {
   dispatchSetNidDoesContainIsRegex: PropTypes.func.isRequired,
   dispatchSetNidDoesNotContainPattern: PropTypes.func.isRequired,
   dispatchSetNodePrograms: PropTypes.func.isRequired,
-  dispatchSetNodeNids: PropTypes.func.isRequired
+  dispatchSetNodeNids: PropTypes.func.isRequired,
+  locale: PropTypes.string.isRequired
 };
 
 function mapDispatchToProps(dispatch) {
@@ -213,6 +225,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
+    polyglot: getP(state),
+    locale: getLocale(state),
     programNames: selectPrograms(state).map(({ name }) => name),
     nodeNids: selectSimulationNodes(state).map(({ nid }) => nid),
     programForNode: selectSimulationNodes(state).reduce(

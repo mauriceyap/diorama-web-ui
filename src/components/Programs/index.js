@@ -89,14 +89,14 @@ class Programs extends Component {
     }
     return (
       <Fragment>
-        <span className={"display1"}>{p.tc("programs")}</span>
+        <span className={"display1"}>{p.tc("programs.programs")}</span>
         {isNewProgramWizardVisible || (
           <p style={{ textAlign: "right" }}>
             <button
               className="button success"
               onClick={this.showNewProgramWizard}
             >
-              <MetroIcon icon={"plus"} /> {p.tc("newProgram")}
+              <MetroIcon icon={"plus"} /> {p.tc("programs.newProgram")}
             </button>
           </p>
         )}
@@ -117,7 +117,7 @@ class Programs extends Component {
 
   componentDidMount() {
     const { p } = this.props;
-    document.title = `Diorama - ${p.tc("programs")}`;
+    document.title = `Diorama - ${p.tc("programs.programs")}`;
   }
 }
 

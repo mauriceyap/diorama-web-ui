@@ -42,7 +42,7 @@ class RightIconsMenu extends Component {
             )}
           </a>
         </li>
-        <li>
+        <li className="intro-step-zero">
           <Link to={"/docs"}>
             <MetroIcon icon={"info"} />
           </Link>

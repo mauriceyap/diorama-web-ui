@@ -31,17 +31,23 @@ class CopyLogsButton extends Component {
     document.execCommand("copy");
     document.body.removeChild(dummyTextAreaElement);
 
-    Metro.toast.create(polyglot.t("copied"), noop, toastTimeout, "success", {
-      showTop: true
-    });
+    Metro.toast.create(
+      polyglot.t("simulation.copied"),
+      noop,
+      toastTimeout,
+      "success",
+      {
+        showTop: true
+      }
+    );
   }
 
   render() {
-    const { className, icon } = this.props;
+    const { className, icon, polyglot } = this.props;
     return (
       <div>
         <button className={`button ${className}`} onClick={this.onClick}>
-          <MetroIcon icon={icon} /> Copy to clipboard
+          <MetroIcon icon={icon} /> {polyglot.tc("simulation.copyToClipboard")}
         </button>
       </div>
     );

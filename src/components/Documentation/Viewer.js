@@ -6,20 +6,17 @@ import PropTypes from "prop-types";
 import { pPropType } from "../../customPropTypes";
 import { getLocale, getP } from "redux-polyglot";
 
-import enGbProgramPython3 from "../../userDocs/en_gb/nodeProgramAPI/python3.md";
-import enGbNetworkJSON from "../../userDocs/en_gb/networkTopologyAPI/JSON.md";
-import enGbNetworkYAML from "../../userDocs/en_gb/networkTopologyAPI/YAML.md";
-
-const mdDocs = {
-  "en-gb": {
-    program: { python3: enGbProgramPython3 },
-    network: { JSON: enGbNetworkJSON, YAML: enGbNetworkYAML }
-  }
-};
+import mdDocs from "./mdDocs";
 
 class Viewer extends Component {
   constructor(props) {
     super(props);
+    this.fetchMdContent = this.fetchMdContent.bind(this);
+    this.state = { mdContent: "Loading..." };
+    this.fetchMdContent();
+  }
+
+  fetchMdContent() {
     const {
       locale,
       match: {
@@ -28,7 +25,6 @@ class Viewer extends Component {
     } = this.props;
     const api = interfaceLanguage.split("-")[0];
     const language = interfaceLanguage.split("-")[1];
-    this.state = { mdContent: "" };
     fetch(mdDocs[locale][api][language])
       .then(res => res.text())
       .then(mdContent => this.setState({ mdContent }));
@@ -44,6 +40,14 @@ class Viewer extends Component {
         <Markdown source={mdContent} />
       </div>
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    const { locale: prevLocale } = prevProps;
+    const { locale } = this.props;
+    if (locale !== prevLocale) {
+      this.fetchMdContent();
+    }
   }
 }
 

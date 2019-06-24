@@ -5,6 +5,9 @@ import { Steps } from "intro.js-react";
 import { selectCustomisation } from "../../reduxStore/selectors";
 import colours from "../../customisation/colours";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { pPropType } from "../../customPropTypes";
+import { getP } from "redux-polyglot";
 
 const topDivStyle = {
   paddingTop: "7rem",
@@ -78,7 +81,7 @@ class ProjectHome extends Component {
   }
 
   render() {
-    const { colourScheme } = this.props;
+    const { colourScheme, polyglot } = this.props;
     const { stepsEnabled } = this.state;
     return (
       <Fragment>
@@ -95,11 +98,8 @@ class ProjectHome extends Component {
           style={topDivStyle}
         >
           <div className="container">
-            <div style={displayLine1Style}>Welcome to Diorama</div>
-            <div style={displayLine2Style}>
-              Simulate your own distributed algorithms on your own network
-              topology
-            </div>
+            <div style={displayLine1Style}>{polyglot.t("home.welcome")}</div>
+            <div style={displayLine2Style}>{polyglot.t("home.intro")}</div>
           </div>
         </div>
         <div
@@ -113,26 +113,24 @@ class ProjectHome extends Component {
               <div className="cell-lg-6 p-12">
                 <div>
                   <p style={bottomDivParagraphStyle}>
-                    Learn how to use Diorama to create and run your first
-                    simulation
+                    {polyglot.t("home.learn")}
                   </p>
                   <button
                     className="button primary large"
                     onClick={this.enableSteps}
                   >
-                    Show me how!
+                    {polyglot.t("home.showMeHow")}
                   </button>
                 </div>
               </div>
               <div className="cell-lg-6 p-12">
                 <div>
                   <p style={bottomDivParagraphStyle}>
-                    Read the documentation for writing node programs and
-                    defining your network topology
+                    {polyglot.t("home.read")}
                   </p>
                   <Link to={"/docs"}>
-                    <button className="button secondary large intro-step-zero">
-                      Take me there!
+                    <button className="button secondary large">
+                      {polyglot.t("home.takeMeThere")}
                     </button>
                   </Link>
                 </div>
@@ -150,11 +148,15 @@ class ProjectHome extends Component {
   }
 }
 
-ProjectHome.propTypes = {};
+ProjectHome.propTypes = {
+  colourScheme: PropTypes.string.isRequired,
+  polyglot: pPropType.isRequired
+};
 
 function mapStateToProps(state) {
   return {
-    colourScheme: selectCustomisation(state).colourScheme
+    colourScheme: selectCustomisation(state).colourScheme,
+    polyglot: getP(state)
   };
 }
 

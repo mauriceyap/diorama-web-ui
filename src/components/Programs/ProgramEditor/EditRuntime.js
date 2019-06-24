@@ -1,25 +1,27 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { onChangeProgramRuntime } from "../../../styleConstants";
-import { runtimeLabels, runtimes } from "../constants";
+import { isComingSoon, runtimeLabels, runtimes } from "../constants";
 
 export default class EditRuntime extends Component {
   render() {
     const { polyglot, defaultValue } = this.props;
     return (
       <Fragment>
-        <h6>{polyglot.tc("runtime")}</h6>
-        <p>something</p>
+        <h6>{polyglot.tc("programs.runtime")}</h6>
+        <p>{polyglot.tc("programs.runtimeExplanation")}</p>
         <select
           data-role="select"
           defaultValue={defaultValue}
           data-on-change={onChangeProgramRuntime}
         >
-          {runtimes.map(runtime => (
-            <option value={runtime} key={runtime}>
-              {runtimeLabels[runtime]}
-            </option>
-          ))}
+          {runtimes
+            .filter(runtime => !isComingSoon[runtime])
+            .map(runtime => (
+              <option value={runtime} key={runtime}>
+                {runtimeLabels[runtime]}
+              </option>
+            ))}
         </select>
       </Fragment>
     );

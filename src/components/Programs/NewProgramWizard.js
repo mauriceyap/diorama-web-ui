@@ -1,15 +1,20 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import Metro from "metro4";
-import { runtimeIcons, runtimeLabels, runtimes } from "./constants";
+import {
+  runtimeIcons,
+  runtimeLabels,
+  runtimes,
+  isComingSoon
+} from "./constants";
 import {
   selectCustomisation,
   selectPrograms
 } from "../../reduxStore/selectors";
 import colours from "../../customisation/colours";
-import { noop } from "../../utils";
+import { noop, notAllowedCursorOnHoverStyle } from "../../utils";
 import {
   onClickNewProgramCancel,
   onClickNewProgramSubmit,
@@ -89,7 +94,7 @@ class NewProgramWizard extends Component {
     return (
       <div
         data-role="wizard"
-        data-icon-help={`<span>${p.tc("cancel")}</span>`}
+        data-icon-help={`<span>${p.tc("common.cancel")}</span>`}
         data-on-help-click={onClickNewProgramCancel}
         data-on-finish-click={onClickNewProgramSubmit}
         data-button-mode="button"
@@ -97,7 +102,7 @@ class NewProgramWizard extends Component {
       >
         <section>
           <div className="page-content">
-            <h5>{p.tc("chooseARuntime")}</h5>
+            <h5>{p.tc("programs.chooseARuntime")}</h5>
             <p />
             <div className="tiles-grid">
               {runtimes.map(runtime => (
@@ -109,14 +114,42 @@ class NewProgramWizard extends Component {
                     { selected: runtime === selectedRuntime }
                   )}
                   data-size="medium"
+                  data-effect={isComingSoon[runtime] ? "hover-slide-up" : ""}
                   key={runtime}
-                  onClick={() => this.setRuntime(runtime)}
+                  onClick={
+                    isComingSoon[runtime]
+                      ? noop
+                      : () => this.setRuntime(runtime)
+                  }
+                  style={
+                    isComingSoon[runtime] ? notAllowedCursorOnHoverStyle : {}
+                  }
                 >
-                  <img
-                    src={runtimeIcons[runtime]}
-                    alt={runtime}
-                    className={"icon"}
-                  />
+                  {isComingSoon[runtime] ? (
+                    <Fragment>
+                      <div className="slide-front">
+                        <span className="badge-top bg-darkRed">
+                          {p.tc("programs.comingSoon")}
+                        </span>
+                        <img
+                          src={runtimeIcons[runtime]}
+                          alt={runtime}
+                          className={"icon"}
+                        />
+                      </div>
+                      <div className="slide-back d-flex flex-justify-center flex-align-center p-4 bg-red">
+                        <p className="text-center">
+                          {p.tc("programs.comingSoon")}
+                        </p>
+                      </div>
+                    </Fragment>
+                  ) : (
+                    <img
+                      src={runtimeIcons[runtime]}
+                      alt={runtime}
+                      className={"icon"}
+                    />
+                  )}
                   <span className="branding-bar">{runtimeLabels[runtime]}</span>
                 </div>
               ))}
@@ -125,8 +158,7 @@ class NewProgramWizard extends Component {
         </section>
         <section>
           <div className="page-content">
-            <h5>{p.tc("giveItAName")}</h5>
-            <p>{p.tc("youCanAlwaysChangeItLater")}</p>
+            <h5>{p.tc("programs.giveItAName")}</h5>
             <p>
               <input
                 type="text"

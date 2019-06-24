@@ -140,10 +140,12 @@ class ConnectionParametersEditorDialog extends Component {
         id={connectionParametersEditorDialogId}
       >
         <div className="dialog-title">
-          {polyglot.tc("modifyConnection", { fromNid, toNid })}
+          {polyglot.tc("networkTopology.modifyConnection", { fromNid, toNid })}
         </div>
         <div className="dialog-content" key={delayDistribution}>
-          <h5 className="mb-8">{polyglot.tc("messageSendingSuccessRate")}</h5>
+          <h5 className="mb-8">
+            {polyglot.tc("networkTopology.messageSendingSuccessRate")}
+          </h5>
           <input
             data-role="slider"
             data-hint="true"
@@ -154,9 +156,11 @@ class ConnectionParametersEditorDialog extends Component {
             data-value={successRate * 100}
             data-on-stop={onChangeConnectionParametersSuccessRate}
           />
-          <h5 className="mb-4 mt-2">{polyglot.tc("messageSendingDelay")}</h5>
+          <h5 className="mb-4 mt-2">
+            {polyglot.tc("networkTopology.messageSendingDelay")}
+          </h5>
           <p>
-            <strong>{polyglot.tc("distribution")}</strong>
+            <strong>{polyglot.tc("networkTopology.distribution")}</strong>
           </p>
           <select
             data-role="select"
@@ -170,7 +174,7 @@ class ConnectionParametersEditorDialog extends Component {
             ))}
           </select>
           <p>
-            <strong>{polyglot.tc("parameters")}</strong>
+            <strong>{polyglot.tc("networkTopology.parameters")}</strong>
           </p>
 
           <div key={delayDistribution}>
@@ -181,7 +185,7 @@ class ConnectionParametersEditorDialog extends Component {
                   <input
                     type="number"
                     data-role="input"
-                    data-append={polyglot.t("millisecondAbbreviation")}
+                    data-append={polyglot.t("common.millisecondAbbreviation")}
                     defaultValue={delayDistributionParameters[parameter]}
                     onChange={
                       this
@@ -198,14 +202,16 @@ class ConnectionParametersEditorDialog extends Component {
             className="button primary js-dialog-close"
             onClick={this.saveParameters}
           >
-            Save
+            {polyglot.tc("common.save")}
           </button>
           {!this.isEditingParametersDefault() && (
             <button className="button info" onClick={this.resetToDefault}>
-              Reset to default
+              {polyglot.tc("networkTopology.resetToDefault")}
             </button>
           )}
-          <button className="button js-dialog-close">Cancel</button>
+          <button className="button js-dialog-close">
+            {polyglot.tc("common.cancel")}
+          </button>
         </div>
       </div>
     );

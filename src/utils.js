@@ -8,6 +8,10 @@ export const pointerCursorOnHoverStyle = {
   cursor: "pointer"
 };
 
+export const notAllowedCursorOnHoverStyle = {
+  cursor: "not-allowed"
+};
+
 export function createListString(items, normalDelimiter, finalDelimiter) {
   if (items.length === 1) {
     return items[0];

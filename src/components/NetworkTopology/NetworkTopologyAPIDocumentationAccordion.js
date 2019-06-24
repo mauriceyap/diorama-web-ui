@@ -5,23 +5,19 @@ import MetroIcon from "../MetroIcon";
 import Markdown from "react-markdown";
 import { getLocale, getP } from "redux-polyglot";
 import { pPropType } from "../../customPropTypes";
-import YAML from "../../userDocs/en_gb/networkTopologyAPI/YAML.md";
-import JSONDoc from "../../userDocs/en_gb/networkTopologyAPI/JSON.md";
-
-const mdDocs = {
-  "en-gb": {
-    YAML,
-    JSON: JSONDoc
-  }
-};
+import mdDocs from "../Documentation/mdDocs";
 
 class NetworkTopologyAPIDocumentationAccordion extends Component {
   constructor(props) {
     super(props);
-    const { language, locale } = props;
+    this.fetchMdContent = this.fetchMdContent.bind(this);
+    this.state = { mdContent: "Loading..." };
+    this.fetchMdContent();
+  }
 
-    this.state = { mdContent: "" };
-    fetch(mdDocs[locale][language])
+  fetchMdContent() {
+    const { locale, language } = this.props;
+    fetch(mdDocs[locale]["network"][language])
       .then(res => res.text())
       .then(mdContent => this.setState({ mdContent }));
   }
@@ -38,7 +34,7 @@ class NetworkTopologyAPIDocumentationAccordion extends Component {
         <div className="frame">
           <div className="heading bg-lightGray">
             <MetroIcon icon={"info"} colour={"black"} />{" "}
-            {p.tc("networkTopologyAPIDocumentation")}
+            {p.tc("networkTopology.networkTopologyAPIDocumentation")}
           </div>
           <div className="content">
             <div className="border bd-lightGray border-size-2 p-4">
@@ -48,6 +44,14 @@ class NetworkTopologyAPIDocumentationAccordion extends Component {
         </div>
       </div>
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    const { locale: prevLocale, language: prevLanguage } = prevProps;
+    const { locale, language } = this.props;
+    if (locale !== prevLocale || language !== prevLanguage) {
+      this.fetchMdContent();
+    }
   }
 }
 

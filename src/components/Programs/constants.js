@@ -28,6 +28,13 @@ export const braceEditorModes = {
 
 export const runtimes = ["python2", "python3", "elixir", "scala"];
 
+export const isComingSoon = {
+  python2: true,
+  python3: false,
+  elixir: true,
+  scala: true
+};
+
 export const codeSourceIcons = {
   raw: rawCodeIcon,
   zip: zipFileIcon,
@@ -47,8 +54,8 @@ export const defaultCodeDataForRuntime = {
     code:
       "def main(peer_nids, my_nid, send, receive, storage):\n" +
       "    while True:\n" +
-      "        message, nid = receive()\n" +
-      "        print(f'{message.decode(\"utf8\")} from {nid}')\n",
+      "        message, sender_nid = receive()\n" +
+      "        print(f'{message.decode(\"utf8\")} from {sender_nid}')\n",
     dependencies: ""
   },
   elixir: { code: "NOT IMPLEMENTED YET", dependencies: "" },

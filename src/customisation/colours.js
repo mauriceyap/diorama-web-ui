@@ -1,44 +1,44 @@
 export default {
   appBarBackground: {
     default: "lightIndigo",
-    strange: "lightRed"
+    reddish: "lightRed"
   },
   appBarForeground: {
     default: "white",
-    strange: "black"
+    reddish: "black"
   },
   sideNavBackground: {
     default: "lightIndigo",
-    strange: "lightRed"
+    reddish: "lightRed"
   },
   sideNavForeground: {
     default: "white",
-    strange: "black"
+    reddish: "black"
   },
   newProgramRuntimeTiles: {
     default: "darkIndigo",
-    strange: "lightRed"
+    reddish: "lightRed"
   },
   aceEditorTheme: {
     default: "tomorrow",
-    strange: "monokai"
+    reddish: "monokai"
   },
   homePageTopDivBackground: {
     default: "darkIndigo",
-    strange: "darkRed"
+    reddish: "darkRed"
   },
   homePageTopDivForeground: {
     default: "white",
-    strange: "white"
+    reddish: "white"
   },
   homePageBottomDivBackground: {
     default: "indigo",
-    strange: "red"
+    reddish: "red"
   },
   homePageBottomDivForeground: {
     default: "white",
-    strange: "white"
+    reddish: "white"
   }
 };
 
-export const colourSchemes = ["default", "strange"];
+export const colourSchemes = ["default", "reddish"];

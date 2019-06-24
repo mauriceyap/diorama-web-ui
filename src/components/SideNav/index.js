@@ -68,7 +68,9 @@ class SideNav extends Component {
                   )}
                 />
                 {isScreenWidthGreaterThan(sideBarShrinkScreenWidth) && (
-                  <span className="title">{p.tc(polyglotLabel)}</span>
+                  <span className="title">
+                    {p.tc(`sideNav.${polyglotLabel}`)}
+                  </span>
                 )}
               </Link>
             </li>

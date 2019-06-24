@@ -3,13 +3,21 @@ import PropTypes from "prop-types";
 
 export default class EditMainHandler extends Component {
   render() {
-    const { polyglot, onChange, defaultValue, isRaw } = this.props;
+    const { polyglot, onChange, defaultValue, isRaw, runtime } = this.props;
     return (
       <Fragment>
         <h6>
-          {isRaw ? polyglot.tc("mainFunction") : polyglot.tc("mainHandler")}
+          {isRaw
+            ? polyglot.tc("programs.mainFunction")
+            : polyglot.tc("programs.mainHandler")}
         </h6>
-        <p>something</p>
+        <p>
+          {polyglot.tc(
+            isRaw
+              ? `programs.mainFunctionInformation.${runtime}`
+              : `programs.mainHandlerInformation.${runtime}`
+          )}
+        </p>
         <input
           type="text"
           data-role="input"
@@ -26,5 +34,6 @@ EditMainHandler.propTypes = {
   polyglot: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   defaultValue: PropTypes.string.isRequired,
-  isRaw: PropTypes.bool.isRequired
+  isRaw: PropTypes.bool.isRequired,
+  runtime: PropTypes.string.isRequired
 };

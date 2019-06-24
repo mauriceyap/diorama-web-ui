@@ -1,40 +1,39 @@
 export default {
   common: {
-    normalDelimiter: ", ",
-    finalDelimiter: " and ",
-    cancel: "cancel",
-    save: "save",
-    millisecondAbbreviation: "ms",
-    revert: "revert",
-    done: "done"
+    normalDelimiter: "、",
+    finalDelimiter: "、",
+    cancel: "取消",
+    save: "保存",
+    millisecondAbbreviation: "毫秒",
+    revert: "还原",
+    done: "完成"
   },
 
   sideNav: {
-    programs: "programs",
-    configuration: "configuration",
-    networkTopology: "network topology",
-    simulation: "simulation"
+    programs: "程序",
+    configuration: "配置",
+    networkTopology: "网络拓扑",
+    simulation: "模拟"
   },
 
   home: {
-    welcome: "Welcome to Diorama!",
-    intro:
-      "Simulate your own distributed algorithms on your own network topology",
-    learn: "Learn how to use Diorama to create and run your first simulation",
-    read:
-      "Read the documentation for writing node programs and defining your network topology",
-    showMeHow: "Show me how!",
-    takeMeThere: "Take me there!"
+    welcome: "欢迎来到 Diorama!",
+    intro: "在您自己的网络拓扑上模拟您自己的分布式算法",
+    learn: "学习如何使用 Diorama 创建和运行您的第一个模拟",
+    read: "阅读用于编写节点程序和定义网络拓扑的文档",
+    showMeHow: "告诉我如何",
+    takeMeThere: "阅读"
   },
 
   preferencesDialog: {
-    preferences: "preferences",
-    colourScheme: "colour scheme",
-    language: "language"
+    preferences: "喜好",
+    colourScheme: "配色方案",
+    language: "语言"
   },
 
-  colourSchemes: { default: "default", reddish: "reddish" },
+  colourSchemes: { default: "标准", reddish: "红" },
 
+  // TODO: Chinese translations
   programs: {
     programs: "Programs",
     newProgram: "New program",

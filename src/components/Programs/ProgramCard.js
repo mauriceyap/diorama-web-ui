@@ -39,11 +39,11 @@ class ProgramCard extends Component {
   requestConfirmDeleteProgram() {
     const { dispatch, name, p } = this.props;
     Metro.dialog.create({
-      title: p.tc("areYouSureYouWantToDeleteProgram", { name }),
-      content: `<p>${p.tc("itWillBeLostForever")}</p>`,
+      title: p.tc("programs.areYouSureYouWantToDeleteProgram", { name }),
+      content: `<p>${p.tc("programs.itWillBeLostForever")}</p>`,
       actions: [
         {
-          caption: p.t("yesIAmSure"),
+          caption: p.t("programs.yesIAmSure"),
           cls: "js-dialog-close alert",
           onclick() {
             Socket.send(SocketEvents.DELETE_PROGRAM, name);
@@ -51,7 +51,7 @@ class ProgramCard extends Component {
           }
         },
         {
-          caption: p.t("noIDoNot"),
+          caption: p.t("programs.noIDoNot"),
           cls: "js-dialog-close"
         }
       ]
@@ -87,7 +87,7 @@ class ProgramCard extends Component {
             </div>
             <div className="name">{name}</div>
             <div className="date">
-              {p.t("lastModified")}{" "}
+              {p.t("programs.lastModified")}{" "}
               <DateTime format={"LLL"} dateTime={lastEdited} />
             </div>
           </div>
@@ -99,12 +99,14 @@ class ProgramCard extends Component {
             <p>{description}</p>
             <p>
               <span className={"text-ultralight"}>
-                {p.tc("runtime")}: {runtimeLabels[runtime]}
+                {p.tc("programs.runtime")}: {runtimeLabels[runtime]}
               </span>
             </p>
           </div>
           <div className="card-footer">
-            <span className={"text-ultralight"}>{p.tc(codeSourceLabel)}</span>
+            <span className={"text-ultralight"}>
+              {p.tc(`programs.${codeSourceLabel}`)}
+            </span>
             <div
               style={{
                 float: "right",

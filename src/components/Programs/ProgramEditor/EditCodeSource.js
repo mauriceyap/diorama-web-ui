@@ -7,14 +7,14 @@ export default class EditCodeSource extends Component {
     const { polyglot, selectedValue, onChange } = this.props;
     return (
       <Fragment>
-        <h6>{polyglot.tc("codeSource")}</h6>
-        <form key={polyglot.tc("codeSource")}>
+        <h6>{polyglot.tc("programs.codeSource")}</h6>
+        <form key={polyglot.tc("programs.codeSource")}>
           {codeSources.map(source => (
             <input
               name={"codeSource"}
               type="radio"
               data-role="radio"
-              data-caption={polyglot.tc(codeSourceLabels[source])}
+              data-caption={polyglot.tc(`programs.${codeSourceLabels[source]}`)}
               value={source}
               checked={selectedValue === source}
               onChange={onChange}

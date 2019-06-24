@@ -10,6 +10,8 @@ import DateTime from "../common/DateTime";
 
 import ExportDataAccordion from "./ExportDataAccordion";
 import OutputFilteringAccordion from "./OutputFilteringAccordion";
+import { getP } from "redux-polyglot";
+import { pPropType } from "../../customPropTypes";
 
 class OutputViewer extends Component {
   constructor(props) {
@@ -73,7 +75,7 @@ class OutputViewer extends Component {
   }
 
   render() {
-    const { simulationLogs, nodeColours } = this.props;
+    const { simulationLogs, nodeColours, polyglot } = this.props;
     return (
       <Fragment>
         <OutputFilteringAccordion />
@@ -81,9 +83,9 @@ class OutputViewer extends Component {
         <table className="table compact row-border table-border">
           <thead>
             <tr>
-              <th>Node ID (nid)</th>
-              <th>Timestamp</th>
-              <th>Output</th>
+              <th>{polyglot.tc("simulation.nodeID")} (nid)</th>
+              <th>{polyglot.tc("simulation.timestamp")}</th>
+              <th>{polyglot.tc("simulation.output")}</th>
             </tr>
           </thead>
           <tbody>
@@ -112,11 +114,13 @@ OutputViewer.propTypes = {
   simulationLogs: PropTypes.arrayOf(PropTypes.object).isRequired,
   nodeColours: PropTypes.objectOf(PropTypes.string).isRequired,
   programForNode: PropTypes.objectOf(PropTypes.string).isRequired,
-  simulationLogsFilter: PropTypes.object.isRequired
+  simulationLogsFilter: PropTypes.object.isRequired,
+  polyglot: pPropType.isRequired
 };
 
 function mapStateToProps(state) {
   return {
+    polyglot: getP(state),
     nodeColours: selectSimulationNodes(state).reduce(
       (accColours, { nid, loggingColour }) => ({
         ...accColours,

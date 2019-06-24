@@ -103,7 +103,7 @@ class NetworkTopology extends Component {
           dispatch(setUnpackedNetworkTopology(unpackedTopology));
           dispatch(setConnectionParameters(connectionParameters));
           Metro.toast.create(
-            p.t("topologySaved"),
+            p.t("networkTopology.topologySaved"),
             noop,
             toastTimeout,
             "success",
@@ -150,7 +150,9 @@ class NetworkTopology extends Component {
     const { rawNetworkTopology, language, selfConnectedNodes } = this.state;
     return (
       <Fragment>
-        <span className={"display1"}>{p.tc("networkTopology")}</span>
+        <span className={"display1"}>
+          {p.tc("networkTopology.networkTopology")}
+        </span>
         <div className="mt-6">
           <NetworkTopologyAPIDocumentationAccordion
             language={language}
@@ -160,7 +162,7 @@ class NetworkTopology extends Component {
         <div className="border bd-lightGray border-size-2 p-4 mt-6">
           <div className="row">
             <div key={language} className="cell-md-6">
-              <h6>Language</h6>
+              <h6>{p.tc("networkTopology.language")}</h6>
               <select
                 data-role="select"
                 defaultValue={language}
@@ -174,11 +176,11 @@ class NetworkTopology extends Component {
               </select>
             </div>
             <div className="mt-4 cell-md-6" key={selfConnectedNodes}>
-              <h6>{p.tc("selfConnectedNodes")}</h6>
+              <h6>{p.tc("networkTopology.selfConnectedNodes")}</h6>
               <p>
                 {selfConnectedNodes
-                  ? "Every node is connected to itself"
-                  : "Unless your code says that it should, each node isn't connected to itself."}
+                  ? p.t("networkTopology.isSelfConnected")
+                  : p.t("networkTopology.isNotSelfConnected")}
               </p>
               <input
                 type="checkbox"
@@ -211,13 +213,13 @@ class NetworkTopology extends Component {
                       className="button primary"
                       onClick={this.saveChanges}
                     >
-                      <MetroIcon icon={"floppy-disk"} /> {p.tc("save")}
+                      <MetroIcon icon={"floppy-disk"} /> {p.tc("common.save")}
                     </button>
                     <button
                       className="button yellow"
                       onClick={this.revertChanges}
                     >
-                      <MetroIcon icon={"undo"} /> {p.tc("revert")}
+                      <MetroIcon icon={"undo"} /> {p.tc("common.revert")}
                     </button>
                   </Fragment>
                 )}
@@ -225,10 +227,7 @@ class NetworkTopology extends Component {
             </div>
             <div className="cell-md-6">
               <p>
-                <b>
-                  Double-click on node connections to add message-passing delays
-                  or success rates.
-                </b>
+                <b>{p.t("networkTopology.doubleClickInformation")}</b>
               </p>
               <NetworkTopologyViewer height={500} />
             </div>
@@ -240,7 +239,7 @@ class NetworkTopology extends Component {
 
   componentDidMount() {
     const { p } = this.props;
-    document.title = `Diorama - ${p.tc("networkTopology")}`;
+    document.title = `Diorama - ${p.tc("networkTopology.networkTopology")}`;
   }
 
   componentDidUpdate(prevProps) {

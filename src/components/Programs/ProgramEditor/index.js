@@ -299,12 +299,10 @@ class ProgramEditor extends Component {
       <Fragment>
         <span className={"display1"}>
           <Link to={"/programs"} className={"display1"}>
-            {p.tc("programs")}
+            {p.tc("programs.programs")}
           </Link>{" "}
           > {programName}
         </span>
-        <div className="mt-6" />
-        <ProgramAPIDocumentationAccordion runtime={programState.runtime} />
         <div className="border bd-lightGray border-size-2 p-4 mt-6">
           <div>
             <EditDescription
@@ -321,6 +319,8 @@ class ProgramEditor extends Component {
             />
           </div>
           <div className="mt-6">
+            <ProgramAPIDocumentationAccordion runtime={programState.runtime} />
+            <div className="mt-6" />
             <EditCodeSource
               polyglot={p}
               selectedValue={programState.codeSource}
@@ -351,20 +351,21 @@ class ProgramEditor extends Component {
               onChange={this.setMainHandler}
               isRaw={programState.codeSource === "raw"}
               defaultValue={programState.mainHandler}
+              runtime={programState.runtime}
             />
           </div>
         </div>
         <div className="mt-4">
           {this.isProgramChanged() && (
             <button className="button primary" onClick={this.saveChanges}>
-              <MetroIcon icon={"floppy-disk"} /> {p.tc("save")}
+              <MetroIcon icon={"floppy-disk"} /> {p.tc("common.save")}
             </button>
           )}
           <button
             className="button light"
             onClick={this.redirectToProgramsPage}
           >
-            <MetroIcon icon={"cancel"} /> {p.tc("cancel")}
+            <MetroIcon icon={"common.cancel"} /> {p.tc("common.cancel")}
           </button>
         </div>
       </Fragment>

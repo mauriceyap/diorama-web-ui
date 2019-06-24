@@ -89,7 +89,7 @@ class NodeManager extends Component {
   }
 
   render() {
-    const { simulationNodes, latestLogTimestampForNode } = this.props;
+    const { simulationNodes, latestLogTimestampForNode, p } = this.props;
     const { selectedNodesNids } = this.state;
     const selectedNodesPossibleActions = this.getSelectedNodesPossibleActions();
     return (
@@ -131,9 +131,9 @@ class NodeManager extends Component {
                   checked={this.getAreAllNodesSelected()}
                 />
               </th>
-              <th>Node ID (nid)</th>
-              <th>Status</th>
-              <th>Program</th>
+              <th>{p.tc("simulation.nodeID")} (nid)</th>
+              <th>{p.tc("simulation.status")}</th>
+              <th>{p.tc("simulation.program")}</th>
               <th />
             </tr>
           </thead>
@@ -171,7 +171,7 @@ class NodeManager extends Component {
                       icon={statusLabelsIcons[status]["icon"]}
                       colour={statusLabelsIcons[status]["colour"]}
                     />{" "}
-                    {statusLabelsIcons[status]["label"]}
+                    {p.tc(`simulation.${statusLabelsIcons[status]["label"]}`)}
                   </td>
                   <td>
                     {description ? (

@@ -7,8 +7,6 @@ import {
 } from "../../reduxStore/selectors";
 import { connect } from "react-redux";
 import Metro from "metro4";
-import { getP } from "redux-polyglot";
-import { pPropType } from "../../customPropTypes";
 import { connectionParametersEditorDialogId } from "../../styleConstants";
 import {
   setConnectionParametersEditorDelayDistribution,
@@ -120,7 +118,6 @@ class NetworkTopologyViewer extends Component {
 NetworkTopologyViewer.propTypes = {
   topology: PropTypes.arrayOf(PropTypes.object),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  polyglot: pPropType.isRequired,
   dispatch: PropTypes.func.isRequired,
   connectionParameters: PropTypes.object.isRequired
 };
@@ -133,7 +130,6 @@ NetworkTopologyViewer.defaultProps = {
 function mapStateToProps(state) {
   return {
     topology: selectNetworkTopology(state).unpackedNetworkTopology,
-    polyglot: getP(state),
     connectionParameters: selectConnectionParameters(state)
   };
 }

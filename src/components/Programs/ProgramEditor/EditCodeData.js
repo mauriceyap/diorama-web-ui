@@ -36,18 +36,23 @@ class EditCodeData extends Component {
     if (selectedSource === "git") {
       const { repositoryUrl, checkoutBranchOrTag } = gitRepository;
       return (
-        <form key={polyglot.tc("repositoryUrl")}>
+        <form key={polyglot.tc("programs.repositoryUrl")}>
+          <p>
+            Give the HTTP URL of the repository, as if you were cloning it. It
+            should end in <code>.git</code> - something like{" "}
+            <code>https://somegithost.com/you/your_project.git</code>.
+          </p>
           <input
             type="url"
             data-role="input"
-            data-prepend={`${polyglot.tc("repositoryUrl")}:`}
+            data-prepend={`${polyglot.tc("programs.repositoryUrl")}:`}
             onChange={onGitRepositoryUrlChange}
             value={repositoryUrl}
           />
           <input
             type="text"
             data-role="input"
-            data-prepend={`${polyglot.tc("checkoutBranchOrTag")}:`}
+            data-prepend={`${polyglot.tc("programs.checkoutBranchOrTag")}:`}
             onChange={onGitCheckoutBranchOrTagChange}
             value={checkoutBranchOrTag}
           />
@@ -56,44 +61,29 @@ class EditCodeData extends Component {
     } else if (selectedSource === "zip") {
       return (
         <Fragment>
-          <form key={polyglot.tc("chooseZipFile")}>
+          <form key={polyglot.tc("programs.chooseZipFile")}>
             <input
               type="file"
               data-role="file"
-              data-button-title={polyglot.tc("chooseZipFile")}
+              data-button-title={polyglot.tc("programs.chooseZipFile")}
               accept={".zip,.ZIP"}
               onChange={onSelectedZipFileChange}
             />
           </form>
           {zipFileName && zipFileName !== existingUploadingFileName && (
             <p>
-              {polyglot.tc("selectedFile")}: {zipFileName}
+              {polyglot.tc("programs.selectedFile")}: {zipFileName}
             </p>
           )}
           {zipFileName === existingUploadingFileName && (
-            <p>{polyglot.tc("existingUploadedFile")}</p>
+            <p>{polyglot.tc("programs.existingUploadedFile")}</p>
           )}
         </Fragment>
       );
     }
     return (
       <div className="mt-2">
-        <h6>Dependencies</h6>
-        <p>
-          List your pip dependencies, with each on a new line like in a{" "}
-          <code>requirements.txt</code> file.
-        </p>
-        <AceEditor
-          name={`editorDependencies${programName}`}
-          width={"100%"}
-          height="10rem"
-          mode="text"
-          theme={colours.aceEditorTheme[colourScheme]}
-          onChange={onRawCodeDependenciesChange}
-          value={rawCodeDependencies}
-        />
-        <div className="mt-6" />
-        <h6>Code</h6>
+        <h6>{polyglot.tc("programs.code")}</h6>
         <AceEditor
           name={`editor${programName}`}
           theme={colours.aceEditorTheme[colourScheme]}
@@ -104,6 +94,18 @@ class EditCodeData extends Component {
           editorProps={{
             $blockScrolling: Infinity
           }}
+        />
+        <div className="mt-6" />
+        <h6>{polyglot.tc("programs.dependencies")}</h6>
+        <p>{polyglot.tc(`programs.dependenciesInputInformation.${runtime}`)}</p>
+        <AceEditor
+          name={`editorDependencies${programName}`}
+          width={"100%"}
+          height="10rem"
+          mode="text"
+          theme={colours.aceEditorTheme[colourScheme]}
+          onChange={onRawCodeDependenciesChange}
+          value={rawCodeDependencies}
         />
       </div>
     );

@@ -20,7 +20,7 @@ class LoadingScreen extends Component {
             className={"text-medium fg-darkGray"}
             style={{ fontSize: "1.3rem" }}
           >
-            {polyglot.t(simulationState)}...
+            {polyglot.t(`simulation.${simulationState}`)}...
           </p>
         </div>
       </div>

@@ -74,34 +74,36 @@ class CustomConfig extends Component {
 
   render() {
     const { p, customConfig } = this.props;
-    const { editingState, formElementKey } = this.state;
+    const { /*editingState,*/ formElementKey } = this.state;
     // TODO: descriptions about each thing, validation
     return (
       <Fragment>
-        <span className={"display1"}>{p.tc("customConfig")}</span>
+        <span className={"display1"}>
+          {p.tc("customConfiguration.customConfiguration")}
+        </span>
         <div
           className="border bd-lightGray border-size-2 p-4 mt-6"
           key={formElementKey}
         >
-          <div key={editingState.selfConnectedNodes}>
-            <h6>{p.tc("selfConnectedNodes")}</h6>
-            <p>what does this mean?</p>
-            <p>
-              {editingState.selfConnectedNodes
-                ? "nodes are connected to themselves"
-                : "nodes are not connected to themselves"}
-            </p>
-            <input
-              type="checkbox"
-              data-role="switch"
-              data-material="true"
-              checked={editingState.selfConnectedNodes}
-              onChange={this.setSelfConnectedNodes}
-            />
-          </div>
-          <div className="mt-6">
-            <h6>{p.tc("baseIpAddress")}</h6>
-            <p>something about base ip</p>
+          {/*<div key={editingState.selfConnectedNodes}>*/}
+          {/*<h6>{p.tc("selfConnectedNodes")}</h6>*/}
+          {/*<p>what does this mean?</p>*/}
+          {/*<p>*/}
+          {/*{editingState.selfConnectedNodes*/}
+          {/*? "nodes are connected to themselves"*/}
+          {/*: "nodes are not connected to themselves"}*/}
+          {/*</p>*/}
+          {/*<input*/}
+          {/*type="checkbox"*/}
+          {/*data-role="switch"*/}
+          {/*data-material="true"*/}
+          {/*checked={editingState.selfConnectedNodes}*/}
+          {/*onChange={this.setSelfConnectedNodes}*/}
+          {/*/>*/}
+          {/*</div>*/}
+          <div>
+            <h6>{p.tc("customConfiguration.baseIpAddress")}</h6>
+            <p>{p.tc("customConfiguration.baseIpAddressInformation")}</p>
             <input
               type="text"
               data-role="input"
@@ -110,8 +112,8 @@ class CustomConfig extends Component {
             />
           </div>
           <div className="mt-6">
-            <h6>{p.tc("networkSubnet")}</h6>
-            <p>something about network subnet</p>
+            <h6>{p.tc("customConfiguration.networkSubnet")}</h6>
+            <p>{p.tc("customConfiguration.networkSubnetInformation")}</p>
             <input
               type="text"
               data-role="input"
@@ -120,8 +122,8 @@ class CustomConfig extends Component {
             />
           </div>
           <div className="mt-6">
-            <h6>{p.tc("basePort")}</h6>
-            <p>something about base port</p>
+            <h6>{p.tc("customConfiguration.basePort")}</h6>
+            <p>{p.tc("customConfiguration.basePortInformation")}</p>
             <input
               type="number"
               data-role="input"
@@ -132,10 +134,10 @@ class CustomConfig extends Component {
           {this.isCustomConfigChanged() && (
             <Fragment>
               <button className="button primary" onClick={this.saveChanges}>
-                <MetroIcon icon={"floppy-disk"} /> {p.tc("save")}
+                <MetroIcon icon={"floppy-disk"} /> {p.tc("common.save")}
               </button>
               <button className="button yellow" onClick={this.revertChanges}>
-                <MetroIcon icon={"undo"} /> {p.tc("revert")}
+                <MetroIcon icon={"undo"} /> {p.tc("common.revert")}
               </button>
             </Fragment>
           )}
@@ -146,7 +148,9 @@ class CustomConfig extends Component {
 
   componentDidMount() {
     const { p } = this.props;
-    document.title = `Diorama - ${p.tc("customConfig")}`;
+    document.title = `Diorama - ${p.tc(
+      "customConfiguration.customConfiguration"
+    )}`;
   }
 
   componentDidUpdate(prevProps) {

@@ -61,7 +61,7 @@ class Simulation extends Component {
   componentDidMount() {
     const { p } = this.props;
     this.getSimulationNodes();
-    document.title = `Diorama - ${p.tc("simulation")}`;
+    document.title = `Diorama - ${p.tc("simulation.simulation")}`;
   }
 
   createSimulationHash() {
@@ -119,7 +119,7 @@ class Simulation extends Component {
     const { p, simulationState, isUserEventsRunning } = this.props;
     return (
       <Fragment>
-        <span className={"display1"}>{p.tc("simulation")}</span>
+        <span className={"display1"}>{p.tc("simulation.simulation")}</span>
         {idleStates.includes(simulationState) && (
           <StartSimulation onButtonClick={this.setUpSimulation} />
         )}
@@ -144,7 +144,8 @@ class Simulation extends Component {
                     className="button primary"
                     onClick={Simulation.openUserEventsDialog}
                   >
-                    <MetroIcon icon={"event-available"} /> Schedule events
+                    <MetroIcon icon={"event-available"} />{" "}
+                    {p.tc("simulation.scheduleEvents")}
                   </button>
                 )}
               </div>
@@ -153,10 +154,10 @@ class Simulation extends Component {
                   className="button alert"
                   onClick={this.stopAndResetSimulation}
                 >
-                  <MetroIcon icon={"stop"} /> Stop and reset{" "}
+                  <MetroIcon icon={"stop"} /> {p.tc("simulation.stopAndReset")}{" "}
                   {this.hasChangesToCurrentSimulation() && (
                     <span className="badge bg-lightOrange inline fg-white">
-                      New changes have been made
+                      {p.tc("simulation.newChanges")}
                     </span>
                   )}
                 </button>
@@ -165,10 +166,10 @@ class Simulation extends Component {
             <div className="mt-6">
               <ul data-role="tabs" data-tabs-type="group" data-expand="true">
                 <li>
-                  <a href="#node-manager">Manage nodes</a>
+                  <a href="#node-manager">{p.tc("simulation.manageNodes")}</a>
                 </li>
                 <li>
-                  <a href="#output-viewer">Output viewer</a>
+                  <a href="#output-viewer">{p.tc("simulation.outputViewer")}</a>
                 </li>
               </ul>
               <div id="node-manager">
@@ -183,10 +184,6 @@ class Simulation extends Component {
       </Fragment>
     );
   }
-
-  componentWillUnmount() {
-    clearInterval(this.updateRequestInterval);
-  }
 }
 
 Simulation.propTypes = {
@@ -196,7 +193,7 @@ Simulation.propTypes = {
   isSimulationNodesEmpty: PropTypes.bool.isRequired,
   isUserEventsRunning: PropTypes.bool.isRequired,
   currentSimulationHash: PropTypes.string.isRequired,
-  connectionParameters: PropTypes.object().isRequired
+  connectionParameters: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

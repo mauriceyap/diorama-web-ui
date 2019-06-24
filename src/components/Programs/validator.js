@@ -13,7 +13,7 @@ export default function(
       rule({ name }) {
         return !isStringEmpty(name);
       },
-      errorMessage: "giveYourProgramAName"
+      errorMessage: "programs.giveYourProgramAName"
     },
     {
       field: "name",
@@ -28,14 +28,14 @@ export default function(
       rule({ name }) {
         return /^[a-z]/.test(name);
       },
-      errorMessage: "nameMustBeLowerCase"
+      errorMessage: "programs.nameMustBeLowerCase"
     },
     {
       field: "runtime",
       rule({ runtime }) {
         return !isStringEmpty(runtime);
       },
-      errorMessage: "chooseARuntimeError"
+      errorMessage: "programs.chooseARuntimeError"
     },
     {
       field: "runtime",
@@ -43,7 +43,7 @@ export default function(
         return runtimes.includes(runtime) || isStringEmpty(runtime);
         // an non-existent runtime technically isn't invalid
       },
-      errorMessage: "runtimeInvalid"
+      errorMessage: "programs.runtimeInvalid"
     }
   ];
 

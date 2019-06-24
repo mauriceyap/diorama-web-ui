@@ -4,23 +4,20 @@ import { connect } from "react-redux";
 import { getLocale, getP } from "redux-polyglot";
 import { pPropType } from "../../../customPropTypes";
 import Markdown from "react-markdown";
-
-import en_gb_python3 from "../../../userDocs/en_gb/nodeProgramAPI/python3.md";
 import MetroIcon from "../../MetroIcon";
-
-const mdDocs = {
-  "en-gb": {
-    python3: en_gb_python3
-  }
-};
+import mdDocs from "../../Documentation/mdDocs";
 
 class ProgramAPIDocumentationAccordion extends Component {
   constructor(props) {
     super(props);
-    const { runtime, locale } = props;
+    this.fetchMdContent = this.fetchMdContent.bind(this);
+    this.state = { mdContent: "Loading..." };
+    this.fetchMdContent();
+  }
 
-    this.state = { mdContent: "" };
-    fetch(mdDocs[locale][runtime])
+  fetchMdContent() {
+    const { locale, runtime } = this.props;
+    fetch(mdDocs[locale]["program"][runtime])
       .then(res => res.text())
       .then(mdContent => this.setState({ mdContent }));
   }
@@ -37,7 +34,7 @@ class ProgramAPIDocumentationAccordion extends Component {
         <div className="frame">
           <div className="heading bg-lightGray">
             <MetroIcon icon={"info"} colour={"black"} />{" "}
-            {p.tc("programAPIDocumentation")}
+            <strong>{p.tc("programs.programAPIDocumentation")}</strong>
           </div>
           <div className="content">
             <div className="border bd-lightGray border-size-2 p-4">
@@ -47,6 +44,14 @@ class ProgramAPIDocumentationAccordion extends Component {
         </div>
       </div>
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    const { locale: prevLocale, runtime: prevRuntime } = prevProps;
+    const { locale, runtime } = this.props;
+    if (locale !== prevLocale || runtime !== prevRuntime) {
+      this.fetchMdContent();
+    }
   }
 }
 

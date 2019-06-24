@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { selectSimulationLogs } from "../../reduxStore/selectors";
 import MetroIcon from "../MetroIcon";
+import { getP } from "redux-polyglot";
+import { pPropType } from "../../customPropTypes";
 
 const createContentDataForFormat = {
   CSV(data) {
@@ -41,11 +43,12 @@ class DownloadLogsButton extends Component {
   }
 
   render() {
-    const { className, icon, fileFormat } = this.props;
+    const { className, icon, fileFormat, polyglot } = this.props;
     return (
       <div>
         <button className={`button ${className}`} onClick={this.onClick}>
-          <MetroIcon icon={icon} /> Download {fileFormat}
+          <MetroIcon icon={icon} />{" "}
+          {polyglot.tc(`simulation.download${fileFormat}`)}
         </button>
       </div>
     );
@@ -56,7 +59,8 @@ DownloadLogsButton.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.string,
   fileFormat: PropTypes.oneOf(["JSON", "CSV"]).isRequired,
-  logsData: PropTypes.arrayOf(PropTypes.object).isRequired
+  logsData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  polyglot: pPropType.isRequired
 };
 
 DownloadLogsButton.defaultProps = {
@@ -66,7 +70,8 @@ DownloadLogsButton.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    logsData: selectSimulationLogs(state)
+    logsData: selectSimulationLogs(state),
+    polyglot: getP(state)
   };
 }
 

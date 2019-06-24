@@ -88,7 +88,7 @@ class NodeManagerButton extends Component {
       >
         <MetroIcon icon={icons[action]} colour={fgColours[action]} />
         {!compact &&
-          ` ${polyglot.tc(`${action}Selected`, {
+          ` ${polyglot.tc(`simulation.${action}Selected`, {
             numberSelected: nids.length
           })}`}
       </button>

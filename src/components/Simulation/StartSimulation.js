@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import MetroIcon from "../MetroIcon";
+import { pPropType } from "../../customPropTypes";
+import { getP } from "redux-polyglot";
+import { connect } from "react-redux";
 
 const startButtonWrapperStyle = {
   textAlign: "center",
@@ -9,13 +12,14 @@ const startButtonWrapperStyle = {
   width: "100%"
 };
 
-export default class StartSimulation extends Component {
+class StartSimulation extends Component {
   render() {
-    const { onButtonClick } = this.props;
+    const { onButtonClick, polyglot } = this.props;
     return (
       <div style={startButtonWrapperStyle}>
         <button className="button success large" onClick={onButtonClick}>
-          <MetroIcon icon={"play"} /> Start simulation
+          <MetroIcon icon={"play"} />{" "}
+          {polyglot.tc("simulation.startSimulation")}
         </button>
       </div>
     );
@@ -23,5 +27,14 @@ export default class StartSimulation extends Component {
 }
 
 StartSimulation.propTypes = {
-  onButtonClick: PropTypes.func.isRequired
+  onButtonClick: PropTypes.func.isRequired,
+  polyglot: pPropType.isRequired
 };
+
+function mapStateToProps(state) {
+  return {
+    polyglot: getP(state)
+  };
+}
+
+export default connect(mapStateToProps)(StartSimulation);

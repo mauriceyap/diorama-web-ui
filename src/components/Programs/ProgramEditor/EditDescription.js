@@ -6,8 +6,8 @@ export default class EditDescription extends Component {
     const { polyglot, defaultValue, onChange } = this.props;
     return (
       <Fragment>
-        <h6>{polyglot.tc("description")}</h6>
-        <p>{polyglot.t("whatDoesThisNodeDo")}</p>
+        <h6>{polyglot.tc("programs.description")}</h6>
+        <p>{polyglot.t("programs.whatDoesThisNodeDo")}</p>
         <textarea
           data-role="textarea"
           data-prepend="<span class='mif-paragraph-left'></span>"
