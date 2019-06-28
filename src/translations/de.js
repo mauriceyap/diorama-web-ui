@@ -170,11 +170,11 @@ export default {
     paused: "angehalten",
 
     // constants.SimulationStateEnum
-    INITIALISING: "Dinge fertig machen",
-    CREATING_VIRTUAL_NETWORK: "Einrichten des virtuellen Netzwerks",
-    CREATING_PROGRAM_IMAGES: "Erstellen von Bildern für alle Ihre Programme",
-    CREATING_NODES: "Knoten machen",
-    RESETTING: "Alles abreißen",
+    INITIALISING: "wird initialisiert",
+    CREATING_VIRTUAL_NETWORK: "wird virtuelle Netzwerke erstellt",
+    CREATING_PROGRAM_IMAGES: "wird deine Programme erstellt",
+    CREATING_NODES: "wird Knoten erstellt",
+    RESETTING: "wird zurückgesetzt",
 
     startSelected: "Auswahl started (%{numberSelected})",
     stopSelected: "Auswahl stoppen (%{numberSelected})",

@@ -18,8 +18,8 @@ export default {
 
   home: {
     welcome: "欢迎来到 Diorama!",
-    intro: "在您自己的网络拓扑上模拟您自己的分布式算法",
-    learn: "学习如何使用 Diorama 创建和运行您的第一个模拟",
+    intro: "在你自己的网络拓扑上模拟你自己的分布式算法",
+    learn: "学习如何使用 Diorama 创建和运行你的第一个模拟",
     read: "阅读用于编写节点程序和定义网络拓扑的文档",
     showMeHow: "告诉我如何",
     takeMeThere: "阅读"
