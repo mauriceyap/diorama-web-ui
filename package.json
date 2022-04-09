@@ -7,7 +7,7 @@
     "intro.js": "^2.9.3",
     "intro.js-react": "^0.2.0",
     "metro4": "^4.2.36",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "prop-types": "^15.7.2",
     "react": "^16.5.2",
     "react-ace": "^6.4.0",
